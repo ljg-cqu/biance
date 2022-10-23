@@ -68,21 +68,21 @@ func main() {
 		WaitGroup: wg,
 	}
 
-	tOneMinute, _ := new(big.Float).SetString("0.05")
-	tThreeMinute, _ := new(big.Float).SetString("0.1")
-	tFiveMinute, _ := new(big.Float).SetString("0.15")
-	tFifteenMinute, _ := new(big.Float).SetString("0.2")
-	tHalfHourMinute, _ := new(big.Float).SetString("0.25")
-	tOneHour, _ := new(big.Float).SetString("0.3")
-	tTwoHour, _ := new(big.Float).SetString("0.35")
-	tFourHour, _ := new(big.Float).SetString("0.4")
-	tEightHour, _ := new(big.Float).SetString("0.45")
-	tOneDay, _ := new(big.Float).SetString("0.5")
-	tThreeDays, _ := new(big.Float).SetString("0.55")
-	tFiveDays, _ := new(big.Float).SetString("0.6")
-	tTenDays, _ := new(big.Float).SetString("0.65")
-	tTwentyDays, _ := new(big.Float).SetString("0.7")
-	tThirtyDays, _ := new(big.Float).SetString("0.75")
+	tOneMinute, _ := new(big.Float).SetString("0.03")
+	tThreeMinute, _ := new(big.Float).SetString("0.05")
+	tFiveMinute, _ := new(big.Float).SetString("0.10")
+	tFifteenMinute, _ := new(big.Float).SetString("0.15")
+	tHalfHourMinute, _ := new(big.Float).SetString("0.20")
+	tOneHour, _ := new(big.Float).SetString("0.25")
+	tTwoHour, _ := new(big.Float).SetString("0.30")
+	tFourHour, _ := new(big.Float).SetString("0.35")
+	tEightHour, _ := new(big.Float).SetString("0.4")
+	tOneDay, _ := new(big.Float).SetString("0.45")
+	tThreeDays, _ := new(big.Float).SetString("0.50")
+	tFiveDays, _ := new(big.Float).SetString("0.55")
+	tTenDays, _ := new(big.Float).SetString("0.60")
+	tTwentyDays, _ := new(big.Float).SetString("0.65")
+	tThirtyDays, _ := new(big.Float).SetString("0.70")
 
 	threholds := map[Period]Threshold{
 		PeriodOneMinute:      {PeriodOneMinute, tOneMinute},

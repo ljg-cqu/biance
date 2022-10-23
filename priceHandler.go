@@ -5,9 +5,11 @@ import (
 	"crypto/tls"
 	"fmt"
 	"github.com/dgraph-io/ristretto"
+	"github.com/ljg-cqu/biance/backoff"
+	"github.com/ljg-cqu/biance/logger"
 	"github.com/ljg-cqu/core/smtp"
+	"github.com/pkg/errors"
 	mail "github.com/xhit/go-simple-mail/v2"
-	"log"
 	"math/big"
 	"sort"
 	"strings"
@@ -91,6 +93,7 @@ func (p PricesChange) String() string {
 // ---
 
 type PriceHandler struct {
+	Logger             logger.Logger
 	PricesCh           chan Prices
 	WaitGroup          *sync.WaitGroup
 	Thresholds         map[Period]Threshold
@@ -138,11 +141,9 @@ func (p *PriceHandler) Run(ctx context.Context) {
 			pricesChangeToPrint := p.buildPricesChangeStr(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18)
 			pricesChangeToReport := p.buildPricesChangeStr(p1_, p2_, p3_, p4_, p5_, p6_, p7_, p8_, p9_, p10_, p11_, p12_, p13_, p14_, p15_, p16_, p17_, p18_)
 
-			if pricesChangeToPrint != "" {
-				fmt.Println(pricesChangeToPrint)
-			}
+			p.Logger.InfoOnTrue(pricesChangeToPrint != "", pricesChangeToPrint)
 			if pricesChangeToReport != "" {
-				p.sendPriceChangeReport(pricesChangeToReport)
+				p.sendPriceChangeReport(ctx, pricesChangeToReport)
 			}
 		}
 	}
@@ -211,18 +212,22 @@ func (p *PriceHandler) buildPricesChangeStr(p1, p2, p3, p4, p5, p6, p7, p8, p9, 
 	return priceChangeStr
 }
 
-func (p *PriceHandler) sendPriceChangeReport(report string) {
-	emailCli := smtp.NewEmailClient(smtp.NetEase126Mail, &tls.Config{InsecureSkipVerify: true}, "ljg_cqu@126.com", "XROTXFGWZUILANPB")
+func (p *PriceHandler) sendPriceChangeReport(ctx context.Context, report string) {
 	email := mail.NewMSG()
 	email.SetFrom("Zealy <ljg_cqu@126.com>").
 		AddTo("ljg_cqu@126.com").
 		SetSubject("Biance Market Price Change Report")
-
 	email.SetBody(mail.TextPlain, report)
-	err := emailCli.Send(email)
-	if err != nil {
-		log.Printf("Failed to send price change report:%v\n", err)
-	}
+
+	err := backoff.RetryFnExponential100Times(p.Logger, ctx, time.Second, time.Second*10, func() (bool, error) {
+		emailCli := smtp.NewEmailClient(smtp.NetEase126Mail, &tls.Config{InsecureSkipVerify: true}, "ljg_cqu@126.com", "XROTXFGWZUILANPB")
+		err := emailCli.Send(email)
+		if err != nil {
+			return true, errors.Wrapf(err, "failed to send email")
+		}
+		return false, nil
+	})
+	p.Logger.ErrorOnError(err, "Failed to report price")
 }
 
 func (p *PriceHandler) filterPricesBUSDUSDT(prices Prices) Prices {

@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/dgraph-io/ristretto"
+	"github.com/ljg-cqu/biance/logger"
 	"math/big"
 	"os"
 	"os/signal"
@@ -60,10 +61,16 @@ func (p Prices) String() string {
 // ---
 
 func main() {
+	// Create logger
+	logger.DevMode = true
+	logger.UseConsoleEncoder = true
+	myLogger := logger.Default()
+
 	var pricesCh = make(chan Prices, 512)
 	var wg = new(sync.WaitGroup)
 
 	priceTracker := PriceTracker{
+		Logger:    myLogger,
 		Interval:  time.Second * 1,
 		PricesCh:  pricesCh,
 		WaitGroup: wg,
@@ -116,6 +123,7 @@ func main() {
 	})
 
 	priceHandler := PriceHandler{
+		Logger:             myLogger,
 		PricesCh:           pricesCh,
 		WaitGroup:          wg,
 		Thresholds:         threholds,

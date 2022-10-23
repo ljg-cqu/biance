@@ -122,7 +122,7 @@ func (p *PriceHandler) Run(ctx context.Context) {
 
 			var priceChangeReport string
 			if p1 != "" {
-				priceChangeReport = fmt.Sprintf("---PeriodOneMinute\n%v\n1n", p1)
+				priceChangeReport = fmt.Sprintf("---PeriodOneMinute\n%v\n\n", p1)
 			}
 			if p2 != "" {
 				priceChangeReport += fmt.Sprintf("------PeriodThreeMinutes\n%v\n\n", p2)

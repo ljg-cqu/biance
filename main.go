@@ -68,38 +68,38 @@ func main() {
 		WaitGroup: wg,
 	}
 
-	tOneMinute, _ := new(big.Float).SetString("0.01")
-	//tThreeMinute, _ := new(big.Float).SetString("0.1")
-	//tFiveMinute, _ := new(big.Float).SetString("0.1")
-	//tFifteenMinute, _ := new(big.Float).SetString("0.2")
-	//tHalfHourMinute, _ := new(big.Float).SetString("0.2")
-	//tOneHour, _ := new(big.Float).SetString("0.2")
-	//tTwoHour, _ := new(big.Float).SetString("0.3")
-	//tFourHour, _ := new(big.Float).SetString("0.3")
-	//tEightHour, _ := new(big.Float).SetString("0.3")
-	//tOneDay, _ := new(big.Float).SetString("0.4")
-	//tThreeDays, _ := new(big.Float).SetString("0.4")
-	//tFiveDays, _ := new(big.Float).SetString("0.4")
-	//tTenDays, _ := new(big.Float).SetString("0.5")
-	//tTwentyDays, _ := new(big.Float).SetString("0.5")
-	//tThirtyDays, _ := new(big.Float).SetString("0.5")
+	tOneMinute, _ := new(big.Float).SetString("0.05")
+	tThreeMinute, _ := new(big.Float).SetString("0.1")
+	tFiveMinute, _ := new(big.Float).SetString("0.15")
+	tFifteenMinute, _ := new(big.Float).SetString("0.2")
+	tHalfHourMinute, _ := new(big.Float).SetString("0.25")
+	tOneHour, _ := new(big.Float).SetString("0.3")
+	tTwoHour, _ := new(big.Float).SetString("0.35")
+	tFourHour, _ := new(big.Float).SetString("0.4")
+	tEightHour, _ := new(big.Float).SetString("0.45")
+	tOneDay, _ := new(big.Float).SetString("0.5")
+	tThreeDays, _ := new(big.Float).SetString("0.55")
+	tFiveDays, _ := new(big.Float).SetString("0.6")
+	tTenDays, _ := new(big.Float).SetString("0.65")
+	tTwentyDays, _ := new(big.Float).SetString("0.7")
+	tThirtyDays, _ := new(big.Float).SetString("0.75")
 
 	threholds := map[Period]Threshold{
-		PeriodOneMinute: {PeriodOneMinute, tOneMinute},
-		//PeriodFiveMinutes: {PeriodFiveMinutes, tThreeMinute},
-		//PeriodThreeMinutes:   {PeriodThreeMinutes, tFiveMinute},
-		//PeriodFifteenMinutes: {PeriodFifteenMinutes, tFifteenMinute},
-		//PeriodHalfHour:       {PeriodHalfHour, tHalfHourMinute},
-		//PeriodOneHour:        {PeriodOneHour, tOneHour},
-		//PeriodTwoHours:       {PeriodTwoHours, tTwoHour},
-		//PeriodFourHours:      {PeriodFourHours, tFourHour},
-		//PeriodEightHours:     {PeriodEightHours, tEightHour},
-		//PeriodOneDay:         {PeriodOneDay, tOneDay},
-		//PeriodThreeDays:      {PeriodThreeDays, tThreeDays},
-		//PeriodFiveDays:       {PeriodFiveDays, tFiveDays},
-		//PeriodTenDays:        {PeriodTenDays, tTenDays},
-		//PeriodTwentyDays:     {PeriodTwentyDays, tTwentyDays},
-		//PeriodThirtyDays:     {PeriodThirtyDays, tThirtyDays},
+		PeriodOneMinute:      {PeriodOneMinute, tOneMinute},
+		PeriodFiveMinutes:    {PeriodFiveMinutes, tThreeMinute},
+		PeriodThreeMinutes:   {PeriodThreeMinutes, tFiveMinute},
+		PeriodFifteenMinutes: {PeriodFifteenMinutes, tFifteenMinute},
+		PeriodHalfHour:       {PeriodHalfHour, tHalfHourMinute},
+		PeriodOneHour:        {PeriodOneHour, tOneHour},
+		PeriodTwoHours:       {PeriodTwoHours, tTwoHour},
+		PeriodFourHours:      {PeriodFourHours, tFourHour},
+		PeriodEightHours:     {PeriodEightHours, tEightHour},
+		PeriodOneDay:         {PeriodOneDay, tOneDay},
+		PeriodThreeDays:      {PeriodThreeDays, tThreeDays},
+		PeriodFiveDays:       {PeriodFiveDays, tFiveDays},
+		PeriodTenDays:        {PeriodTenDays, tTenDays},
+		PeriodTwentyDays:     {PeriodTwentyDays, tTwentyDays},
+		PeriodThirtyDays:     {PeriodThirtyDays, tThirtyDays},
 	}
 
 	priceHandler := PriceHandler{

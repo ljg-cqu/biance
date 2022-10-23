@@ -24,7 +24,10 @@ const (
 	PeriodOneHour        Period = "oneHour"
 	PeriodTwoHours       Period = "twoHours"
 	PeriodFourHours      Period = "fourHours"
+	PeriodSixHours       Period = "sixHours"
 	PeriodEightHours     Period = "eightHours"
+	PeriodTwelveHours    Period = "twelveHours"
+	PeriodEighteenHours  Period = "eighteenHours"
 	PeriodOneDay         Period = "oneDay"
 	PeriodThreeDays      Period = "threeDays"
 	PeriodFiveDays       Period = "fiveDays"
@@ -102,24 +105,27 @@ func (p *PriceHandler) Run(ctx context.Context) {
 			}
 			p.pricesHistory = append(p.pricesHistory, pricesBUSDUSDT)
 		case <-t.C:
-			p1, p11 := p.doCheckDifferences(PeriodOneMinute)
-			p2, p22 := p.doCheckDifferences(PeriodThreeMinutes)
-			p3, p33 := p.doCheckDifferences(PeriodFiveMinutes)
-			p4, p44 := p.doCheckDifferences(PeriodFifteenMinutes)
-			p5, p55 := p.doCheckDifferences(PeriodHalfHour)
-			p6, p66 := p.doCheckDifferences(PeriodOneHour)
-			p7, p77 := p.doCheckDifferences(PeriodTwoHours)
-			p8, p88 := p.doCheckDifferences(PeriodFourHours)
-			p9, p99 := p.doCheckDifferences(PeriodEightHours)
-			p10, p1010 := p.doCheckDifferences(PeriodOneDay)
-			p11, p1111 := p.doCheckDifferences(PeriodThreeDays)
-			p12, p1212 := p.doCheckDifferences(PeriodFiveDays)
-			p13, p1313 := p.doCheckDifferences(PeriodTenDays)
-			p14, p1414 := p.doCheckDifferences(PeriodTwentyDays)
-			p15, p1515 := p.doCheckDifferences(PeriodThirtyDays)
+			p1, p1_ := p.doCheckDifferences(PeriodOneMinute)
+			p2, p2_ := p.doCheckDifferences(PeriodThreeMinutes)
+			p3, p3_ := p.doCheckDifferences(PeriodFiveMinutes)
+			p4, p4_ := p.doCheckDifferences(PeriodFifteenMinutes)
+			p5, p5_ := p.doCheckDifferences(PeriodHalfHour)
+			p6, p6_ := p.doCheckDifferences(PeriodOneHour)
+			p7, p7_ := p.doCheckDifferences(PeriodTwoHours)
+			p8, p8_ := p.doCheckDifferences(PeriodFourHours)
+			p9, p9_ := p.doCheckDifferences(PeriodSixHours)
+			p10, p10_ := p.doCheckDifferences(PeriodEightHours)
+			p11, p11_ := p.doCheckDifferences(PeriodTwelveHours)
+			p12, p12_ := p.doCheckDifferences(PeriodEighteenHours)
+			p13, p13_ := p.doCheckDifferences(PeriodOneDay)
+			p14, p14_ := p.doCheckDifferences(PeriodThreeDays)
+			p15, p15_ := p.doCheckDifferences(PeriodFiveDays)
+			p16, p16_ := p.doCheckDifferences(PeriodTenDays)
+			p17, p17_ := p.doCheckDifferences(PeriodTwentyDays)
+			p18, p18_ := p.doCheckDifferences(PeriodThirtyDays)
 
-			pricesChangeToPrint := p.buildPricesChangeStr(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15)
-			pricesChangeToReport := p.buildPricesChangeStr(p11, p22, p33, p44, p55, p66, p77, p88, p99, p1010, p1111, p1212, p1313, p1414, p1515)
+			pricesChangeToPrint := p.buildPricesChangeStr(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18)
+			pricesChangeToReport := p.buildPricesChangeStr(p1_, p2_, p3_, p4_, p5_, p6_, p7_, p8_, p9_, p10_, p11_, p12_, p13_, p14_, p15_, p16_, p17_, p18_)
 
 			if pricesChangeToPrint != "" {
 				fmt.Println(pricesChangeToPrint)
@@ -131,7 +137,7 @@ func (p *PriceHandler) Run(ctx context.Context) {
 	}
 }
 
-func (p *PriceHandler) buildPricesChangeStr(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15 string) string {
+func (p *PriceHandler) buildPricesChangeStr(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18 string) string {
 	if p1 == "" && p2 == "" && p3 == "" && p4 == "" && p5 == "" && p6 == "" && p7 == "" && p8 == "" &&
 		p9 == "" && p10 == "" && p11 == "" && p12 == "" && p13 == "" && p14 == "" && p15 == "" {
 		return ""
@@ -162,24 +168,33 @@ func (p *PriceHandler) buildPricesChangeStr(p1, p2, p3, p4, p5, p6, p7, p8, p9, 
 		priceChangeStr += fmt.Sprintf("------------------------PeriodFourHours\n%v\n\n", p8)
 	}
 	if p9 != "" {
-		priceChangeStr += fmt.Sprintf("---------------------------PeriodEightHours\n%v\n\n", p9)
+		priceChangeStr += fmt.Sprintf("------------------------PeriodSixHours\n%v\n\n", p8)
 	}
 	if p10 != "" {
-		priceChangeStr += fmt.Sprintf("------------------------------PeriodOneDay\n%v\n\n", p10)
+		priceChangeStr += fmt.Sprintf("---------------------------PeriodEightHours\n%v\n\n", p9)
 	}
 	if p11 != "" {
-		priceChangeStr += fmt.Sprintf("---------------------------------PeriodThreeDays\n%v\n", p11)
+		priceChangeStr += fmt.Sprintf("---------------------------PeriodTwelvesHours\n%v\n\n", p9)
 	}
 	if p12 != "" {
-		priceChangeStr += fmt.Sprintf("------------------------------------PeriodFiveDays\n%v\n\n", p12)
+		priceChangeStr += fmt.Sprintf("---------------------------PeriodEighteenHours\n%v\n\n", p9)
 	}
 	if p13 != "" {
-		priceChangeStr += fmt.Sprintf("---------------------------------------PeriodTenDaysn%v\n\n", p13)
+		priceChangeStr += fmt.Sprintf("------------------------------PeriodOneDay\n%v\n\n", p10)
 	}
 	if p14 != "" {
-		priceChangeStr += fmt.Sprintf("------------------------------------------PeriodTwentyDays\n%v\n\n", p14)
+		priceChangeStr += fmt.Sprintf("---------------------------------PeriodThreeDays\n%v\n", p11)
 	}
 	if p15 != "" {
+		priceChangeStr += fmt.Sprintf("------------------------------------PeriodFiveDays\n%v\n\n", p12)
+	}
+	if p16 != "" {
+		priceChangeStr += fmt.Sprintf("---------------------------------------PeriodTenDaysn%v\n\n", p13)
+	}
+	if p17 != "" {
+		priceChangeStr += fmt.Sprintf("------------------------------------------PeriodTwentyDays\n%v\n\n", p14)
+	}
+	if p18 != "" {
 		priceChangeStr += fmt.Sprintf("---------------------------------------------PeriodThirtyDays\n%v\n\n", p15)
 	}
 	return priceChangeStr
@@ -294,33 +309,45 @@ func (p *PriceHandler) checkDifferences(threshold Threshold) PricesChange {
 		if len(p.pricesHistory) > 14400 {
 			pricesOld = p.pricesHistory[pricesLen-14400]
 		}
+	case PeriodSixHours:
+		if len(p.pricesHistory) > 21600 {
+			pricesOld = p.pricesHistory[pricesLen-21600]
+		}
 	case PeriodEightHours:
 		if len(p.pricesHistory) > 28800 {
-			pricesOld = p.pricesHistory[pricesLen-14400]
+			pricesOld = p.pricesHistory[pricesLen-28800]
+		}
+	case PeriodTwelveHours:
+		if len(p.pricesHistory) > 43200 {
+			pricesOld = p.pricesHistory[pricesLen-43200]
+		}
+	case PeriodEighteenHours:
+		if len(p.pricesHistory) > 64800 {
+			pricesOld = p.pricesHistory[pricesLen-64800]
 		}
 	case PeriodOneDay:
 		if len(p.pricesHistory) > 86400 {
-			pricesOld = p.pricesHistory[pricesLen-14400]
+			pricesOld = p.pricesHistory[pricesLen-86400]
 		}
 	case PeriodThreeDays:
 		if len(p.pricesHistory) > 259200 {
-			pricesOld = p.pricesHistory[pricesLen-14400]
+			pricesOld = p.pricesHistory[pricesLen-259200]
 		}
 	case PeriodFiveDays:
 		if len(p.pricesHistory) > 604800 {
-			pricesOld = p.pricesHistory[pricesLen-14400]
+			pricesOld = p.pricesHistory[pricesLen-604800]
 		}
 	case PeriodTenDays:
 		if len(p.pricesHistory) > 864000 {
-			pricesOld = p.pricesHistory[pricesLen-14400]
+			pricesOld = p.pricesHistory[pricesLen-864000]
 		}
 	case PeriodTwentyDays:
 		if len(p.pricesHistory) > 1728000 {
-			pricesOld = p.pricesHistory[pricesLen-14400]
+			pricesOld = p.pricesHistory[pricesLen-1728000]
 		}
 	case PeriodThirtyDays:
 		if len(p.pricesHistory) > 2592000 {
-			pricesOld = p.pricesHistory[pricesLen-14400]
+			pricesOld = p.pricesHistory[pricesLen-2592000]
 		}
 	}
 

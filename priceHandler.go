@@ -102,78 +102,87 @@ func (p *PriceHandler) Run(ctx context.Context) {
 			}
 			p.pricesHistory = append(p.pricesHistory, pricesBUSDUSDT)
 		case <-t.C:
-			p1 := p.doCheckDifferences(PeriodOneMinute)
-			p2 := p.doCheckDifferences(PeriodThreeMinutes)
-			p3 := p.doCheckDifferences(PeriodFiveMinutes)
-			p4 := p.doCheckDifferences(PeriodFifteenMinutes)
-			p5 := p.doCheckDifferences(PeriodHalfHour)
-			p6 := p.doCheckDifferences(PeriodOneHour)
-			p7 := p.doCheckDifferences(PeriodTwoHours)
-			p8 := p.doCheckDifferences(PeriodFourHours)
-			p9 := p.doCheckDifferences(PeriodEightHours)
-			p10 := p.doCheckDifferences(PeriodOneDay)
-			p11 := p.doCheckDifferences(PeriodThreeDays)
-			p12 := p.doCheckDifferences(PeriodFiveDays)
-			p13 := p.doCheckDifferences(PeriodTenDays)
-			p14 := p.doCheckDifferences(PeriodTwentyDays)
-			p15 := p.doCheckDifferences(PeriodThirtyDays)
+			p1, p11 := p.doCheckDifferences(PeriodOneMinute)
+			p2, p22 := p.doCheckDifferences(PeriodThreeMinutes)
+			p3, p33 := p.doCheckDifferences(PeriodFiveMinutes)
+			p4, p44 := p.doCheckDifferences(PeriodFifteenMinutes)
+			p5, p55 := p.doCheckDifferences(PeriodHalfHour)
+			p6, p66 := p.doCheckDifferences(PeriodOneHour)
+			p7, p77 := p.doCheckDifferences(PeriodTwoHours)
+			p8, p88 := p.doCheckDifferences(PeriodFourHours)
+			p9, p99 := p.doCheckDifferences(PeriodEightHours)
+			p10, p1010 := p.doCheckDifferences(PeriodOneDay)
+			p11, p1111 := p.doCheckDifferences(PeriodThreeDays)
+			p12, p1212 := p.doCheckDifferences(PeriodFiveDays)
+			p13, p1313 := p.doCheckDifferences(PeriodTenDays)
+			p14, p1414 := p.doCheckDifferences(PeriodTwentyDays)
+			p15, p1515 := p.doCheckDifferences(PeriodThirtyDays)
 
-			if p1 == "" && p2 == "" && p3 == "" && p4 == "" && p5 == "" && p6 == "" && p7 == "" && p8 == "" &&
-				p9 == "" && p10 == "" && p11 == "" && p12 == "" && p13 == "" && p14 == "" && p15 == "" {
-				continue
-			}
+			pricesChangeToPrint := p.buildPricesChangeStr(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15)
+			pricesChangeToReport := p.buildPricesChangeStr(p11, p22, p33, p44, p55, p66, p77, p88, p99, p1010, p1111, p1212, p1313, p1414, p1515)
 
-			var priceChangeReport string
-			if p1 != "" {
-				priceChangeReport = fmt.Sprintf("---PeriodOneMinute\n%v\n\n", p1)
+			if pricesChangeToPrint != "" {
+				fmt.Println(pricesChangeToPrint)
 			}
-			if p2 != "" {
-				priceChangeReport += fmt.Sprintf("------PeriodThreeMinutes\n%v\n\n", p2)
+			if pricesChangeToReport != "" {
+				p.sendPriceChangeReport(pricesChangeToReport)
 			}
-			if p3 != "" {
-				priceChangeReport += fmt.Sprintf("---------PeriodFiveMinutes\n%v\n\n", p3)
-			}
-			if p4 != "" {
-				priceChangeReport += fmt.Sprintf("------------PeriodFifteenMinutes\n%v\n\n", p4)
-			}
-			if p5 != "" {
-				priceChangeReport += fmt.Sprintf("---------------PeriodHalfHour\n%v\n\n", p5)
-			}
-			if p6 != "" {
-				priceChangeReport += fmt.Sprintf("------------------PeriodOneHour\n%v\n\n", p6)
-			}
-			if p7 != "" {
-				priceChangeReport += fmt.Sprintf("---------------------PeriodTwoHoursn%v\n\n", p7)
-			}
-			if p8 != "" {
-				priceChangeReport += fmt.Sprintf("------------------------PeriodFourHours\n%v\n\n", p8)
-			}
-			if p9 != "" {
-				priceChangeReport += fmt.Sprintf("---------------------------PeriodEightHours\n%v\n\n", p9)
-			}
-			if p10 != "" {
-				priceChangeReport += fmt.Sprintf("------------------------------PeriodOneDay\n%v\n\n", p10)
-			}
-			if p11 != "" {
-				priceChangeReport += fmt.Sprintf("---------------------------------PeriodThreeDays\n%v\n", p11)
-			}
-			if p12 != "" {
-				priceChangeReport += fmt.Sprintf("------------------------------------PeriodFiveDays\n%v\n\n", p12)
-			}
-			if p13 != "" {
-				priceChangeReport += fmt.Sprintf("---------------------------------------PeriodTenDaysn%v\n\n", p13)
-			}
-			if p14 != "" {
-				priceChangeReport += fmt.Sprintf("------------------------------------------PeriodTwentyDays\n%v\n\n", p14)
-			}
-			if p15 != "" {
-				priceChangeReport += fmt.Sprintf("---------------------------------------------PeriodThirtyDays\n%v\n\n", p15)
-			}
-
-			fmt.Println(priceChangeReport)
-			go p.sendPriceChangeReport(priceChangeReport)
 		}
 	}
+}
+
+func (p *PriceHandler) buildPricesChangeStr(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15 string) string {
+	if p1 == "" && p2 == "" && p3 == "" && p4 == "" && p5 == "" && p6 == "" && p7 == "" && p8 == "" &&
+		p9 == "" && p10 == "" && p11 == "" && p12 == "" && p13 == "" && p14 == "" && p15 == "" {
+		return ""
+	}
+	var priceChangeStr string
+	if p1 != "" {
+		priceChangeStr = fmt.Sprintf("---PeriodOneMinute\n%v\n\n", p1)
+	}
+	if p2 != "" {
+		priceChangeStr += fmt.Sprintf("------PeriodThreeMinutes\n%v\n\n", p2)
+	}
+	if p3 != "" {
+		priceChangeStr += fmt.Sprintf("---------PeriodFiveMinutes\n%v\n\n", p3)
+	}
+	if p4 != "" {
+		priceChangeStr += fmt.Sprintf("------------PeriodFifteenMinutes\n%v\n\n", p4)
+	}
+	if p5 != "" {
+		priceChangeStr += fmt.Sprintf("---------------PeriodHalfHour\n%v\n\n", p5)
+	}
+	if p6 != "" {
+		priceChangeStr += fmt.Sprintf("------------------PeriodOneHour\n%v\n\n", p6)
+	}
+	if p7 != "" {
+		priceChangeStr += fmt.Sprintf("---------------------PeriodTwoHoursn%v\n\n", p7)
+	}
+	if p8 != "" {
+		priceChangeStr += fmt.Sprintf("------------------------PeriodFourHours\n%v\n\n", p8)
+	}
+	if p9 != "" {
+		priceChangeStr += fmt.Sprintf("---------------------------PeriodEightHours\n%v\n\n", p9)
+	}
+	if p10 != "" {
+		priceChangeStr += fmt.Sprintf("------------------------------PeriodOneDay\n%v\n\n", p10)
+	}
+	if p11 != "" {
+		priceChangeStr += fmt.Sprintf("---------------------------------PeriodThreeDays\n%v\n", p11)
+	}
+	if p12 != "" {
+		priceChangeStr += fmt.Sprintf("------------------------------------PeriodFiveDays\n%v\n\n", p12)
+	}
+	if p13 != "" {
+		priceChangeStr += fmt.Sprintf("---------------------------------------PeriodTenDaysn%v\n\n", p13)
+	}
+	if p14 != "" {
+		priceChangeStr += fmt.Sprintf("------------------------------------------PeriodTwentyDays\n%v\n\n", p14)
+	}
+	if p15 != "" {
+		priceChangeStr += fmt.Sprintf("---------------------------------------------PeriodThirtyDays\n%v\n\n", p15)
+	}
+	return priceChangeStr
 }
 
 func (p *PriceHandler) sendPriceChangeReport(report string) {
@@ -215,14 +224,14 @@ func (p *PriceHandler) filterPricesBUSDUSDT(prices Prices) Prices {
 	return pricesBUSDUSDT
 }
 
-func (p *PriceHandler) doCheckDifferences(period Period) string {
+func (p *PriceHandler) doCheckDifferences(period Period) (toPrint string, toReport string) {
 	threshold, ok := p.Thresholds[period]
 	if !ok {
-		return ""
+		return "", ""
 	}
 	pricesChange := p.checkDifferences(threshold)
 	if len(pricesChange) == 0 {
-		return ""
+		return "", ""
 	}
 
 	var pricesChangeToReport PricesChange
@@ -237,8 +246,9 @@ func (p *PriceHandler) doCheckDifferences(period Period) string {
 		p.Cache.Wait()
 	}
 
+	pricesChange.Sort()
 	pricesChangeToReport.Sort()
-	return pricesChangeToReport.String()
+	return pricesChange.String(), pricesChangeToReport.String()
 }
 
 func (p *PriceHandler) checkDifferences(threshold Threshold) PricesChange {

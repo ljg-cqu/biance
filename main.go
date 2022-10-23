@@ -120,7 +120,7 @@ func main() {
 		WaitGroup:          wg,
 		Thresholds:         threholds,
 		Cache:              cache,
-		MiniReportInterval: time.Minute * 15,
+		MiniReportInterval: time.Minute * 5,
 	}
 
 	shutdownCtx, shutdown := context.WithCancel(context.Background())

@@ -2,7 +2,7 @@ package backoff
 
 import (
 	"context"
-	"github.com/avalido/mpc-controller/logger"
+	"github.com/ljg-cqu/logger"
 	"github.com/lestrrat-go/backoff/v2"
 	"github.com/pkg/errors"
 	"time"

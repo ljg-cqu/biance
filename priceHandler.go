@@ -73,7 +73,7 @@ func (p PricesChange) Sort() {
 func (p PricesChange) String() string {
 	var str string
 	for i, price := range p {
-		str += fmt.Sprintf("(%v) %v:%v | %v:%v\n", i, price.LatestPrice.Symbol, price.LatestPrice.Price, price.Period, price.PriceDiffPercent)
+		str += fmt.Sprintf("(%v) %v:%v | %v:%v | %v\n", i, price.LatestPrice.Symbol, price.LatestPrice.Price, price.Period, price.PriceDiffPercent, time.Now())
 	}
 	return str
 }

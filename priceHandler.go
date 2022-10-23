@@ -2,7 +2,11 @@ package main
 
 import (
 	"context"
+	"crypto/tls"
 	"fmt"
+	"github.com/ljg-cqu/core/smtp"
+	mail "github.com/xhit/go-simple-mail/v2"
+	"log"
 	"math/big"
 	"sort"
 	"strings"
@@ -65,9 +69,8 @@ func (p PricesChange) Sort() {
 func (p PricesChange) String() string {
 	var str string
 	for i, price := range p {
-		str += fmt.Sprintf("%v %v:%v %v:%v\n", i, price.LatestPrice.Symbol, price.LatestPrice.Price, price.Period, price.PriceDiffPercent)
+		str += fmt.Sprintf("%v %v:%v %v:%v", i, price.LatestPrice.Symbol, price.LatestPrice.Price, price.Period, price.PriceDiffPercent)
 	}
-	str += fmt.Sprintf("------------------\n")
 	return str
 }
 
@@ -96,22 +99,91 @@ func (p *PriceHandler) Run(ctx context.Context) {
 			}
 			p.pricesHistory = append(p.pricesHistory, pricesBUSDUSDT)
 		case <-t.C:
-			p.doCheckDifferences(PeriodOneMinute)
-			p.doCheckDifferences(PeriodThreeMinutes)
-			p.doCheckDifferences(PeriodFiveMinutes)
-			p.doCheckDifferences(PeriodFifteenMinutes)
-			p.doCheckDifferences(PeriodHalfHour)
-			p.doCheckDifferences(PeriodOneHour)
-			p.doCheckDifferences(PeriodTwoHours)
-			p.doCheckDifferences(PeriodFourHours)
-			p.doCheckDifferences(PeriodEightHours)
-			p.doCheckDifferences(PeriodOneDay)
-			p.doCheckDifferences(PeriodThreeDays)
-			p.doCheckDifferences(PeriodFiveDays)
-			p.doCheckDifferences(PeriodTenDays)
-			p.doCheckDifferences(PeriodTwentyDays)
-			p.doCheckDifferences(PeriodThirtyDays)
+			p1 := p.doCheckDifferences(PeriodOneMinute)
+			p2 := p.doCheckDifferences(PeriodThreeMinutes)
+			p3 := p.doCheckDifferences(PeriodFiveMinutes)
+			p4 := p.doCheckDifferences(PeriodFifteenMinutes)
+			p5 := p.doCheckDifferences(PeriodHalfHour)
+			p6 := p.doCheckDifferences(PeriodOneHour)
+			p7 := p.doCheckDifferences(PeriodTwoHours)
+			p8 := p.doCheckDifferences(PeriodFourHours)
+			p9 := p.doCheckDifferences(PeriodEightHours)
+			p10 := p.doCheckDifferences(PeriodOneDay)
+			p11 := p.doCheckDifferences(PeriodThreeDays)
+			p12 := p.doCheckDifferences(PeriodFiveDays)
+			p13 := p.doCheckDifferences(PeriodTenDays)
+			p14 := p.doCheckDifferences(PeriodTwentyDays)
+			p15 := p.doCheckDifferences(PeriodThirtyDays)
+
+			if p1 == "" && p2 == "" && p3 == "" && p4 == "" && p5 == "" && p6 == "" && p7 == "" && p8 == "" &&
+				p9 == "" && p10 == "" && p11 == "" && p12 == "" && p13 == "" && p14 == "" && p15 == "" {
+				continue
+			}
+
+			var priceChangeReport string
+			if p1 != "" {
+				priceChangeReport = fmt.Sprintf("---PeriodOneMinute\n%v\n1n", p1)
+			}
+			if p2 != "" {
+				priceChangeReport += fmt.Sprintf("------PeriodThreeMinutes\n%v\n\n", p2)
+			}
+			if p3 != "" {
+				priceChangeReport += fmt.Sprintf("---------PeriodFiveMinutes\n%v\n\n", p3)
+			}
+			if p4 != "" {
+				priceChangeReport += fmt.Sprintf("------------PeriodFifteenMinutes\n%v\n\n", p4)
+			}
+			if p5 != "" {
+				priceChangeReport += fmt.Sprintf("---------------PeriodHalfHour\n%v\n\n", p5)
+			}
+			if p6 != "" {
+				priceChangeReport += fmt.Sprintf("------------------PeriodOneHour\n%v\n\n", p6)
+			}
+			if p7 != "" {
+				priceChangeReport += fmt.Sprintf("---------------------PeriodTwoHoursn%v\n\n", p7)
+			}
+			if p8 != "" {
+				priceChangeReport += fmt.Sprintf("------------------------PeriodFourHours\n%v\n\n", p8)
+			}
+			if p9 != "" {
+				priceChangeReport += fmt.Sprintf("---------------------------PeriodEightHours\n%v\n\n", p9)
+			}
+			if p10 != "" {
+				priceChangeReport += fmt.Sprintf("------------------------------PeriodOneDay\n%v\n\n", p10)
+			}
+			if p11 != "" {
+				priceChangeReport += fmt.Sprintf("---------------------------------PeriodThreeDays\n%v\n", p11)
+			}
+			if p12 != "" {
+				priceChangeReport += fmt.Sprintf("------------------------------------PeriodFiveDays\n%v\n\n", p12)
+			}
+			if p13 != "" {
+				priceChangeReport += fmt.Sprintf("---------------------------------------PeriodTenDaysn%v\n\n", p13)
+			}
+			if p14 != "" {
+				priceChangeReport += fmt.Sprintf("------------------------------------------PeriodTwentyDays\n%v\n\n", p14)
+			}
+			if p15 != "" {
+				priceChangeReport += fmt.Sprintf("---------------------------------------------PeriodThirtyDays\n%v\n\n", p15)
+			}
+
+			fmt.Println(priceChangeReport)
+			go p.sendPriceChangeReport(priceChangeReport)
 		}
+	}
+}
+
+func (p *PriceHandler) sendPriceChangeReport(report string) {
+	emailCli := smtp.NewEmailClient(smtp.NetEase126Mail, &tls.Config{InsecureSkipVerify: true}, "ljg_cqu@126.com", "XROTXFGWZUILANPB")
+	email := mail.NewMSG()
+	email.SetFrom("Zealy <ljg_cqu@126.com>").
+		AddTo("ljg_cqu@126.com").
+		SetSubject("Biance Market Price Change Report")
+
+	email.SetBody(mail.TextPlain, report)
+	err := emailCli.Send(email)
+	if err != nil {
+		log.Printf("Failed to send price change report:%v\n", err)
 	}
 }
 
@@ -140,18 +212,18 @@ func (p *PriceHandler) filterPricesBUSDUSDT(prices Prices) Prices {
 	return pricesBUSDUSDT
 }
 
-func (p *PriceHandler) doCheckDifferences(period Period) {
+func (p *PriceHandler) doCheckDifferences(period Period) string {
 	threshold, ok := p.Thresholds[period]
 	if !ok {
-		return
+		return ""
 	}
 	pricesChange := p.checkDifferences(threshold)
 	if len(pricesChange) == 0 {
-		return
+		return ""
 	}
 
 	pricesChange.Sort()
-	fmt.Print(pricesChange)
+	return pricesChange.String()
 }
 
 func (p *PriceHandler) checkDifferences(threshold Threshold) PricesChange {

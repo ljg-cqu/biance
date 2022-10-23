@@ -69,32 +69,38 @@ func main() {
 		WaitGroup: wg,
 	}
 
-	tOneMinute, _ := new(big.Float).SetString("0.05")
-	tThreeMinute, _ := new(big.Float).SetString("0.1")
-	tFiveMinute, _ := new(big.Float).SetString("0.15")
-	tFifteenMinute, _ := new(big.Float).SetString("0.20")
-	tHalfHourMinute, _ := new(big.Float).SetString("0.25")
-	tOneHour, _ := new(big.Float).SetString("0.30")
-	tTwoHour, _ := new(big.Float).SetString("0.35")
-	tFourHour, _ := new(big.Float).SetString("0.40")
-	tEightHour, _ := new(big.Float).SetString("0.45")
-	tOneDay, _ := new(big.Float).SetString("0.50")
-	tThreeDays, _ := new(big.Float).SetString("0.55")
-	tFiveDays, _ := new(big.Float).SetString("0.60")
-	tTenDays, _ := new(big.Float).SetString("0.65")
-	tTwentyDays, _ := new(big.Float).SetString("0.70")
-	tThirtyDays, _ := new(big.Float).SetString("0.75")
+	tOneMinute, _ := new(big.Float).SetString("0.03")
+	tThreeMinutes, _ := new(big.Float).SetString("0.05")
+	tFiveMinutes, _ := new(big.Float).SetString("0.10")
+	tFifteenMinutes, _ := new(big.Float).SetString("0.15")
+	tHalfHour, _ := new(big.Float).SetString("0.20")
+	tOneHour, _ := new(big.Float).SetString("0.25")
+	tTwoHours, _ := new(big.Float).SetString("0.30")
+	tFourHours, _ := new(big.Float).SetString("0.35")
+	tSixHours, _ := new(big.Float).SetString("0.40")
+	tEightHours, _ := new(big.Float).SetString("0.45")
+	tTwelvesHours, _ := new(big.Float).SetString("0.50")
+	tEighteenHours, _ := new(big.Float).SetString("0.55")
+	tOneDay, _ := new(big.Float).SetString("0.60")
+	tThreeDays, _ := new(big.Float).SetString("0.65")
+	tFiveDays, _ := new(big.Float).SetString("0.70")
+	tTenDays, _ := new(big.Float).SetString("0.75")
+	tTwentyDays, _ := new(big.Float).SetString("0.80")
+	tThirtyDays, _ := new(big.Float).SetString("0.85")
 
 	threholds := map[Period]Threshold{
 		PeriodOneMinute:      {PeriodOneMinute, tOneMinute},
-		PeriodFiveMinutes:    {PeriodFiveMinutes, tThreeMinute},
-		PeriodThreeMinutes:   {PeriodThreeMinutes, tFiveMinute},
-		PeriodFifteenMinutes: {PeriodFifteenMinutes, tFifteenMinute},
-		PeriodHalfHour:       {PeriodHalfHour, tHalfHourMinute},
+		PeriodThreeMinutes:   {PeriodThreeMinutes, tThreeMinutes},
+		PeriodFiveMinutes:    {PeriodFiveMinutes, tFiveMinutes},
+		PeriodFifteenMinutes: {PeriodFifteenMinutes, tFifteenMinutes},
+		PeriodHalfHour:       {PeriodHalfHour, tHalfHour},
 		PeriodOneHour:        {PeriodOneHour, tOneHour},
-		PeriodTwoHours:       {PeriodTwoHours, tTwoHour},
-		PeriodFourHours:      {PeriodFourHours, tFourHour},
-		PeriodEightHours:     {PeriodEightHours, tEightHour},
+		PeriodTwoHours:       {PeriodTwoHours, tTwoHours},
+		PeriodFourHours:      {PeriodFourHours, tFourHours},
+		PeriodSixHours:       {PeriodSixHours, tSixHours},
+		PeriodEightHours:     {PeriodEightHours, tEightHours},
+		PeriodTwelveHours:    {PeriodTwelveHours, tTwelvesHours},
+		PeriodEighteenHours:  {PeriodEighteenHours, tEighteenHours},
 		PeriodOneDay:         {PeriodOneDay, tOneDay},
 		PeriodThreeDays:      {PeriodThreeDays, tThreeDays},
 		PeriodFiveDays:       {PeriodFiveDays, tFiveDays},

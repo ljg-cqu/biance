@@ -2,7 +2,7 @@ package adapter
 
 import (
 	"fmt"
-	"github.com/avalido/mpc-controller/logger"
+	"github.com/ljg-cqu/biance/logger"
 	"strings"
 )
 

@@ -86,13 +86,14 @@ type PriceHandler struct {
 	WaitGroup          *sync.WaitGroup
 	Thresholds         map[Period]Threshold
 	Cache              *ristretto.Cache
+	CheckPriceInterval time.Duration
 	MiniReportInterval time.Duration // avoid report too frequently
 
 	pricesHistory []Prices // todo: consider persistence and recovery
 }
 
 func (p *PriceHandler) Run(ctx context.Context) {
-	t := time.NewTicker(time.Second * 15)
+	t := time.NewTicker(time.Second * p.CheckPriceInterval)
 	defer p.WaitGroup.Done()
 	for {
 		select {

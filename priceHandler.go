@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/tls"
 	"fmt"
+	"github.com/dgraph-io/ristretto"
 	"github.com/ljg-cqu/core/smtp"
 	mail "github.com/xhit/go-simple-mail/v2"
 	"log"
@@ -77,9 +78,11 @@ func (p PricesChange) String() string {
 // ---
 
 type PriceHandler struct {
-	PricesCh   chan Prices
-	WaitGroup  *sync.WaitGroup
-	Thresholds map[Period]Threshold
+	PricesCh           chan Prices
+	WaitGroup          *sync.WaitGroup
+	Thresholds         map[Period]Threshold
+	Cache              *ristretto.Cache
+	MiniReportInterval time.Duration // avoid report too frequently
 
 	pricesHistory []Prices // todo: consider persistence and recovery
 }
@@ -222,8 +225,20 @@ func (p *PriceHandler) doCheckDifferences(period Period) string {
 		return ""
 	}
 
-	pricesChange.Sort()
-	return pricesChange.String()
+	var pricesChangeToReport PricesChange
+	for _, priceChange := range pricesChange {
+		symbol := priceChange.LatestPrice.Symbol
+		_, ok := p.Cache.Get(symbol)
+		if ok {
+			continue
+		}
+		pricesChangeToReport = append(pricesChangeToReport, priceChange)
+		p.Cache.SetWithTTL(priceChange.LatestPrice.Symbol, "", 1, p.MiniReportInterval)
+		p.Cache.Wait()
+	}
+
+	pricesChangeToReport.Sort()
+	return pricesChangeToReport.String()
 }
 
 func (p *PriceHandler) checkDifferences(threshold Threshold) PricesChange {

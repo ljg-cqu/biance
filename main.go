@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/dgraph-io/ristretto"
 	"math/big"
 	"os"
 	"os/signal"
@@ -68,21 +69,21 @@ func main() {
 		WaitGroup: wg,
 	}
 
-	tOneMinute, _ := new(big.Float).SetString("0.03")
-	tThreeMinute, _ := new(big.Float).SetString("0.05")
-	tFiveMinute, _ := new(big.Float).SetString("0.10")
-	tFifteenMinute, _ := new(big.Float).SetString("0.15")
-	tHalfHourMinute, _ := new(big.Float).SetString("0.20")
-	tOneHour, _ := new(big.Float).SetString("0.25")
-	tTwoHour, _ := new(big.Float).SetString("0.30")
-	tFourHour, _ := new(big.Float).SetString("0.35")
-	tEightHour, _ := new(big.Float).SetString("0.4")
-	tOneDay, _ := new(big.Float).SetString("0.45")
-	tThreeDays, _ := new(big.Float).SetString("0.50")
-	tFiveDays, _ := new(big.Float).SetString("0.55")
-	tTenDays, _ := new(big.Float).SetString("0.60")
-	tTwentyDays, _ := new(big.Float).SetString("0.65")
-	tThirtyDays, _ := new(big.Float).SetString("0.70")
+	tOneMinute, _ := new(big.Float).SetString("0.1")
+	tThreeMinute, _ := new(big.Float).SetString("0.2")
+	tFiveMinute, _ := new(big.Float).SetString("0.3")
+	tFifteenMinute, _ := new(big.Float).SetString("0.4")
+	tHalfHourMinute, _ := new(big.Float).SetString("0.5")
+	tOneHour, _ := new(big.Float).SetString("0.6")
+	tTwoHour, _ := new(big.Float).SetString("0.7")
+	tFourHour, _ := new(big.Float).SetString("0.8")
+	tEightHour, _ := new(big.Float).SetString("0.9")
+	tOneDay, _ := new(big.Float).SetString("1.0")
+	tThreeDays, _ := new(big.Float).SetString("1.1")
+	tFiveDays, _ := new(big.Float).SetString("1.2")
+	tTenDays, _ := new(big.Float).SetString("1.3")
+	tTwentyDays, _ := new(big.Float).SetString("1.4")
+	tThirtyDays, _ := new(big.Float).SetString("1.5")
 
 	threholds := map[Period]Threshold{
 		PeriodOneMinute:      {PeriodOneMinute, tOneMinute},
@@ -102,10 +103,18 @@ func main() {
 		PeriodThirtyDays:     {PeriodThirtyDays, tThirtyDays},
 	}
 
+	cache, _ := ristretto.NewCache(&ristretto.Config{
+		NumCounters: 1e7,
+		MaxCost:     1 << 30,
+		BufferItems: 64,
+	})
+
 	priceHandler := PriceHandler{
-		PricesCh:   pricesCh,
-		WaitGroup:  wg,
-		Thresholds: threholds,
+		PricesCh:           pricesCh,
+		WaitGroup:          wg,
+		Thresholds:         threholds,
+		Cache:              cache,
+		MiniReportInterval: time.Minute * 15,
 	}
 
 	shutdownCtx, shutdown := context.WithCancel(context.Background())

@@ -122,7 +122,7 @@ func main() {
 		BufferItems: 64,
 	})
 
-	miniReportThreshold, _ := new(big.Float).SetString("0.10")
+	miniReportThreshold, _ := new(big.Float).SetString("0.05")
 	priceHandler := PriceHandler{
 		Logger:              myLogger,
 		PricesCh:            pricesCh,

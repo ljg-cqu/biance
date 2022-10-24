@@ -77,7 +77,7 @@ func (p PricesChange) String() string {
 	for i, price := range p {
 		var pref string
 		zeroFloat, _ := new(big.Float).SetString("0.00")
-		switch zeroFloat.Cmp(price.PriceDiffPercent) {
+		switch price.PriceDiffPercent.Cmp(zeroFloat) {
 		case -1:
 			pref = "-"
 		case 0:
@@ -85,7 +85,7 @@ func (p PricesChange) String() string {
 		case 1:
 			pref = "+"
 		}
-		str += fmt.Sprintf("(%v):%v | %v:%v | %v:%v\n", pref, i, price.LatestPrice.Symbol, price.LatestPrice.Price, price.Period, price.PriceDiffPercent)
+		str += fmt.Sprintf("(%v):%v | %v:%v | %v:%v\n", i, pref, price.LatestPrice.Symbol, price.LatestPrice.Price, price.Period, price.PriceDiffPercent)
 	}
 	return str
 }
@@ -143,7 +143,7 @@ func (p *PriceHandler) Run(ctx context.Context) {
 
 			p.Logger.InfoOnTrue(pricesChangeToPrint != "", pricesChangeToPrint)
 			if pricesChangeToReport != "" {
-				p.sendPriceChangeReport(ctx, pricesChangeToReport)
+				p.sendPriceChangeReport(ctx, fmt.Sprintf("\n%v", pricesChangeToReport))
 			}
 		}
 	}
@@ -265,21 +265,21 @@ func (p *PriceHandler) doCheckDifferences(period Period) (toPrint string, toRepo
 		return "", ""
 	}
 
-	//var pricesChangeToReport PricesChange
-	//for _, priceChange := range pricesChange {
-	//	symbol := priceChange.LatestPrice.Symbol
-	//	_, ok := p.Cache.Get(symbol)
-	//	if ok {
-	//		continue
-	//	}
-	//	pricesChangeToReport = append(pricesChangeToReport, priceChange)
-	//	p.Cache.SetWithTTL(priceChange.LatestPrice.Symbol, "", 1, p.MiniReportInterval)
-	//	p.Cache.Wait()
-	//}
+	var pricesChangeToReport PricesChange
+	for _, priceChange := range pricesChange {
+		symbol := priceChange.LatestPrice.Symbol
+		_, ok := p.Cache.Get(symbol)
+		if ok {
+			continue
+		}
+		pricesChangeToReport = append(pricesChangeToReport, priceChange)
+		p.Cache.SetWithTTL(priceChange.LatestPrice.Symbol, "", 1, p.MiniReportInterval)
+		p.Cache.Wait()
+	}
 
 	pricesChange.Sort()
-	//pricesChangeToReport.Sort()
-	return pricesChange.String(), pricesChange.String()
+	pricesChangeToReport.Sort()
+	return pricesChange.String(), pricesChangeToReport.String()
 }
 
 func (p *PriceHandler) checkDifferences(threshold Threshold) PricesChange {

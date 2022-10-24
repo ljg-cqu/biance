@@ -119,6 +119,7 @@ func (p *PriceHandler) Run(ctx context.Context) {
 			}
 			p.pricesHistory = append(p.pricesHistory, pricesBUSDUSDT)
 		case <-t.C:
+			p.Logger.Debug("Checking price change...")
 			p1, p1_ := p.doCheckDifferences(PeriodOneMinute)
 			p2, p2_ := p.doCheckDifferences(PeriodThreeMinutes)
 			p3, p3_ := p.doCheckDifferences(PeriodFiveMinutes)
@@ -151,7 +152,7 @@ func (p *PriceHandler) Run(ctx context.Context) {
 
 func (p *PriceHandler) buildPricesChangeStr(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18 string) string {
 	if p1 == "" && p2 == "" && p3 == "" && p4 == "" && p5 == "" && p6 == "" && p7 == "" && p8 == "" &&
-		p9 == "" && p10 == "" && p11 == "" && p12 == "" && p13 == "" && p14 == "" && p15 == "" {
+		p9 == "" && p10 == "" && p11 == "" && p12 == "" && p13 == "" && p14 == "" && p15 == "" && p16 == "" && p17 == "" && p18 == "" {
 		return ""
 	}
 	var priceChangeStr string
@@ -180,34 +181,34 @@ func (p *PriceHandler) buildPricesChangeStr(p1, p2, p3, p4, p5, p6, p7, p8, p9, 
 		priceChangeStr += fmt.Sprintf("------------------------PeriodFourHours\n%v\n\n", p8)
 	}
 	if p9 != "" {
-		priceChangeStr += fmt.Sprintf("------------------------PeriodSixHours\n%v\n\n", p8)
+		priceChangeStr += fmt.Sprintf("---------------------------PeriodSixHours\n%v\n\n", p8)
 	}
 	if p10 != "" {
-		priceChangeStr += fmt.Sprintf("---------------------------PeriodEightHours\n%v\n\n", p9)
+		priceChangeStr += fmt.Sprintf("------------------------------PeriodEightHours\n%v\n\n", p9)
 	}
 	if p11 != "" {
-		priceChangeStr += fmt.Sprintf("---------------------------PeriodTwelvesHours\n%v\n\n", p9)
+		priceChangeStr += fmt.Sprintf("---------------------------------PeriodTwelvesHours\n%v\n\n", p9)
 	}
 	if p12 != "" {
-		priceChangeStr += fmt.Sprintf("---------------------------PeriodEighteenHours\n%v\n\n", p9)
+		priceChangeStr += fmt.Sprintf("------------------------------------PeriodEighteenHours\n%v\n\n", p9)
 	}
 	if p13 != "" {
-		priceChangeStr += fmt.Sprintf("------------------------------PeriodOneDay\n%v\n\n", p10)
+		priceChangeStr += fmt.Sprintf("---------------------------------------PeriodOneDay\n%v\n\n", p10)
 	}
 	if p14 != "" {
-		priceChangeStr += fmt.Sprintf("---------------------------------PeriodThreeDays\n%v\n", p11)
+		priceChangeStr += fmt.Sprintf("------------------------------------------PeriodThreeDays\n%v\n", p11)
 	}
 	if p15 != "" {
-		priceChangeStr += fmt.Sprintf("------------------------------------PeriodFiveDays\n%v\n\n", p12)
+		priceChangeStr += fmt.Sprintf("---------------------------------------------PeriodFiveDays\n%v\n\n", p12)
 	}
 	if p16 != "" {
-		priceChangeStr += fmt.Sprintf("---------------------------------------PeriodTenDaysn%v\n\n", p13)
+		priceChangeStr += fmt.Sprintf("------------------------------------------------PeriodTenDaysn%v\n\n", p13)
 	}
 	if p17 != "" {
-		priceChangeStr += fmt.Sprintf("------------------------------------------PeriodTwentyDays\n%v\n\n", p14)
+		priceChangeStr += fmt.Sprintf("---------------------------------------------------PeriodTwentyDays\n%v\n\n", p14)
 	}
 	if p18 != "" {
-		priceChangeStr += fmt.Sprintf("---------------------------------------------PeriodThirtyDays\n%v\n\n", p15)
+		priceChangeStr += fmt.Sprintf("------------------------------------------------------PeriodThirtyDays\n%v\n\n", p15)
 	}
 	return priceChangeStr
 }

@@ -122,14 +122,16 @@ func main() {
 		BufferItems: 64,
 	})
 
+	miniReportThreshold, _ := new(big.Float).SetString("0.10")
 	priceHandler := PriceHandler{
-		Logger:             myLogger,
-		PricesCh:           pricesCh,
-		WaitGroup:          wg,
-		Thresholds:         threholds,
-		Cache:              cache,
-		CheckPriceInterval: time.Second * 5,
-		MiniReportInterval: time.Minute * 5,
+		Logger:              myLogger,
+		PricesCh:            pricesCh,
+		WaitGroup:           wg,
+		Thresholds:          threholds,
+		Cache:               cache,
+		CheckPriceInterval:  time.Second * 5,
+		MiniReportInterval:  time.Minute * 5,
+		MiniReportThreshold: miniReportThreshold,
 	}
 
 	shutdownCtx, shutdown := context.WithCancel(context.Background())

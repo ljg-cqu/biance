@@ -102,10 +102,13 @@ type PriceHandler struct {
 	MiniReportInterval time.Duration // avoid report too frequently
 
 	pricesHistory []Prices // todo: consider persistence and recovery
+	reportCh      chan string
 }
 
 func (p *PriceHandler) Run(ctx context.Context) {
+	p.reportCh = make(chan string, 1024)
 	t := time.NewTicker(p.CheckPriceInterval)
+	go p.sendPriceChangeReport(ctx) // todo: remove gorutine leak
 	defer p.WaitGroup.Done()
 	for {
 		select {
@@ -143,7 +146,7 @@ func (p *PriceHandler) Run(ctx context.Context) {
 
 			p.Logger.InfoOnTrue(pricesChangeToPrint != "", fmt.Sprintf("\n%v", pricesChangeToPrint))
 			if pricesChangeToReport != "" {
-				p.sendPriceChangeReport(ctx, pricesChangeToReport)
+				p.reportCh <- pricesChangeToReport
 			}
 		}
 	}
@@ -212,22 +215,29 @@ func (p *PriceHandler) buildPricesChangeStr(p1, p2, p3, p4, p5, p6, p7, p8, p9, 
 	return priceChangeStr
 }
 
-func (p *PriceHandler) sendPriceChangeReport(ctx context.Context, report string) {
-	email := mail.NewMSG()
-	email.SetFrom("Zealy <ljg_cqu@126.com>").
-		AddTo("ljg_cqu@126.com").
-		SetSubject("Biance Market Price Change Report")
-	email.SetBody(mail.TextPlain, report)
+func (p *PriceHandler) sendPriceChangeReport(ctx context.Context) {
+	for {
+		select {
+		case <-ctx.Done():
+			return
+		case content := <-p.reportCh:
+			email := mail.NewMSG()
+			email.SetFrom("Zealy <ljg_cqu@126.com>").
+				AddTo("ljg_cqu@126.com").
+				SetSubject("Biance Market Price Change Report")
+			email.SetBody(mail.TextPlain, content)
 
-	err := backoff.RetryFnExponential100Times(p.Logger, ctx, time.Second, time.Second*10, func() (bool, error) {
-		emailCli := smtp.NewEmailClient(smtp.NetEase126Mail, &tls.Config{InsecureSkipVerify: true}, "ljg_cqu@126.com", "XROTXFGWZUILANPB")
-		err := emailCli.Send(email)
-		if err != nil {
-			return true, errors.Wrapf(err, "failed to send email")
+			err := backoff.RetryFnExponential100Times(p.Logger, ctx, time.Second, time.Second*10, func() (bool, error) {
+				emailCli := smtp.NewEmailClient(smtp.NetEase126Mail, &tls.Config{InsecureSkipVerify: true}, "ljg_cqu@126.com", "XROTXFGWZUILANPB")
+				err := emailCli.Send(email)
+				if err != nil {
+					return true, errors.Wrapf(err, "failed to send email")
+				}
+				return false, nil
+			})
+			p.Logger.ErrorOnError(err, "Failed to report price")
 		}
-		return false, nil
-	})
-	p.Logger.ErrorOnError(err, "Failed to report price")
+	}
 }
 
 func (p *PriceHandler) filterPricesBUSDUSDT(prices Prices) Prices {

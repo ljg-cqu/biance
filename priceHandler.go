@@ -85,7 +85,7 @@ func (p PricesChange) String() string {
 		case 1:
 			pref = "+"
 		}
-		str += fmt.Sprintf("%v | %v | %v%v\n", price.LatestPrice.Symbol, price.LatestPrice.Price, pref, price.PriceDiffPercent)
+		str += fmt.Sprintf("(%v) %v | %v | %v%v\n", pref, price.LatestPrice.Symbol, price.LatestPrice.Price, pref, price.PriceDiffPercent)
 	}
 	return str
 }

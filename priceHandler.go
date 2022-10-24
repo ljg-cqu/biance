@@ -141,9 +141,9 @@ func (p *PriceHandler) Run(ctx context.Context) {
 			pricesChangeToPrint := p.buildPricesChangeStr(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18)
 			pricesChangeToReport := p.buildPricesChangeStr(p1_, p2_, p3_, p4_, p5_, p6_, p7_, p8_, p9_, p10_, p11_, p12_, p13_, p14_, p15_, p16_, p17_, p18_)
 
-			p.Logger.InfoOnTrue(pricesChangeToPrint != "", pricesChangeToPrint)
+			p.Logger.InfoOnTrue(pricesChangeToPrint != "", fmt.Sprintf("\n%v", pricesChangeToPrint))
 			if pricesChangeToReport != "" {
-				p.sendPriceChangeReport(ctx, fmt.Sprintf("\n%v", pricesChangeToReport))
+				p.sendPriceChangeReport(ctx, pricesChangeToReport)
 			}
 		}
 	}

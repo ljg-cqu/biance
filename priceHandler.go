@@ -265,21 +265,21 @@ func (p *PriceHandler) doCheckDifferences(period Period) (toPrint string, toRepo
 		return "", ""
 	}
 
-	var pricesChangeToReport PricesChange
-	for _, priceChange := range pricesChange {
-		symbol := priceChange.LatestPrice.Symbol
-		_, ok := p.Cache.Get(symbol)
-		if ok {
-			continue
-		}
-		pricesChangeToReport = append(pricesChangeToReport, priceChange)
-		p.Cache.SetWithTTL(priceChange.LatestPrice.Symbol, "", 1, p.MiniReportInterval)
-		p.Cache.Wait()
-	}
+	//var pricesChangeToReport PricesChange
+	//for _, priceChange := range pricesChange {
+	//	symbol := priceChange.LatestPrice.Symbol
+	//	_, ok := p.Cache.Get(symbol)
+	//	if ok {
+	//		continue
+	//	}
+	//	pricesChangeToReport = append(pricesChangeToReport, priceChange)
+	//	p.Cache.SetWithTTL(priceChange.LatestPrice.Symbol, "", 1, p.MiniReportInterval)
+	//	p.Cache.Wait()
+	//}
 
 	pricesChange.Sort()
-	pricesChangeToReport.Sort()
-	return pricesChange.String(), pricesChangeToReport.String()
+	//pricesChangeToReport.Sort()
+	return pricesChange.String(), pricesChange.String()
 }
 
 func (p *PriceHandler) checkDifferences(threshold Threshold) PricesChange {

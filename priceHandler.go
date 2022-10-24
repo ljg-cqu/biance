@@ -93,13 +93,14 @@ func (p PricesChange) String() string {
 // ---
 
 type PriceHandler struct {
-	Logger             logger.Logger
-	PricesCh           chan Prices
-	WaitGroup          *sync.WaitGroup
-	Thresholds         map[Period]Threshold
-	Cache              *ristretto.Cache
-	CheckPriceInterval time.Duration
-	MiniReportInterval time.Duration // avoid report too frequently
+	Logger              logger.Logger
+	PricesCh            chan Prices
+	WaitGroup           *sync.WaitGroup
+	Thresholds          map[Period]Threshold
+	Cache               *ristretto.Cache
+	CheckPriceInterval  time.Duration
+	MiniReportInterval  time.Duration // avoid report too frequently
+	MiniReportThreshold *big.Float    // avoid report too small amount
 
 	pricesHistory []Prices // todo: consider persistence and recovery
 	reportCh      chan string
@@ -282,6 +283,11 @@ func (p *PriceHandler) doCheckDifferences(period Period) (toPrint string, toRepo
 		if ok {
 			continue
 		}
+
+		if r := priceChange.Threshold.T.Cmp(p.MiniReportThreshold); r == -1 {
+			continue
+		}
+
 		pricesChangeToReport = append(pricesChangeToReport, priceChange)
 		p.Cache.SetWithTTL(priceChange.LatestPrice.Symbol, "", 1, p.MiniReportInterval)
 		p.Cache.Wait()

@@ -105,7 +105,7 @@ type PriceHandler struct {
 }
 
 func (p *PriceHandler) Run(ctx context.Context) {
-	t := time.NewTicker(time.Second * p.CheckPriceInterval)
+	t := time.NewTicker(p.CheckPriceInterval)
 	defer p.WaitGroup.Done()
 	for {
 		select {
@@ -119,7 +119,6 @@ func (p *PriceHandler) Run(ctx context.Context) {
 			}
 			p.pricesHistory = append(p.pricesHistory, pricesBUSDUSDT)
 		case <-t.C:
-			p.Logger.Debug("Checking price change...")
 			p1, p1_ := p.doCheckDifferences(PeriodOneMinute)
 			p2, p2_ := p.doCheckDifferences(PeriodThreeMinutes)
 			p3, p3_ := p.doCheckDifferences(PeriodFiveMinutes)

@@ -41,7 +41,7 @@ func (p *PriceTracker) Run(ctx context.Context) {
 
 func (p *PriceTracker) prices(ctx context.Context) (Prices, error) {
 	var prices Prices
-	err := backoff.RetryFnExponentialForever(p.Logger, ctx, time.Second, time.Second*10, func() (bool, error) {
+	err := backoff.RetryFnExponential10Times(p.Logger, ctx, time.Second, time.Second*10, func() (bool, error) {
 		res, err := http.Get("https://api.binance.com/api/v3/ticker/price")
 		if err != nil {
 			return true, errors.Wrapf(err, "failed to send request")

@@ -5,7 +5,7 @@ go 1.18
 require (
 	github.com/dgraph-io/ristretto v0.1.1
 	github.com/lestrrat-go/backoff/v2 v2.0.8
-	github.com/ljg-cqu/core v0.0.0-20221025123538-8e5bf46ab8d3
+        github.com/ljg-cqu/core v0.0.0-20221025132507-ed7fbeb9f0a5
 	github.com/pkg/errors v0.9.1
 	github.com/sirupsen/logrus v1.9.0
 	github.com/xhit/go-simple-mail/v2 v2.12.0

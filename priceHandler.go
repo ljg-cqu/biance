@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"crypto/tls"
 	"fmt"
 	"github.com/dgraph-io/ristretto"
 	"github.com/ljg-cqu/biance/backoff"
@@ -91,6 +90,7 @@ type PriceHandler struct {
 	CheckPriceInterval  time.Duration
 	MiniReportInterval  time.Duration // avoid report too frequently
 	MiniReportThreshold *big.Float    // avoid report too small amount
+	EmailClient         *smtp.EmailClient
 
 	pricesHistory []Prices // todo: consider persistence and recovery
 	reportCh      chan string
@@ -219,8 +219,7 @@ func (p *PriceHandler) sendPriceChangeReport(ctx context.Context) {
 			email.SetBody(mail.TextPlain, content)
 
 			err := backoff.RetryFnExponential10Times(p.Logger, ctx, time.Second, time.Second*10, func() (bool, error) {
-				emailCli := smtp.NewEmailClient(smtp.NetEase126Mail, &tls.Config{InsecureSkipVerify: true}, "ljg_cqu@126.com", "XROTXFGWZUILANPB")
-				err := emailCli.Send(email)
+				err := p.EmailClient.Send(email)
 				if err != nil {
 					return true, errors.Wrapf(err, "failed to send email")
 				}

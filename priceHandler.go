@@ -218,7 +218,7 @@ func (p *PriceHandler) sendPriceChangeReport(ctx context.Context) {
 				SetSubject("Biance Market Price Change Report")
 			email.SetBody(mail.TextPlain, content)
 
-			err := backoff.RetryFnExponentialForever(p.Logger, ctx, time.Second, time.Second*10, func() (bool, error) {
+			err := backoff.RetryFnExponential10Times(p.Logger, ctx, time.Second, time.Second*10, func() (bool, error) {
 				emailCli := smtp.NewEmailClient(smtp.NetEase126Mail, &tls.Config{InsecureSkipVerify: true}, "ljg_cqu@126.com", "XROTXFGWZUILANPB")
 				err := emailCli.Send(email)
 				if err != nil {

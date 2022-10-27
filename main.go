@@ -81,8 +81,8 @@ func main() {
 		WP:                  wg,
 		Thresholds:          threholds,
 		Cache:               cache,
-		CheckPriceInterval:  time.Second * 5,
-		MiniReportInterval:  time.Minute * 15,
+		CheckPriceInterval:  time.Minute * 5,
+		MiniReportInterval:  time.Minute * 5,
 		MiniReportThreshold: miniReportThreshold,
 	}
 

@@ -70,10 +70,10 @@ func main() {
 	var wg = new(sync.WaitGroup)
 
 	priceTracker := PriceTracker{
-		Logger:    myLogger,
-		Interval:  time.Second * 1,
-		PricesCh:  pricesCh,
-		WaitGroup: wg,
+		Logger:   myLogger,
+		Interval: time.Second * 1,
+		PricesCh: pricesCh,
+		WP:       wg,
 	}
 
 	tOneMinute, _ := new(big.Float).SetString("0.03")
@@ -126,7 +126,7 @@ func main() {
 	priceHandler := PriceHandler{
 		Logger:              myLogger,
 		PricesCh:            pricesCh,
-		WaitGroup:           wg,
+		WP:                  wg,
 		Thresholds:          threholds,
 		Cache:               cache,
 		CheckPriceInterval:  time.Second * 5,
@@ -135,6 +135,11 @@ func main() {
 	}
 
 	shutdownCtx, shutdown := context.WithCancel(context.Background())
+
+	imonl := &ImOnline{
+		TickDur: time.Second * 60,
+		WP:      wg,
+	}
 
 	// Handle graceful shutdown.
 	go func() {
@@ -150,6 +155,9 @@ func main() {
 
 	wg.Add(1)
 	go priceHandler.Run(shutdownCtx)
+
+	wg.Add(1)
+	go imonl.Tick(shutdownCtx)
 
 	wg.Wait()
 }

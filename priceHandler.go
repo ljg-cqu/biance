@@ -431,6 +431,7 @@ func (p *PriceHandler) checkDifferences(period Period) PricesChange {
 			DiffPercentFromHigh:    priceDiffPercentHigh,
 			DiffPercentFromLow:     priceDiffPercentLow,
 		}
+		fmt.Println(pricesChange)
 		pricesChange = append(pricesChange, priceChange)
 	}
 

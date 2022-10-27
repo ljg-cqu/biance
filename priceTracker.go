@@ -2,10 +2,14 @@ package main
 
 import (
 	"context"
+	"crypto/tls"
 	"encoding/json"
+	"fmt"
 	"github.com/ljg-cqu/biance/backoff"
 	"github.com/ljg-cqu/biance/logger"
+	"github.com/ljg-cqu/core/smtp"
 	"github.com/pkg/errors"
+	mail "github.com/xhit/go-simple-mail/v2"
 
 	"io/ioutil"
 	"math/big"
@@ -32,6 +36,24 @@ func (p *PriceTracker) Run(ctx context.Context) {
 			prices, err := p.prices(ctx)
 			p.Logger.ErrorOnError(err, "Failed to query prices")
 			if err != nil {
+				email := mail.NewMSG()
+				email.SetFrom("Zealy <ljg_cqu@126.com>").
+					AddTo("ljg_cqu@126.com").
+					SetSubject("Biance Market Price Track Error")
+				email.SetBody(mail.TextPlain, fmt.Sprintf("%+v", err))
+
+				err := backoff.RetryFnExponential10Times(p.Logger, ctx, time.Second, time.Second*10, func() (bool, error) {
+					emailCli, err := smtp.NewEmailClient(smtp.NetEase126Mail, &tls.Config{InsecureSkipVerify: true}, "ljg_cqu@126.com", "XROTXFGWZUILANPB")
+					if err != nil {
+						return true, errors.Wrapf(err, "failed to create email client.")
+					}
+					err = emailCli.Send(email)
+					if err != nil {
+						return true, errors.Wrapf(err, "failed to send email")
+					}
+					return false, nil
+				})
+				p.Logger.ErrorOnError(err, "Failed to report error")
 				continue
 			}
 			p.PricesCh <- prices
@@ -44,7 +66,7 @@ func (p *PriceTracker) prices(ctx context.Context) (Prices, error) {
 	err := backoff.RetryFnExponential10Times(p.Logger, ctx, time.Second, time.Second*10, func() (bool, error) {
 		res, err := http.Get("https://api.binance.com/api/v3/ticker/price")
 		if err != nil {
-			return true, errors.Wrapf(err, "failed to send request")
+			return true, errors.Wrapf(err, "failed to send pirce request")
 		}
 
 		defer res.Body.Close()

@@ -46,9 +46,19 @@ type Threshold struct {
 }
 
 type PriceChange struct {
-	LatestPrice      Price // todo: consider comparing with average prices
-	PriceDiffPercent *big.Float
-	Threshold
+	Symbol string
+	Period Period
+
+	LatestPrice  *big.Float
+	AveragePrice *big.Float
+	HighPrice    *big.Float
+	LowPrice     *big.Float
+
+	DiffPercentFromAverage *big.Float
+	DiffPercentFromHigh    *big.Float
+	DiffPercentFromLow     *big.Float
+
+	//Threshold
 }
 
 type PricesChange []PriceChange
@@ -57,8 +67,8 @@ func (p PricesChange) Len() int {
 	return len(p)
 }
 
-func (p PricesChange) Less(i, j int) bool {
-	if p[i].PriceDiffPercent.Cmp(p[j].PriceDiffPercent) == -1 {
+func (p PricesChange) Less(i, j int) bool { // todo:
+	if p[i].DiffPercentFromLow.Cmp(p[j].DiffPercentFromLow) == -1 {
 		return true
 	}
 	return false
@@ -74,8 +84,10 @@ func (p PricesChange) Sort() {
 
 func (p PricesChange) String() string {
 	var str string
-	for _, price := range p {
-		str += fmt.Sprintf("%v | %v | %v\n", price.LatestPrice.Symbol, price.LatestPrice.Price, price.PriceDiffPercent)
+	for i, price := range p {
+		str += fmt.Sprintf("%v) %v:%v | %v %v %v| %v %v %v\n", i, price.Symbol, price.LatestPrice,
+			price.AveragePrice, price.HighPrice, price.LowPrice,
+			price.DiffPercentFromAverage, price.DiffPercentFromHigh, price.DiffPercentFromLow)
 	}
 	return str
 }
@@ -264,135 +276,176 @@ func (p *PriceHandler) doCheckDifferences(period Period) (toPrint string, toRepo
 	if !ok {
 		return "", ""
 	}
-	pricesChange := p.checkDifferences(threshold)
+	pricesChange := p.checkDifferences(threshold.Period)
 	if len(pricesChange) == 0 {
 		return "", ""
 	}
 
-	var pricesChangeToReport PricesChange
-	for _, priceChange := range pricesChange {
-		symbol := priceChange.LatestPrice.Symbol
-		_, ok := p.Cache.Get(symbol)
-		if ok {
-			continue
-		}
-
-		if r := priceChange.Threshold.T.Cmp(p.MiniReportThreshold); r == -1 {
-			continue
-		}
-
-		pricesChangeToReport = append(pricesChangeToReport, priceChange)
-		p.Cache.SetWithTTL(priceChange.LatestPrice.Symbol, "", 1, p.MiniReportInterval)
-		p.Cache.Wait()
-	}
+	//var pricesChangeToReport PricesChange
+	//for _, priceChange := range pricesChange {
+	//	symbol := priceChange.LatestPrice.Symbol
+	//	_, ok := p.Cache.Get(symbol)
+	//	if ok {
+	//		continue
+	//	}
+	//
+	//	if r := priceChange.Threshold.T.Cmp(p.MiniReportThreshold); r == -1 {
+	//		continue
+	//	}
+	//
+	//	pricesChangeToReport = append(pricesChangeToReport, priceChange)
+	//	p.Cache.SetWithTTL(priceChange.LatestPrice.Symbol, "", 1, p.MiniReportInterval)
+	//	p.Cache.Wait()
+	//}
 
 	pricesChange.Sort()
-	pricesChangeToReport.Sort()
-	return pricesChange.String(), pricesChangeToReport.String()
+	//pricesChangeToReport.Sort()
+	return pricesChange.String(), pricesChange.String()
 }
 
-func (p *PriceHandler) checkDifferences(threshold Threshold) PricesChange {
+func (p *PriceHandler) checkDifferences(period Period) PricesChange {
 	pricesLen := len(p.pricesHistory)
 	if pricesLen == 0 {
 		return nil
 	}
-	pricesNew := p.pricesHistory[pricesLen-1]
 
-	var pricesChange PricesChange
-
-	var pricesOld Prices
-	switch threshold.Period {
+	var pricesOldAll []Prices
+	switch period {
 	case PeriodOneMinute:
 		if len(p.pricesHistory) > 60 {
-			pricesOld = p.pricesHistory[pricesLen-60]
+			pricesOldAll = p.pricesHistory[pricesLen-60:]
 		}
 	case PeriodThreeMinutes:
 		if len(p.pricesHistory) > 180 {
-			pricesOld = p.pricesHistory[pricesLen-180]
+			pricesOldAll = p.pricesHistory[pricesLen-180:]
 		}
 	case PeriodFiveMinutes:
 		if len(p.pricesHistory) > 300 {
-			pricesOld = p.pricesHistory[pricesLen-300]
+			pricesOldAll = p.pricesHistory[pricesLen-300:]
 		}
 	case PeriodFifteenMinutes:
 		if len(p.pricesHistory) > 900 {
-			pricesOld = p.pricesHistory[pricesLen-900]
+			pricesOldAll = p.pricesHistory[pricesLen-900:]
 		}
 	case PeriodHalfHour:
 		if len(p.pricesHistory) > 1800 {
-			pricesOld = p.pricesHistory[pricesLen-1800]
+			pricesOldAll = p.pricesHistory[pricesLen-1800:]
 		}
 	case PeriodOneHour:
 		if len(p.pricesHistory) > 3600 {
-			pricesOld = p.pricesHistory[pricesLen-3600]
+			pricesOldAll = p.pricesHistory[pricesLen-3600:]
 		}
 	case PeriodTwoHours:
 		if len(p.pricesHistory) > 7200 {
-			pricesOld = p.pricesHistory[pricesLen-7200]
+			pricesOldAll = p.pricesHistory[pricesLen-7200:]
 		}
 	case PeriodFourHours:
 		if len(p.pricesHistory) > 14400 {
-			pricesOld = p.pricesHistory[pricesLen-14400]
+			pricesOldAll = p.pricesHistory[pricesLen-14400:]
 		}
 	case PeriodSixHours:
 		if len(p.pricesHistory) > 21600 {
-			pricesOld = p.pricesHistory[pricesLen-21600]
+			pricesOldAll = p.pricesHistory[pricesLen-21600:]
 		}
 	case PeriodEightHours:
 		if len(p.pricesHistory) > 28800 {
-			pricesOld = p.pricesHistory[pricesLen-28800]
+			pricesOldAll = p.pricesHistory[pricesLen-28800:]
 		}
 	case PeriodTwelveHours:
 		if len(p.pricesHistory) > 43200 {
-			pricesOld = p.pricesHistory[pricesLen-43200]
+			pricesOldAll = p.pricesHistory[pricesLen-43200:]
 		}
 	case PeriodEighteenHours:
 		if len(p.pricesHistory) > 64800 {
-			pricesOld = p.pricesHistory[pricesLen-64800]
+			pricesOldAll = p.pricesHistory[pricesLen-64800:]
 		}
 	case PeriodOneDay:
 		if len(p.pricesHistory) > 86400 {
-			pricesOld = p.pricesHistory[pricesLen-86400]
+			pricesOldAll = p.pricesHistory[pricesLen-86400:]
 		}
 	case PeriodThreeDays:
 		if len(p.pricesHistory) > 259200 {
-			pricesOld = p.pricesHistory[pricesLen-259200]
+			pricesOldAll = p.pricesHistory[pricesLen-259200:]
 		}
 	case PeriodFiveDays:
 		if len(p.pricesHistory) > 604800 {
-			pricesOld = p.pricesHistory[pricesLen-604800]
+			pricesOldAll = p.pricesHistory[pricesLen-604800:]
 		}
 	case PeriodTenDays:
 		if len(p.pricesHistory) > 864000 {
-			pricesOld = p.pricesHistory[pricesLen-864000]
+			pricesOldAll = p.pricesHistory[pricesLen-864000:]
 		}
 	case PeriodTwentyDays:
 		if len(p.pricesHistory) > 1728000 {
-			pricesOld = p.pricesHistory[pricesLen-1728000]
+			pricesOldAll = p.pricesHistory[pricesLen-1728000:]
 		}
 	case PeriodThirtyDays:
 		if len(p.pricesHistory) > 2592000 {
-			pricesOld = p.pricesHistory[pricesLen-2592000]
+			pricesOldAll = p.pricesHistory[pricesLen-2592000:]
 		}
 	}
 
-	var pricesOldMap = map[string]Price{}
-	for _, price := range pricesOld {
-		pricesOldMap[price.Symbol] = price
-	}
+	var pricesOldMap = map[string]PricesOfOneSymbol{}
+	for _, pricesOld := range pricesOldAll {
+		for _, priceOld := range pricesOld {
+			pricesOldOfOneSymbol := pricesOldMap[priceOld.Symbol]
+			pricesOldOfOneSymbol = append(pricesOldOfOneSymbol, priceOld)
 
-	for _, priceNew := range pricesNew {
-		if priceOld, ok := pricesOldMap[priceNew.Symbol]; ok {
-			priceDiff := new(big.Float).Sub(priceNew.PriceFloat, priceOld.PriceFloat)
-			priceDiffPercent := new(big.Float).Quo(priceDiff, priceOld.PriceFloat)
-			if new(big.Float).Abs(priceDiffPercent).Cmp(threshold.T) == -1 {
-				continue
-			}
-
-			priceChange := PriceChange{priceNew, priceDiffPercent, threshold}
-			pricesChange = append(pricesChange, priceChange)
 		}
 	}
+
+	var latestPricesMap = make(map[string]Price)
+
+	for _, latestPrice := range p.pricesHistory[pricesLen-1] {
+		latestPricesMap[latestPrice.Symbol] = latestPrice
+	}
+
+	var pricesChange PricesChange
+
+	for symbol, pricesOld := range pricesOldMap {
+		latestPrice, ok := latestPricesMap[symbol]
+		if !ok {
+			continue
+		}
+
+		avragePrice := pricesOld.AveragePrice()
+		priceDiffAverage := new(big.Float).Sub(latestPrice.PriceFloat, avragePrice)
+		priceDiffPercentAverage := new(big.Float).Quo(priceDiffAverage, avragePrice)
+
+		highPrice := pricesOld.HighPrice()
+		priceDiffHigh := new(big.Float).Sub(latestPrice.PriceFloat, highPrice)
+		priceDiffPercentHigh := new(big.Float).Quo(priceDiffHigh, highPrice)
+
+		lowPrice := pricesOld.LowPrice()
+		priceDiffLow := new(big.Float).Sub(latestPrice.PriceFloat, lowPrice)
+		priceDiffPercentLow := new(big.Float).Quo(priceDiffLow, lowPrice)
+
+		priceChange := PriceChange{
+			Symbol:                 symbol,
+			Period:                 period,
+			LatestPrice:            latestPrice.PriceFloat,
+			AveragePrice:           avragePrice,
+			HighPrice:              highPrice,
+			LowPrice:               lowPrice,
+			DiffPercentFromAverage: priceDiffPercentAverage,
+			DiffPercentFromHigh:    priceDiffPercentHigh,
+			DiffPercentFromLow:     priceDiffPercentLow,
+		}
+		pricesChange = append(pricesChange, priceChange)
+	}
+
+	//for _, priceNew := range pricesNew {
+	//	if priceOld, ok := pricesOldMap[priceNew.Symbol]; ok {
+	//		priceDiff := new(big.Float).Sub(priceNew.PriceFloat, priceOld.PriceFloat)
+	//		priceDiffPercent := new(big.Float).Quo(priceDiff, priceOld.PriceFloat)
+	//		if new(big.Float).Abs(priceDiffPercent).Cmp(threshold.T) == -1 {
+	//			continue
+	//		}
+	//
+	//		priceChange := PriceChange{priceNew, priceDiffPercent, threshold}
+	//		pricesChange = append(pricesChange, priceChange)
+	//	}
+	//}
 
 	return pricesChange
 }

@@ -388,9 +388,7 @@ func (p *PriceHandler) checkDifferences(period Period) PricesChange {
 	var pricesOldMap = map[string]PricesOfOneSymbol{}
 	for _, pricesOld := range pricesOldAll {
 		for _, priceOld := range pricesOld {
-			pricesOldOfOneSymbol := pricesOldMap[priceOld.Symbol]
-			pricesOldOfOneSymbol = append(pricesOldOfOneSymbol, priceOld)
-
+			pricesOldMap[priceOld.Symbol] = append(pricesOldMap[priceOld.Symbol], priceOld)
 		}
 	}
 

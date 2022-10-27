@@ -15,14 +15,14 @@ import (
 )
 
 type PriceTracker struct {
-	Logger    logger.Logger
-	Interval  time.Duration
-	PricesCh  chan Prices
-	WaitGroup *sync.WaitGroup
+	Logger   logger.Logger
+	Interval time.Duration
+	PricesCh chan Prices
+	WP       *sync.WaitGroup
 }
 
 func (p *PriceTracker) Run(ctx context.Context) {
-	defer p.WaitGroup.Done()
+	defer p.WP.Done()
 	t := time.NewTicker(p.Interval)
 	for {
 		select {

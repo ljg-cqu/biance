@@ -85,7 +85,7 @@ func (p PricesChange) String() string {
 type PriceHandler struct {
 	Logger              logger.Logger
 	PricesCh            chan Prices
-	WaitGroup           *sync.WaitGroup
+	WP                  *sync.WaitGroup
 	Thresholds          map[Period]Threshold
 	Cache               *ristretto.Cache
 	CheckPriceInterval  time.Duration
@@ -100,7 +100,7 @@ func (p *PriceHandler) Run(ctx context.Context) {
 	p.reportCh = make(chan string, 1024)
 	t := time.NewTicker(p.CheckPriceInterval)
 	go p.sendPriceChangeReport(ctx) // todo: remove gorutine leak
-	defer p.WaitGroup.Done()
+	defer p.WP.Done()
 	for {
 		select {
 		case <-ctx.Done():

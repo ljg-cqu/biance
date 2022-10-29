@@ -32,7 +32,7 @@ type asset_ struct {
 func GetAsset(client biance.Client, url, asset, apiKey, secretKey string) ([]Asset, error) {
 	var params string
 	if asset != "" {
-		params = fmt.Sprintf("asset_=%v&timestamp=%v", asset, utilsTime.Timestamp())
+		params = fmt.Sprintf("asset=%v&timestamp=%v", asset, utilsTime.Timestamp())
 	} else {
 		params = fmt.Sprintf("timestamp=%v", utilsTime.Timestamp())
 	}

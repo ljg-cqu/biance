@@ -32,7 +32,7 @@ type userAsset struct {
 
 func getUserAsset(client client.Client, url, asset, apiKey, secretKey string) ([]UserAsset, error) {
 	var body string
-	if asset == "" {
+	if asset != "" {
 		body = fmt.Sprintf("asset=%v&timestamp=%v", asset, utilsTime.Timestamp())
 		body = utils.CalculateAndAppendSignature(body, secretKey)
 	} else {

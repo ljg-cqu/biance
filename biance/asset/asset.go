@@ -4,12 +4,14 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/ljg-cqu/biance/biance"
+	"github.com/ljg-cqu/biance/biance/price"
 	"github.com/ljg-cqu/biance/biance/utils"
 	utilsTime "github.com/ljg-cqu/biance/utils/time"
 	"github.com/pkg/errors"
 	"io/ioutil"
 	"math/big"
 	"net/http"
+	"sort"
 	"strings"
 )
 
@@ -19,6 +21,8 @@ type Asset struct {
 	Locked      *big.Float
 	Freeze      *big.Float
 	Withdrawing *big.Float
+	Price       *big.Float // BUSD or USDT price timely
+	Dollar      *big.Float // free BUSD  or USDT value
 }
 
 type asset_ struct {
@@ -29,7 +33,63 @@ type asset_ struct {
 	Withdrawing string `json:"withdrawing"`
 }
 
-func GetAsset(client biance.Client, url, asset, apiKey, secretKey string) ([]Asset, error) {
+type Assets []Asset
+
+func (a Assets) Len() int {
+	return len(a)
+}
+
+func (a Assets) Less(i, j int) bool {
+	if a[i].Dollar.Cmp(a[j].Dollar) == 1 {
+		return true
+	}
+	return false
+}
+
+func (a Assets) Swap(i, j int) {
+	a[i], a[j] = a[j], a[i]
+}
+
+func (p Assets) Sort() {
+	sort.Sort(p)
+}
+
+var getPriceFn = price.GetPrice
+
+func GetAssetWithDollar(client biance.Client, assetURL, priceURL, asset, apiKey, secretKey string) (Assets, error) {
+	assets, err := GetAsset(client, assetURL, asset, apiKey, secretKey)
+	if err != nil {
+		return nil, errors.Wrapf(err, "failed to get asset")
+	}
+	prices, err := getPriceFn(client, priceURL)
+	if err != nil {
+		return nil, errors.Wrapf(err, "failed to et price")
+	}
+
+	var pricesMap = make(map[price.Symbol]*big.Float)
+	for _, price := range prices {
+		pricesMap[price.Symbol] = price.Price
+	}
+
+	for i, asset := range assets {
+		symbol := price.Symbol(asset.Asset + "BUSD")
+		price_, ok := pricesMap[symbol]
+		if !ok {
+			symbol = price.Symbol(asset.Asset + "USDT")
+			price_, ok = pricesMap[symbol]
+		}
+		if !ok {
+			continue
+		}
+
+		assets[i].Price = price_
+		assets[i].Dollar = new(big.Float).Mul(price_, asset.Free)
+	}
+	assets.Sort()
+	return assets, nil
+}
+
+func GetAsset(client biance.Client, assetURL, asset, apiKey, secretKey string) (Assets, error) {
 	var params string
 	if asset != "" {
 		params = fmt.Sprintf("asset=%v&timestamp=%v", asset, utilsTime.Timestamp())
@@ -39,7 +99,7 @@ func GetAsset(client biance.Client, url, asset, apiKey, secretKey string) ([]Ass
 	params = utils.CalculateAndAppendSignature(params, secretKey)
 
 	var payload = strings.NewReader("")
-	req, err := http.NewRequest(http.MethodPost, url+"?"+params, payload)
+	req, err := http.NewRequest(http.MethodPost, assetURL+"?"+params, payload)
 	if err != nil {
 		return nil, errors.Wrapf(err, "failed to create request")
 	}
@@ -62,14 +122,21 @@ func GetAsset(client biance.Client, url, asset, apiKey, secretKey string) ([]Ass
 		return nil, errors.Wrapf(err, "failed to parse response params")
 	}
 
-	var UserAssets []Asset
+	var UserAssets Assets
 
 	for _, userAsset := range userAssets {
 		free, _ := new(big.Float).SetString(userAsset.Free)
 		locked, _ := new(big.Float).SetString(userAsset.Locked)
 		freeze, _ := new(big.Float).SetString(userAsset.Freeze)
 		withdrawing, _ := new(big.Float).SetString(userAsset.Withdrawing)
-		UserAssets = append(UserAssets, Asset{userAsset.Asset, free, locked, freeze, withdrawing})
+
+		var asset Asset
+		asset.Asset = userAsset.Asset
+		asset.Free = free
+		asset.Locked = locked
+		asset.Freeze = freeze
+		asset.Withdrawing = withdrawing
+		UserAssets = append(UserAssets, asset)
 	}
 	return UserAssets, nil
 }

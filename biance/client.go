@@ -2,6 +2,7 @@ package biance
 
 import (
 	"context"
+	"github.com/ljg-cqu/biance/logger"
 	"github.com/ljg-cqu/biance/utils/backoff"
 	"github.com/pkg/errors"
 	"net/http"
@@ -13,11 +14,11 @@ type Client interface {
 }
 
 type client struct {
-	l log.Logger
+	l logger.Logger
 	c *http.Client
 }
 
-func New(logger log.Logger) Client {
+func New(logger logger.Logger) Client {
 	return &client{logger, &http.Client{}}
 }
 

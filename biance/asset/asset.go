@@ -22,7 +22,7 @@ type Asset struct {
 }
 
 type asset_ struct {
-	Asset       string `json:"asset_"`
+	Asset       string `json:"asset"`
 	Free        string `json:"free"`
 	Locked      string `json:"locked"`
 	Freeze      string `json:"freeze"`

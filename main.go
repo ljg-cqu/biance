@@ -88,11 +88,6 @@ func main() {
 
 	shutdownCtx, shutdown := context.WithCancel(context.Background())
 
-	imonl := &ImOnline{
-		TickDur: time.Second * 60,
-		WP:      wg,
-	}
-
 	// Handle graceful shutdown.
 	go func() {
 		quit := make(chan os.Signal)
@@ -107,9 +102,6 @@ func main() {
 
 	wg.Add(1)
 	go priceHandler.Run(shutdownCtx)
-
-	wg.Add(1)
-	go imonl.Tick(shutdownCtx)
 
 	wg.Wait()
 }

@@ -3,6 +3,7 @@ package symbolprice
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/ljg-cqu/biance/biance"
 	"github.com/pkg/errors"
 	"io/ioutil"
 	"math/big"

@@ -26,8 +26,12 @@ require (
 	github.com/golang/protobuf v1.3.1 // indirect
 	github.com/golang/snappy v0.0.3 // indirect
 	github.com/google/flatbuffers v1.12.1 // indirect
+	github.com/google/uuid v1.3.0 // indirect
+	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/compress v1.12.3 // indirect
 	github.com/lestrrat-go/option v1.0.0 // indirect
+	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
+	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/toorop/go-dkim v0.0.0-20201103131630-e1cd1a0a5208 // indirect
 	go.opencensus.io v0.22.5 // indirect

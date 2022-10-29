@@ -31,17 +31,17 @@ type userAsset struct {
 }
 
 func getUserAsset(client client.Client, url, asset, apiKey, secretKey string) ([]UserAsset, error) {
-	var body string
+	var params string
 	if asset != "" {
-		body = fmt.Sprintf("asset=%v&timestamp=%v", asset, utilsTime.Timestamp())
-		body = utils.CalculateAndAppendSignature(body, secretKey)
+		params = fmt.Sprintf("asset=%v&timestamp=%v", asset, utilsTime.Timestamp())
+		params = utils.CalculateAndAppendSignature(params, secretKey)
 	} else {
-		body = fmt.Sprintf("timestamp=%v", utilsTime.Timestamp())
-		body = utils.CalculateAndAppendSignature(body, secretKey)
+		params = fmt.Sprintf("timestamp=%v", utilsTime.Timestamp())
+		params = utils.CalculateAndAppendSignature(params, secretKey)
 	}
 
 	var payload = strings.NewReader("")
-	req, err := http.NewRequest(http.MethodPost, url+"?"+body, payload)
+	req, err := http.NewRequest(http.MethodPost, url+"?"+params, payload)
 	if err != nil {
 		return nil, errors.Wrapf(err, "failed to create request")
 	}
@@ -61,7 +61,7 @@ func getUserAsset(client client.Client, url, asset, apiKey, secretKey string) ([
 
 	err = json.Unmarshal(respBody, &userAssets)
 	if err != nil {
-		return nil, errors.Wrapf(err, "failed to parse response body")
+		return nil, errors.Wrapf(err, "failed to parse response params")
 	}
 
 	var UserAssets []UserAsset

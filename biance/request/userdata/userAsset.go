@@ -3,6 +3,7 @@ package userdata
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/ljg-cqu/biance/biance"
 	"github.com/ljg-cqu/biance/biance/request"
 	"github.com/ljg-cqu/biance/biance/request/utils"
 	utilsTime "github.com/ljg-cqu/biance/utils/time"

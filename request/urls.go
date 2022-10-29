@@ -1,7 +1,7 @@
 package request
 
 const (
-	URLTickerPrice URL = iota
+	URLSymbolPrice URL = iota
 	URLUserAsset
 )
 
@@ -15,6 +15,6 @@ const (
 type URL int
 
 var URLs = map[URL]string{
-	URLTickerPrice: endpoint + tickerPriceUrlPath,
+	URLSymbolPrice: endpoint + tickerPriceUrlPath,
 	URLUserAsset:   endpoint + userAssetUrlPath,
 }

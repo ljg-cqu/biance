@@ -113,6 +113,14 @@ func configPrincipalValue(pnls FreePNLs) {
 			pnls[i].PrincipalValueInDollar = pricipal
 			continue
 		}
+
+		fity, _ := new(big.Float).SetString("50")
+		if pnl.FreeValue.Cmp(fity) == -1 {
+			pricipal, _ := new(big.Float).SetString("1")
+			pnls[i].PrincipalValueInDollar = pricipal
+			continue
+		}
+
 		pricipal, _ := new(big.Float).SetString("100")
 		pnls[i].PrincipalValueInDollar = pricipal
 	}

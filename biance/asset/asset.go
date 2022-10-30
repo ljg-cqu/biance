@@ -56,7 +56,7 @@ func (p Assets) Sort() {
 
 var getPriceFn = price.GetPrice
 
-func GetAssetWithDollar(client biance.Client, assetURL, priceURL, asset, apiKey, secretKey string) (Assets, error) {
+func GetAssetWithUSDTOrBUSD(client biance.Client, assetURL, priceURL, asset, apiKey, secretKey string) (Assets, error) {
 	assets, err := GetAsset(client, assetURL, asset, apiKey, secretKey)
 	if err != nil {
 		return nil, errors.Wrapf(err, "failed to get asset")
@@ -65,7 +65,7 @@ func GetAssetWithDollar(client biance.Client, assetURL, priceURL, asset, apiKey,
 	if err != nil {
 		return nil, errors.Wrapf(err, "failed to et price")
 	}
-	
+
 	for i, asset := range assets {
 		symbol := price.Symbol(asset.Asset + "BUSD")
 		price_, ok := pricesMap[symbol]

@@ -64,9 +64,17 @@ func GetAssetWithUSDTOrBUSDFreeValue(client biance.Client, assetURL, priceURL, a
 	if err != nil {
 		return nil, errors.Wrapf(err, "failed to get asset")
 	}
+	if len(assets) == 0 {
+		return nil, errors.Errorf("found no asset")
+	}
+
 	pricesMap, err := getPriceFn(client, priceURL)
 	if err != nil {
 		return nil, errors.Wrapf(err, "failed to et price")
+	}
+
+	if len(pricesMap) == 0 {
+		return nil, errors.New("no price found")
 	}
 
 	for i, asset := range assets {
@@ -76,7 +84,12 @@ func GetAssetWithUSDTOrBUSDFreeValue(client biance.Client, assetURL, priceURL, a
 			symbol = price.Symbol(asset.Token + "BUSD")
 			price_, ok = pricesMap[symbol]
 		}
-		if !ok {
+		if !ok && asset.Token != "USDT" && asset.Token != "BUSD" {
+			continue
+		}
+
+		if asset.Token == "USDT" || asset.Token == "BUSD" {
+			assets[i].FreeValue = asset.Free
 			continue
 		}
 

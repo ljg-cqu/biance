@@ -31,9 +31,12 @@ type PNLMonitor struct {
 	lossPercentThreshold *big.Float
 	checkPNLInterval     time.Duration
 
+	miniPrintInterval time.Duration
+
 	reportCh           chan string
 	miniReportInterval time.Duration
 
+	lastPrintTime  time.Time
 	lastReportTime time.Time
 }
 
@@ -41,6 +44,7 @@ func (m *PNLMonitor) Init() {
 	m.client = &http.Client{}
 	m.userAssetURL = biance.URLs[biance.URLUserAsset]
 	m.symbolPriceURL = biance.URLs[biance.URLSymbolPrice]
+	m.miniPrintInterval = time.Second * 15
 	m.checkPNLInterval = time.Second * 5
 	m.reportCh = make(chan string, 1024)
 	m.miniReportInterval = time.Minute * 5
@@ -67,8 +71,11 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 			printGain, printLoss := buildPNLStr(freePNLs, "1", "0.03")
 			reportGain, reportLoss := buildPNLStr(freePNLs, "10", "0.1")
 
-			if printGain != "" || printLoss != "" {
-				fmt.Println(printGain + printLoss)
+			if m.lastPrintTime.Add(m.miniPrintInterval).After(time.Now()) {
+				if printGain != "" || printLoss != "" {
+					fmt.Println(printGain + printLoss)
+				}
+				m.lastPrintTime = time.Now()
 			}
 
 			if m.lastReportTime.Add(m.miniReportInterval).After(time.Now()) {

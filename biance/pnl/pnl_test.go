@@ -18,29 +18,44 @@ func TestCheckFreePNLWithUSDTOrBUSD(t *testing.T) {
 	freePNLs, err := CheckFreePNLWithUSDTOrBUSD(client, assetURL, priceURL, "", apiKey, secretKey)
 	require.Nil(t, err)
 
-	var gainPNLs []FreePNL
-	zero, _ := new(big.Float).SetString("0")
-	var totalGain = zero
+	var considerableGianPNLs []FreePNL
+	var considerableLossPNLs []FreePNL
+	zeroGain, _ := new(big.Float).SetString("0")
+	zeroLoss, _ := new(big.Float).SetString("0")
+
+	one, _ := new(big.Float).SetString("1")
+	considerableLossPercent, _ := new(big.Float).SetString("0.03")
+	var totalGain = zeroGain
+	var totalLoss = zeroLoss
+
+	oneHundred, _ := new(big.Float).SetString("100")
+
 	for _, freePNL := range freePNLs {
-		one, _ := new(big.Float).SetString("1")
 		if freePNL.PNLValue.Cmp(one) == 1 {
-			gainPNLs = append(gainPNLs, freePNL)
+			considerableGianPNLs = append(considerableGianPNLs, freePNL)
 			totalGain = new(big.Float).Add(totalGain, freePNL.PNLValue)
+			continue
+		}
+		if new(big.Float).Abs(freePNL.PNLPercent).Cmp(considerableLossPercent) == 1 {
+			considerableLossPNLs = append(considerableLossPNLs, freePNL)
+			totalLoss = new(big.Float).Add(totalLoss, freePNL.PNLValue)
 		}
 	}
 
-	fmt.Printf("Total gain: %v tokens, about %v dollars\n\n", len(gainPNLs), totalGain)
-	var gainToConvertStr string
-	for _, gainPNL := range gainPNLs {
-		oneHundred, _ := new(big.Float).SetString("100")
-		gainToConvertStr += fmt.Sprintf("%v: %v => %v @%v%%\n", gainPNL.Symbol, gainPNL.PNLAmountConvertable,
+	var gainInfoStr = fmt.Sprintf("\n++++++++++++++++++++tokens:%v profit:%v++++++++++++++++++++\n",
+		len(considerableGianPNLs), totalGain)
+	for _, gainPNL := range considerableGianPNLs {
+		gainInfoStr += fmt.Sprintf("%v %v => %v @%v%%\n", gainPNL.Symbol, gainPNL.PNLAmountConvertable,
 			gainPNL.PNLValue, new(big.Float).Mul(oneHundred, gainPNL.PNLPercent))
 	}
-	fmt.Println(gainToConvertStr)
 
-	fmt.Println("--------------Details------------------")
-	fmt.Println(len(freePNLs))
-	for _, freePNL := range freePNLs {
-		fmt.Println(freePNL)
+	var lossInfoStr = fmt.Sprintf("--------------------tokens:%v loss:%v--------------------\n",
+		len(considerableLossPNLs), totalLoss)
+	for _, lossPNL := range considerableLossPNLs {
+		lossInfoStr += fmt.Sprintf("%v %v @%v%%\n", lossPNL.Symbol,
+			lossPNL.PNLValue, new(big.Float).Mul(oneHundred, lossPNL.PNLPercent))
 	}
+
+	fmt.Println(gainInfoStr)
+	fmt.Println(lossInfoStr)
 }

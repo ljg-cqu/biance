@@ -22,7 +22,7 @@ type Pair struct {
 
 var getPriceFn = price.GetPrice
 
-func MappingWithBUSDOrUSDT(client biance.Client, priceUrl string, fromBUSD bool, paris ...*Pair) ([]Mapped, error) {
+func MappingBUSD(client biance.Client, priceUrl string, reverseFromBUSD bool, paris ...*Pair) ([]Mapped, error) {
 	var editPair = paris
 	var prices []price.Price
 	for i, pair := range editPair {
@@ -57,10 +57,10 @@ func MappingWithBUSDOrUSDT(client biance.Client, priceUrl string, fromBUSD bool,
 		editPair[i].Symbol = symbol
 		prices = append(prices, pricesOne[0])
 	}
-	return mapping(prices, fromBUSD, paris...), nil
+	return mapping(prices, reverseFromBUSD, paris...), nil
 }
 
-func Mapping(client biance.Client, priceUrl string, fromBUSD bool, paris ...*Pair) ([]Mapped, error) {
+func Mapping(client biance.Client, priceUrl string, reverse bool, paris ...*Pair) ([]Mapped, error) {
 	var symbols []price.Symbol
 	for _, pair := range paris {
 		symbols = append(symbols, pair.Symbol)
@@ -70,10 +70,10 @@ func Mapping(client biance.Client, priceUrl string, fromBUSD bool, paris ...*Pai
 		return nil, errors.Wrap(err, "failed to get price")
 	}
 
-	return mapping(prices, fromBUSD, paris...), nil
+	return mapping(prices, reverse, paris...), nil
 }
 
-func mapping(prices []price.Price, fromBUSD bool, pairs ...*Pair) []Mapped {
+func mapping(prices []price.Price, reverse bool, pairs ...*Pair) []Mapped {
 	var pricesMap = make(map[price.Symbol]*big.Float)
 	for _, price := range prices {
 		pricesMap[price.Symbol] = price.Price
@@ -84,7 +84,7 @@ func mapping(prices []price.Price, fromBUSD bool, pairs ...*Pair) []Mapped {
 		price := pricesMap[pair.Symbol]
 
 		var amtMapped *big.Float
-		if fromBUSD {
+		if reverse {
 			amtMapped = new(big.Float).Quo(pair.BaseAmt, price)
 		} else {
 			amtMapped = new(big.Float).Mul(price, pair.BaseAmt)

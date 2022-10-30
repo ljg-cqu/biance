@@ -61,16 +61,11 @@ func GetAssetWithDollar(client biance.Client, assetURL, priceURL, asset, apiKey,
 	if err != nil {
 		return nil, errors.Wrapf(err, "failed to get asset")
 	}
-	prices, err := getPriceFn(client, priceURL)
+	pricesMap, err := getPriceFn(client, priceURL)
 	if err != nil {
 		return nil, errors.Wrapf(err, "failed to et price")
 	}
-
-	var pricesMap = make(map[price.Symbol]*big.Float)
-	for _, price := range prices {
-		pricesMap[price.Symbol] = price.Price
-	}
-
+	
 	for i, asset := range assets {
 		symbol := price.Symbol(asset.Asset + "BUSD")
 		price_, ok := pricesMap[symbol]
@@ -82,8 +77,8 @@ func GetAssetWithDollar(client biance.Client, assetURL, priceURL, asset, apiKey,
 			continue
 		}
 
-		assets[i].Price = price_
-		assets[i].Dollar = new(big.Float).Mul(price_, asset.Free)
+		assets[i].Price = price_.Price
+		assets[i].Dollar = new(big.Float).Mul(price_.Price, asset.Free)
 	}
 	assets.Sort()
 	return assets, nil

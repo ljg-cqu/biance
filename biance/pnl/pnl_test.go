@@ -3,6 +3,7 @@ package pnl
 import (
 	"fmt"
 	"github.com/ljg-cqu/biance/biance"
+	"github.com/ljg-cqu/biance/biance/asset"
 	"github.com/stretchr/testify/require"
 	"math/big"
 	"net/http"
@@ -18,6 +19,23 @@ func TestCheckFreePNLWithUSDTOrBUSD(t *testing.T) {
 	freePNLs, err := CheckFreePNLWithUSDTOrBUSD(client, assetURL, priceURL, "", apiKey, secretKey)
 	require.Nil(t, err)
 
+	var freePNLsFilter FreePNLs
+
+	var tokenFilerMap = map[asset.Token]string{
+		"NBS":  "",
+		"USDT": "",
+		"BUSD": "",
+		"VIDT": "",
+	}
+
+	for _, freePNL := range freePNLs {
+		_, ok := tokenFilerMap[freePNL.Token]
+		if ok {
+			continue
+		}
+		freePNLsFilter = append(freePNLsFilter, freePNL)
+	}
+
 	var considerableGianPNLs []FreePNL
 	var considerableLossPNLs []FreePNL
 	zeroGain, _ := new(big.Float).SetString("0")
@@ -30,7 +48,7 @@ func TestCheckFreePNLWithUSDTOrBUSD(t *testing.T) {
 
 	oneHundred, _ := new(big.Float).SetString("100")
 
-	for _, freePNL := range freePNLs {
+	for _, freePNL := range freePNLsFilter {
 		if freePNL.PNLValue.Cmp(one) == 1 {
 			considerableGianPNLs = append(considerableGianPNLs, freePNL)
 			totalGain = new(big.Float).Add(totalGain, freePNL.PNLValue)

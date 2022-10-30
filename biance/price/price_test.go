@@ -20,7 +20,7 @@ func TestGetSymbolPrice(t *testing.T) {
 
 func TestGetSymbolPriceWithGivenSymbols(t *testing.T) {
 	client := &http.Client{}
-	symbolPrices, err := GetPrice(client, biance.URLs[biance.URLSymbolPrice], "BTCUSDT", "BNBUSDT")
+	symbolPrices, err := GetPrice(client, biance.URLs[biance.URLSymbolPrice], "TRUBUSD", "TRUUSDT")
 	require.Nil(t, err)
 	fmt.Println(len(symbolPrices))
 	for _, symbolPrice := range symbolPrices {

@@ -14,7 +14,7 @@ func TestGetAssetWithDolVal(t *testing.T) {
 	secretKey := ""
 	assetURL := biance.URLs[biance.URLUserAsset]
 	priceURL := biance.URLs[biance.URLSymbolPrice]
-	userAssets, err := GetAssetWithDollar(client, assetURL, priceURL, "", apiKey, secretKey)
+	userAssets, err := GetAssetWithUSDTOrBUSD(client, assetURL, priceURL, "", apiKey, secretKey)
 	require.Nil(t, err)
 	fmt.Println(len(userAssets))
 	for _, userAsset := range userAssets {

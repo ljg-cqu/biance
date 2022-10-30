@@ -12,7 +12,7 @@ import (
 )
 
 func TestMappingBUSD(t *testing.T) { // TODO: improve, reduce many request
-	TokenValueRaw := "JASMY:7.34 AXS:5.25"
+	TokenValueRaw := "MDX:43 AKRO:9.111 SLP:8.95 HNT:13.47 JASMY:8.81 GALA:5.17"
 	tokenValuePairs := strings.Fields(TokenValueRaw)
 
 	var pairs []*Pair

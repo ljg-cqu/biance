@@ -90,6 +90,14 @@ func GetAssetWithUSDTOrBUSDFreeValue(client biance.Client, assetURL, priceURL, a
 
 		if asset.Token == "USDT" || asset.Token == "BUSD" {
 			assets[i].FreeValue = asset.Free
+			one, _ := new(big.Float).SetString("1")
+			var symbol price.Symbol
+			if asset.Token == "USDT" {
+				symbol = "USDTUSDT"
+			} else {
+				symbol = "BUSDBUSD"
+			}
+			assets[i].Price = price.Price{Symbol: symbol, Price: one}
 			continue
 		}
 

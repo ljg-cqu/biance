@@ -31,7 +31,10 @@ type PNLMonitor struct {
 	lossPercentThreshold *big.Float
 	checkPNLInterval     time.Duration
 
-	reportCh chan string
+	reportCh           chan string
+	miniReportInterval time.Duration
+
+	lastReportTime time.Time
 }
 
 func (m *PNLMonitor) Init() {
@@ -40,6 +43,7 @@ func (m *PNLMonitor) Init() {
 	m.symbolPriceURL = biance.URLs[biance.URLSymbolPrice]
 	m.checkPNLInterval = time.Second * 5
 	m.reportCh = make(chan string, 1024)
+	m.miniReportInterval = time.Minute * 5
 }
 
 func (m *PNLMonitor) Run(ctx context.Context) {
@@ -61,14 +65,17 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 			}
 
 			printGain, printLoss := buildPNLStr(freePNLs, "1", "0.03")
-			reportGain, reportLoss := buildPNLStr(freePNLs, "5", "0.05")
+			reportGain, reportLoss := buildPNLStr(freePNLs, "10", "0.1")
 
 			if printGain != "" || printLoss != "" {
 				fmt.Println(printGain + printLoss)
 			}
 
-			if reportGain != "" || reportLoss != "" {
-				m.reportCh <- reportGain + reportLoss
+			if m.lastReportTime.Add(m.miniReportInterval).After(time.Now()) {
+				if reportGain != "" || reportLoss != "" {
+					m.reportCh <- reportGain + reportLoss
+				}
+				m.lastReportTime = time.Now()
 			}
 		}
 	}

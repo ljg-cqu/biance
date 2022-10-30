@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"github.com/dgraph-io/ristretto"
 	"github.com/ljg-cqu/biance/logger"
 	"os"
 	"os/signal"
@@ -65,11 +66,11 @@ func main() {
 	//	PeriodThirtyDays:     {PeriodThirtyDays, tThirtyDays},
 	//}
 	//
-	//cache, _ := ristretto.NewCache(&ristretto.Config{
-	//	NumCounters: 1e7,
-	//	MaxCost:     1 << 30,
-	//	BufferItems: 64,
-	//})
+	cache, _ := ristretto.NewCache(&ristretto.Config{
+		NumCounters: 1e7,
+		MaxCost:     1 << 30,
+		BufferItems: 64,
+	})
 	//
 	//miniReportThreshold, _ := new(big.Float).SetString("0.05")
 	//priceHandler := PriceHandler{
@@ -88,6 +89,7 @@ func main() {
 		ApiKey:    "",
 		SecretKey: "",
 		WP:        wg,
+		Cache:     cache,
 	}
 	pnlMonitor.Init()
 

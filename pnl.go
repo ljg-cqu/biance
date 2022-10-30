@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/tls"
 	"fmt"
+	"github.com/dgraph-io/ristretto"
 	"github.com/ljg-cqu/biance/biance"
 	"github.com/ljg-cqu/biance/biance/asset"
 	"github.com/ljg-cqu/biance/biance/pnl"
@@ -23,6 +24,7 @@ type PNLMonitor struct {
 	ApiKey    string
 	SecretKey string
 	WP        *sync.WaitGroup
+	Cache     *ristretto.Cache
 
 	client         biance.Client
 	userAssetURL   string
@@ -32,8 +34,6 @@ type PNLMonitor struct {
 	lossPercentThreshold *big.Float
 	checkPNLInterval     time.Duration
 
-	miniPrintInterval time.Duration
-
 	reportCh           chan string
 	miniReportInterval time.Duration
 }
@@ -42,10 +42,9 @@ func (m *PNLMonitor) Init() {
 	m.client = &http.Client{}
 	m.userAssetURL = biance.URLs[biance.URLUserAsset]
 	m.symbolPriceURL = biance.URLs[biance.URLSymbolPrice]
-	m.miniPrintInterval = time.Second * 15
-	m.checkPNLInterval = time.Second * 5
+	m.checkPNLInterval = time.Second * 60
 	m.reportCh = make(chan string, 1024)
-	m.miniReportInterval = time.Minute * 5
+	m.miniReportInterval = time.Minute * 15
 }
 
 func (m *PNLMonitor) Run(ctx context.Context) {
@@ -84,7 +83,7 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 			}
 
 			printGain, printLoss := buildPNLStr(freePNLsFilter, "3", "0.03")
-			reportGain, reportLoss := buildPNLStr(freePNLsFilter, "10", "0.1")
+			reportGain, reportLoss := buildPNLStr(freePNLsFilter, "10", "0.2")
 
 			if printGain != "" || printLoss != "" {
 				fmt.Println(printGain + printLoss)
@@ -103,6 +102,11 @@ func (m *PNLMonitor) sendPNLReport(ctx context.Context) {
 		case <-ctx.Done():
 			return
 		case content := <-m.reportCh:
+			_, ok := m.Cache.Get("reportPNL")
+			if ok {
+				continue
+			}
+
 			email := mail.NewMSG()
 			email.SetFrom("Zealy <ljg_cqu@126.com>").
 				AddTo("ljg_cqu@126.com").
@@ -120,7 +124,12 @@ func (m *PNLMonitor) sendPNLReport(ctx context.Context) {
 				}
 				return false, nil
 			})
-			m.Logger.ErrorOnError(err, "Failed to report price")
+			if err != nil {
+				m.Logger.ErrorOnError(err, "Failed to report price")
+				continue
+			}
+			m.Cache.SetWithTTL("reportPNL", "", 1, m.miniReportInterval)
+			m.Cache.Wait()
 		}
 	}
 }

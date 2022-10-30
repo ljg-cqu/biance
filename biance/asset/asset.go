@@ -15,18 +15,21 @@ import (
 	"strings"
 )
 
+type Token string
+
 type Asset struct {
-	Asset       string
+	Token       Token
 	Free        *big.Float
 	Locked      *big.Float
 	Freeze      *big.Float
 	Withdrawing *big.Float
-	Price       *big.Float // BUSD or USDT price timely
-	Dollar      *big.Float // free BUSD  or USDT value
+
+	price.Price
+	FreeValue *big.Float
 }
 
 type asset_ struct {
-	Asset       string `json:"asset"`
+	Token       Token  `json:"asset"`
 	Free        string `json:"free"`
 	Locked      string `json:"locked"`
 	Freeze      string `json:"freeze"`
@@ -40,7 +43,7 @@ func (a Assets) Len() int {
 }
 
 func (a Assets) Less(i, j int) bool {
-	if a[i].Dollar.Cmp(a[j].Dollar) == 1 {
+	if a[i].FreeValue.Cmp(a[j].FreeValue) == 1 {
 		return true
 	}
 	return false
@@ -56,7 +59,7 @@ func (p Assets) Sort() {
 
 var getPriceFn = price.GetPrice
 
-func GetAssetWithUSDTOrBUSD(client biance.Client, assetURL, priceURL, asset, apiKey, secretKey string) (Assets, error) {
+func GetAssetWithUSDTOrBUSDFreeValue(client biance.Client, assetURL, priceURL, asset, apiKey, secretKey string) (Assets, error) {
 	assets, err := GetAsset(client, assetURL, asset, apiKey, secretKey)
 	if err != nil {
 		return nil, errors.Wrapf(err, "failed to get asset")
@@ -67,18 +70,18 @@ func GetAssetWithUSDTOrBUSD(client biance.Client, assetURL, priceURL, asset, api
 	}
 
 	for i, asset := range assets {
-		symbol := price.Symbol(asset.Asset + "BUSD")
+		symbol := price.Symbol(asset.Token + "USDT")
 		price_, ok := pricesMap[symbol]
 		if !ok {
-			symbol = price.Symbol(asset.Asset + "USDT")
+			symbol = price.Symbol(asset.Token + "BUSD")
 			price_, ok = pricesMap[symbol]
 		}
 		if !ok {
 			continue
 		}
 
-		assets[i].Price = price_.Price
-		assets[i].Dollar = new(big.Float).Mul(price_.Price, asset.Free)
+		assets[i].Price = price_
+		assets[i].FreeValue = new(big.Float).Mul(price_.Price, asset.Free)
 	}
 	assets.Sort()
 	return assets, nil
@@ -126,7 +129,7 @@ func GetAsset(client biance.Client, assetURL, asset, apiKey, secretKey string) (
 		withdrawing, _ := new(big.Float).SetString(userAsset.Withdrawing)
 
 		var asset Asset
-		asset.Asset = userAsset.Asset
+		asset.Token = userAsset.Token
 		asset.Free = free
 		asset.Locked = locked
 		asset.Freeze = freeze

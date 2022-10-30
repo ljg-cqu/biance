@@ -42,9 +42,9 @@ func (m *PNLMonitor) Init() {
 	m.client = &http.Client{}
 	m.userAssetURL = biance.URLs[biance.URLUserAsset]
 	m.symbolPriceURL = biance.URLs[biance.URLSymbolPrice]
-	m.checkPNLInterval = time.Second * 60
+	m.checkPNLInterval = time.Second * 15
 	m.reportCh = make(chan string, 1024)
-	m.miniReportInterval = time.Minute * 15
+	m.miniReportInterval = time.Minute * 5
 }
 
 func (m *PNLMonitor) Run(ctx context.Context) {

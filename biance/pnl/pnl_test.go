@@ -11,8 +11,8 @@ import (
 
 func TestCheckFreePNLWithUSDTOrBUSD(t *testing.T) {
 	client := &http.Client{}
-	apiKey := "f4e3ss8FqJdTgmJGQ5ZPfZa39x37eBi9MCrs8tfXtqwGY0CeBc1HA1YrZq6Au2fB"
-	secretKey := "EE2WXi7v0cuOTsREu3CmYtLpJclLtGPVgKKGJLMMwDJ7xq97nvXZejjgoouMQzcE"
+	apiKey := ""
+	secretKey := ""
 	assetURL := biance.URLs[biance.URLUserAsset]
 	priceURL := biance.URLs[biance.URLSymbolPrice]
 	freePNLs, err := CheckFreePNLWithUSDTOrBUSD(client, assetURL, priceURL, "", apiKey, secretKey)

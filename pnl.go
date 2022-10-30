@@ -5,6 +5,7 @@ import (
 	"crypto/tls"
 	"fmt"
 	"github.com/ljg-cqu/biance/biance"
+	"github.com/ljg-cqu/biance/biance/asset"
 	"github.com/ljg-cqu/biance/biance/pnl"
 	"github.com/ljg-cqu/biance/logger"
 	"github.com/ljg-cqu/biance/utils/backoff"
@@ -35,9 +36,6 @@ type PNLMonitor struct {
 
 	reportCh           chan string
 	miniReportInterval time.Duration
-
-	lastPrintTime  time.Time
-	lastReportTime time.Time
 }
 
 func (m *PNLMonitor) Init() {
@@ -48,8 +46,6 @@ func (m *PNLMonitor) Init() {
 	m.checkPNLInterval = time.Second * 5
 	m.reportCh = make(chan string, 1024)
 	m.miniReportInterval = time.Minute * 5
-	m.lastPrintTime = time.Now()
-	m.lastPrintTime = time.Now()
 }
 
 func (m *PNLMonitor) Run(ctx context.Context) {
@@ -70,21 +66,31 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 				continue
 			}
 
-			printGain, printLoss := buildPNLStr(freePNLs, "1", "0.03")
-			reportGain, reportLoss := buildPNLStr(freePNLs, "10", "0.1")
+			var freePNLsFilter pnl.FreePNLs
 
-			if m.lastPrintTime.Add(m.miniPrintInterval).After(time.Now()) {
-				if printGain != "" || printLoss != "" {
-					fmt.Println(printGain + printLoss)
-				}
-				m.lastPrintTime = time.Now()
+			var tokenFilerMap = map[asset.Token]string{
+				"NBS":  "",
+				"USDT": "",
+				"BUSD": "",
 			}
 
-			if m.lastReportTime.Add(m.miniReportInterval).After(time.Now()) {
-				if reportGain != "" || reportLoss != "" {
-					m.reportCh <- reportGain + reportLoss
+			for _, freePNL := range freePNLs {
+				_, ok := tokenFilerMap[freePNL.Token]
+				if ok {
+					continue
 				}
-				m.lastReportTime = time.Now()
+				freePNLsFilter = append(freePNLsFilter, freePNL)
+			}
+
+			printGain, printLoss := buildPNLStr(freePNLsFilter, "3", "0.03")
+			reportGain, reportLoss := buildPNLStr(freePNLsFilter, "10", "0.1")
+
+			if printGain != "" || printLoss != "" {
+				fmt.Println(printGain + printLoss)
+			}
+
+			if reportGain != "" || reportLoss != "" {
+				m.reportCh <- reportGain + reportLoss
 			}
 		}
 	}

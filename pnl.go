@@ -48,6 +48,8 @@ func (m *PNLMonitor) Init() {
 	m.checkPNLInterval = time.Second * 5
 	m.reportCh = make(chan string, 1024)
 	m.miniReportInterval = time.Minute * 5
+	m.lastPrintTime = time.Now()
+	m.lastPrintTime = time.Now()
 }
 
 func (m *PNLMonitor) Run(ctx context.Context) {

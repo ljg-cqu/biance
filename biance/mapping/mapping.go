@@ -22,7 +22,7 @@ type Pair struct {
 
 var getPriceFn = price.GetPrice
 
-func MappingBUSD(client biance.Client, priceUrl string, reverseFromBUSD bool, pairs ...*Pair) ([]Mapped, error) {
+func MappingUSDTOrBUSD(client biance.Client, priceUrl string, reverse bool, pairs ...*Pair) ([]Mapped, error) {
 	var prices = make(map[price.Symbol]price.Price)
 	pricesAllMap, err := getPriceFn(client, priceUrl)
 	if err != nil {
@@ -59,7 +59,7 @@ func MappingBUSD(client biance.Client, priceUrl string, reverseFromBUSD bool, pa
 		prices[newSymbol] = price_
 	}
 
-	return mapping(prices, reverseFromBUSD, pairs...), nil
+	return mapping(prices, reverse, pairs...), nil
 }
 
 func Mapping(client biance.Client, priceUrl string, reverse bool, paris ...*Pair) ([]Mapped, error) {

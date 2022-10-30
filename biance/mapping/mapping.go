@@ -22,42 +22,44 @@ type Pair struct {
 
 var getPriceFn = price.GetPrice
 
-func MappingBUSD(client biance.Client, priceUrl string, reverseFromBUSD bool, paris ...*Pair) ([]Mapped, error) {
-	var editPair = paris
-	var prices []price.Price
-	for i, pair := range editPair {
+func MappingBUSD(client biance.Client, priceUrl string, reverseFromBUSD bool, pairs ...*Pair) ([]Mapped, error) {
+	var prices = make(map[price.Symbol]price.Price)
+	pricesAllMap, err := getPriceFn(client, priceUrl)
+	if err != nil {
+		return nil, errors.Wrapf(err, "failed to get prices")
+	}
+
+	for i, pair := range pairs {
+		if pair.Symbol == "" {
+			return nil, errors.Errorf("Symbol shouldn't be empty")
+		}
 		if !strings.Contains(string(pair.Symbol), "BUSD") && !strings.Contains(string(pair.Symbol), "USDT") {
 			return nil, errors.New("only BUSD or USDT supported")
 		}
 
-		var pricesOne []price.Price
-		var symbol = pair.Symbol
-		var err error
-		switch {
-		case strings.HasSuffix(string(pair.Symbol), "BUSD"):
-			pricesOne, err = getPriceFn(client, priceUrl, pair.Symbol)
-			if err != nil {
-				symbol = price.Symbol(strings.TrimSuffix(string(pair.Symbol), "BUSD") + "USDT")
-				pricesOne, err = getPriceFn(client, priceUrl, symbol)
-				if err != nil {
-					return nil, errors.Wrapf(err, "failed to get price for symbol %v", symbol)
-				}
-			}
-		case strings.HasSuffix(string(pair.Symbol), "USDT"):
-			pricesOne, err = getPriceFn(client, priceUrl, pair.Symbol)
-			if err != nil {
-				symbol = price.Symbol(strings.TrimSuffix(string(pair.Symbol), "USDT") + "BUSD")
-				pricesOne, err = getPriceFn(client, priceUrl, symbol)
-				if err != nil {
-					return nil, errors.Wrapf(err, "failed to get price for symbol %v", symbol)
-				}
+		price_, ok := pricesAllMap[pair.Symbol]
+		var newSymbol = pair.Symbol
+		if !ok {
+			switch {
+			case strings.HasSuffix(string(pair.Symbol), "BUSD"):
+				newSymbol = price.Symbol(strings.TrimSuffix(string(pair.Symbol), "BUSD") + "USDT")
+			case strings.HasSuffix(string(pair.Symbol), "USDT"):
+				newSymbol = price.Symbol(strings.TrimSuffix(string(pair.Symbol), "USDT") + "BUSD")
 			}
 		}
 
-		editPair[i].Symbol = symbol
-		prices = append(prices, pricesOne[0])
+		if !ok {
+			price_, ok = pricesAllMap[price.Symbol(newSymbol)]
+			if !ok {
+				return nil, errors.Errorf("no price found for %v", pair.Symbol)
+			}
+		}
+
+		pairs[i].Symbol = newSymbol
+		prices[newSymbol] = price_
 	}
-	return mapping(prices, reverseFromBUSD, paris...), nil
+
+	return mapping(prices, reverseFromBUSD, pairs...), nil
 }
 
 func Mapping(client biance.Client, priceUrl string, reverse bool, paris ...*Pair) ([]Mapped, error) {
@@ -73,24 +75,19 @@ func Mapping(client biance.Client, priceUrl string, reverse bool, paris ...*Pair
 	return mapping(prices, reverse, paris...), nil
 }
 
-func mapping(prices []price.Price, reverse bool, pairs ...*Pair) []Mapped {
-	var pricesMap = make(map[price.Symbol]*big.Float)
-	for _, price := range prices {
-		pricesMap[price.Symbol] = price.Price
-	}
-
+func mapping(pricesMap map[price.Symbol]price.Price, reverse bool, pairs ...*Pair) []Mapped {
 	var mappeds []Mapped
 	for _, pair := range pairs {
-		price := pricesMap[pair.Symbol]
+		price_ := pricesMap[pair.Symbol]
 
 		var amtMapped *big.Float
 		if reverse {
-			amtMapped = new(big.Float).Quo(pair.BaseAmt, price)
+			amtMapped = new(big.Float).Quo(pair.BaseAmt, price_.Price)
 		} else {
-			amtMapped = new(big.Float).Mul(price, pair.BaseAmt)
+			amtMapped = new(big.Float).Mul(price_.Price, pair.BaseAmt)
 		}
 
-		mappeds = append(mappeds, Mapped{pair.Symbol, amtMapped, pair.BaseAmt, price})
+		mappeds = append(mappeds, Mapped{pair.Symbol, amtMapped, pair.BaseAmt, price_.Price})
 	}
 	return mappeds
 }

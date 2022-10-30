@@ -23,7 +23,7 @@ type price struct {
 	Price  string `json:"price"`
 }
 
-func GetPrice(client biance.Client, url string, symbols ...Symbol) ([]Price, error) {
+func GetPrice(client biance.Client, url string, symbols ...Symbol) (map[Symbol]Price, error) {
 	var params string
 	if symbols != nil {
 		var symbolParam = "["
@@ -66,5 +66,11 @@ func GetPrice(client biance.Client, url string, symbols ...Symbol) ([]Price, err
 		priceFloat, _ := new(big.Float).SetString(symbolPrice.Price)
 		SymbolPrices = append(SymbolPrices, Price{symbolPrice.Symbol, priceFloat})
 	}
-	return SymbolPrices, nil
+
+	var pricesMap = make(map[Symbol]Price)
+	for _, price := range SymbolPrices {
+		pricesMap[price.Symbol] = price
+	}
+
+	return pricesMap, nil
 }

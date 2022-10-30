@@ -12,7 +12,7 @@ import (
 )
 
 func TestMappingBUSD(t *testing.T) { // TODO: improve, reduce many request
-	TokenValueRaw := "TRU:2.96 ARPA:1 FLM:2.61 DUSK:2.21 PROS:2.17 BTTC:2.11 AGLD:2.09 "
+	TokenValueRaw := "JASMY:7.34 AXS:5.25"
 	tokenValuePairs := strings.Fields(TokenValueRaw)
 
 	var pairs []*Pair
@@ -21,7 +21,7 @@ func TestMappingBUSD(t *testing.T) { // TODO: improve, reduce many request
 		tokenValue := strings.Split(tokenValuePair, ":")
 		amtToMap, _ := new(big.Float).SetString(tokenValue[1])
 		token := tokenValue[0]
-		symbol := price.Symbol(token + "BUSD")
+		symbol := price.Symbol(token + "USDT")
 		pair := Pair{
 			Symbol:  symbol,
 			BaseAmt: amtToMap,
@@ -30,7 +30,7 @@ func TestMappingBUSD(t *testing.T) { // TODO: improve, reduce many request
 	}
 
 	client := &http.Client{}
-	mappeds, err := MappingBUSD(client, biance.URLs[biance.URLSymbolPrice], true, pairs...)
+	mappeds, err := MappingUSDTOrBUSD(client, biance.URLs[biance.URLSymbolPrice], true, pairs...)
 	require.Nil(t, err)
 	for _, mapped := range mappeds {
 		fmt.Printf("%+v\n", mapped)

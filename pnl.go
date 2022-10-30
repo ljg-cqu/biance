@@ -72,6 +72,7 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 				"NBS":  "",
 				"USDT": "",
 				"BUSD": "",
+				"VIDT": "",
 			}
 
 			for _, freePNL := range freePNLs {

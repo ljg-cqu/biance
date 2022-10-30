@@ -11,8 +11,8 @@ import (
 	"testing"
 )
 
-func TestMappingBUSD(t *testing.T) {
-	TokenValueRaw := "PORTO:200"
+func TestMappingBUSD(t *testing.T) { // TODO: improve, reduce many request
+	TokenValueRaw := "TRU:2.96 ARPA:1 FLM:2.61 DUSK:2.21 PROS:2.17 BTTC:2.11 AGLD:2.09 "
 	tokenValuePairs := strings.Fields(TokenValueRaw)
 
 	var pairs []*Pair
@@ -30,7 +30,7 @@ func TestMappingBUSD(t *testing.T) {
 	}
 
 	client := &http.Client{}
-	mappeds, err := MappingBUSD(client, biance.URLs[biance.URLSymbolPrice], false, pairs...)
+	mappeds, err := MappingBUSD(client, biance.URLs[biance.URLSymbolPrice], true, pairs...)
 	require.Nil(t, err)
 	for _, mapped := range mappeds {
 		fmt.Printf("%+v\n", mapped)

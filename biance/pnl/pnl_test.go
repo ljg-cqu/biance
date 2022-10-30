@@ -32,7 +32,9 @@ func TestCheckFreePNLWithUSDTOrBUSD(t *testing.T) {
 	fmt.Printf("Total gain: %v tokens, about %v dollars\n\n", len(gainPNLs), totalGain)
 	var gainToConvertStr string
 	for _, gainPNL := range gainPNLs {
-		gainToConvertStr += fmt.Sprintf("%v: %v | %v \n", gainPNL.Symbol, gainPNL.PNLAmountConvertable, gainPNL.PNLValue)
+		oneHundred, _ := new(big.Float).SetString("100")
+		gainToConvertStr += fmt.Sprintf("%v: %v => %v @%v%%\n", gainPNL.Symbol, gainPNL.PNLAmountConvertable,
+			gainPNL.PNLValue, new(big.Float).Mul(oneHundred, gainPNL.PNLPercent))
 	}
 	fmt.Println(gainToConvertStr)
 

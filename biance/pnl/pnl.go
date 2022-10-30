@@ -81,13 +81,13 @@ func CheckFreePNLWithUSDTOrBUSD(client biance.Client, assetURL, priceURL, asset,
 		pnlPercent := new(big.Float).Quo(pnlVal, freePNL.PrincipalValueInDollar)
 		freePNLs[i].PNLPercent = pnlPercent
 
-		if freePNL.FreeValue.Cmp(freePNL.PrincipalValueInDollar) == 1 {
-			pnlAmtConvertable := new(big.Float).Quo(pnlVal, freePNL.Price.Price)
-			freePNLs[i].PNLAmountConvertable = pnlAmtConvertable
-		} else {
-			zero, _ := new(big.Float).SetString("0")
-			freePNLs[i].PNLAmountConvertable = zero
-		}
+		//if freePNL.FreeValue.Cmp(freePNL.PrincipalValueInDollar) == 1 {
+		pnlAmtConvertable := new(big.Float).Quo(pnlVal, freePNL.Price.Price)
+		freePNLs[i].PNLAmountConvertable = pnlAmtConvertable
+		//} else {
+		//	zero, _ := new(big.Float).SetString("0")
+		//	freePNLs[i].PNLAmountConvertable = zero
+		//}
 	}
 
 	freePNLs.Sort()

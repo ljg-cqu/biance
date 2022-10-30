@@ -42,9 +42,9 @@ func (m *PNLMonitor) Init() {
 	m.client = &http.Client{}
 	m.userAssetURL = biance.URLs[biance.URLUserAsset]
 	m.symbolPriceURL = biance.URLs[biance.URLSymbolPrice]
-	m.checkPNLInterval = time.Second * 15
+	m.checkPNLInterval = time.Second * 5
 	m.reportCh = make(chan string, 1024)
-	m.miniReportInterval = time.Minute * 5
+	m.miniReportInterval = time.Second * 180
 }
 
 func (m *PNLMonitor) Run(ctx context.Context) {
@@ -72,6 +72,7 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 				"USDT": "",
 				"BUSD": "",
 				"VIDT": "",
+				"OG":   "",
 			}
 
 			for _, freePNL := range freePNLs {
@@ -82,8 +83,8 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 				freePNLsFilter = append(freePNLsFilter, freePNL)
 			}
 
-			printGain, printLoss := buildPNLStr(freePNLsFilter, "3", "0.03")
-			reportGain, reportLoss := buildPNLStr(freePNLsFilter, "10", "0.2")
+			printGain, printLoss := buildPNLStr(freePNLsFilter, "5", "0.05")
+			reportGain, reportLoss := buildPNLStr(freePNLsFilter, "10", "0.10")
 
 			if printGain != "" || printLoss != "" {
 				fmt.Println(printGain + printLoss)
@@ -109,7 +110,7 @@ func (m *PNLMonitor) sendPNLReport(ctx context.Context) {
 
 			email := mail.NewMSG()
 			email.SetFrom("Zealy <ljg_cqu@126.com>").
-				AddTo("ljg_cqu@126.com").
+				AddTo("ljg_cqu@126.com", "qq1025003548@gmail.com").
 				SetSubject("Biance Investment PNL Report")
 			email.SetBody(mail.TextPlain, content)
 

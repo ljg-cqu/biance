@@ -115,7 +115,7 @@ func (m *PNLMonitor) sendPNLReport(ctx context.Context) {
 			email.SetBody(mail.TextPlain, content)
 
 			err := backoff.RetryFnExponential10Times(m.Logger, ctx, time.Second, time.Second*10, func() (bool, error) {
-				emailCli, err := smtp.NewEmailClient(smtp.NetEase126Mail, &tls.Config{InsecureSkipVerify: true}, "ljg_cqu@126.com", "XROTXFGWZUILANPB")
+				emailCli, err := smtp.NewEmailClient(smtp.NetEase126Mail, &tls.Config{InsecureSkipVerify: true}, "ljg_cqu@126.com", "CCODKEUPFWSQPQUW")
 				if err != nil {
 					return true, errors.Wrapf(err, "failed to create email client.")
 				}

@@ -42,9 +42,9 @@ func (m *PNLMonitor) Init() {
 	m.client = &http.Client{}
 	m.userAssetURL = biance.URLs[biance.URLUserAsset]
 	m.symbolPriceURL = biance.URLs[biance.URLSymbolPrice]
-	m.checkPNLInterval = time.Second * 30
+	m.checkPNLInterval = time.Second * 15
 	m.reportCh = make(chan string, 1024)
-	m.miniReportInterval = time.Second * 300
+	m.miniReportInterval = time.Second * 180
 }
 
 func (m *PNLMonitor) Run(ctx context.Context) {
@@ -87,7 +87,7 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 			}
 
 			printGain, printLoss := buildPNLStr(freePNLsFilter, "5", "0.05")
-			reportGain, reportLoss := buildPNLStr(freePNLsFilter, "0.1", "0.010")
+			reportGain, reportLoss := buildPNLStr(freePNLsFilter, "10", "0.1")
 
 			if printGain != "" || printLoss != "" {
 				fmt.Println(printGain + printLoss)

@@ -125,7 +125,7 @@ func main() {
 		Cache:     cache,
 		Filter:    FilterMap[FilterLevelSuper],
 	}
-	highPNLMonitor.Init()
+	superPNLMonitor.Init()
 
 	shutdownCtx, shutdown := context.WithCancel(context.Background())
 

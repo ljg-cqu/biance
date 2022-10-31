@@ -43,8 +43,8 @@ func (m *PNLMonitor) Init() {
 	m.userAssetURL = biance.URLs[biance.URLUserAsset]
 	m.symbolPriceURL = biance.URLs[biance.URLSymbolPrice]
 
-	m.checkPNLInterval = time.Second * 15
-	m.miniReportInterval = time.Second * 150
+	m.checkPNLInterval = time.Second * 1
+	m.miniReportInterval = time.Second * 300
 
 	m.printFilterGainValue = "5"
 	m.printFilterLossPercent = "0.05"

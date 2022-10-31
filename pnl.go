@@ -51,7 +51,6 @@ type PNLMonitor struct {
 	client         biance.Client
 	userAssetURL   string
 	symbolPriceURL string
-	filter         Filter
 
 	reportCh chan string
 }

@@ -2,17 +2,13 @@ package main
 
 import (
 	"context"
-	"crypto/tls"
 	"fmt"
 	"github.com/dgraph-io/ristretto"
 	"github.com/ljg-cqu/biance/biance"
 	"github.com/ljg-cqu/biance/biance/asset"
 	"github.com/ljg-cqu/biance/biance/pnl"
+	"github.com/ljg-cqu/biance/email"
 	"github.com/ljg-cqu/biance/logger"
-	"github.com/ljg-cqu/biance/utils/backoff"
-	"github.com/ljg-cqu/core/smtp"
-	"github.com/pkg/errors"
-	mail "github.com/xhit/go-simple-mail/v2"
 	"math/big"
 	"net/http"
 	"sync"
@@ -30,21 +26,33 @@ type PNLMonitor struct {
 	userAssetURL   string
 	symbolPriceURL string
 
-	convertThreshold     *big.Float
-	lossPercentThreshold *big.Float
-	checkPNLInterval     time.Duration
-
-	reportCh           chan string
+	checkPNLInterval   time.Duration
 	miniReportInterval time.Duration
+
+	printFilterGainValue   string
+	printFilterLossPercent string
+
+	emailFilterGainValue   string
+	emailFilterLossPercent string
+
+	reportCh chan string
 }
 
 func (m *PNLMonitor) Init() {
 	m.client = &http.Client{}
 	m.userAssetURL = biance.URLs[biance.URLUserAsset]
 	m.symbolPriceURL = biance.URLs[biance.URLSymbolPrice]
+
 	m.checkPNLInterval = time.Second * 15
+	m.miniReportInterval = time.Second * 150
+
+	m.printFilterGainValue = "5"
+	m.printFilterLossPercent = "0.05"
+
+	m.emailFilterGainValue = "8"
+	m.emailFilterLossPercent = "0.08"
+
 	m.reportCh = make(chan string, 1024)
-	m.miniReportInterval = time.Second * 180
 }
 
 func (m *PNLMonitor) Run(ctx context.Context) {
@@ -52,8 +60,7 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 	defer tCheck.Stop()
 	defer m.WP.Done()
 
-	//go m.sendPNLReportWith126Mail(ctx)
-	go m.sendPNLReportWithQQMail(ctx)
+	go m.sendPNLReport(ctx)
 
 	for {
 		select {
@@ -87,7 +94,7 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 			}
 
 			printGain, printLoss := buildPNLStr(freePNLsFilter, "5", "0.05")
-			reportGain, reportLoss := buildPNLStr(freePNLsFilter, "10", "0.1")
+			reportGain, reportLoss := buildPNLStr(freePNLsFilter, "5", "0.05")
 
 			if printGain != "" || printLoss != "" {
 				fmt.Println(printGain + printLoss)
@@ -104,63 +111,20 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 	}
 }
 
-func (m *PNLMonitor) sendPNLReportWith126Mail(ctx context.Context) {
+func (m *PNLMonitor) sendPNLReport(ctx context.Context) {
 	for {
 		select {
 		case <-ctx.Done():
 			return
 		case content := <-m.reportCh:
-			email := mail.NewMSG()
-			email.SetFrom("Zealy <ljg_cqu@126.com>").
-				AddTo("ljg_cqu@126.com", "1025003548@qq.com").
-				SetSubject("Biance Investment PNL Report")
-			email.SetBody(mail.TextPlain, content)
-
-			err := backoff.RetryFnExponential10Times(m.Logger, ctx, time.Second, time.Second*10, func() (bool, error) {
-				emailCli, err := smtp.NewEmailClient(smtp.NetEase126Mail, &tls.Config{InsecureSkipVerify: true}, "ljg_cqu@126.com", "XROTXFGWZUILANPB")
-				if err != nil {
-					return true, errors.Wrapf(err, "failed to create email client.")
-				}
-				err = emailCli.Send(email)
-				if err != nil {
-					return true, errors.Wrapf(err, "failed to send email")
-				}
-				return false, nil
-			})
+			subject := "Biance Investment PNL Report"
+			err := email.SendPNLReportWith126Mail(m.Logger, ctx, subject, content)
 			if err != nil {
-				m.Logger.ErrorOnError(err, "Failed to report price")
-				continue
-			}
-		}
-	}
-}
-
-func (m *PNLMonitor) sendPNLReportWithQQMail(ctx context.Context) {
-	for {
-		select {
-		case <-ctx.Done():
-			return
-		case content := <-m.reportCh:
-			email := mail.NewMSG()
-			email.SetFrom("Zealy <1025003548@qq.com>").
-				AddTo("ljg_cqu@126.com", "1025003548@qq.com").
-				SetSubject("Biance Investment PNL Report")
-			email.SetBody(mail.TextPlain, content)
-
-			err := backoff.RetryFnExponential10Times(m.Logger, ctx, time.Second, time.Second*10, func() (bool, error) {
-				emailCli, err := smtp.NewEmailClient(smtp.QQMail, &tls.Config{InsecureSkipVerify: true}, "1025003548@qq.com", "ncoajiivbenpbfbh")
+				m.Logger.ErrorOnError(err, "Failed to send email with 126 mailbox.")
+				err = email.SendPNLReportWithQQMail(m.Logger, ctx, subject, content)
 				if err != nil {
-					return true, errors.Wrapf(err, "failed to create email client.")
+					m.Logger.ErrorOnError(err, "Failed to send email with qq mailbox")
 				}
-				err = emailCli.Send(email)
-				if err != nil {
-					return true, errors.Wrapf(err, "failed to send email")
-				}
-				return false, nil
-			})
-			if err != nil {
-				m.Logger.ErrorOnError(err, "Failed to report price")
-				continue
 			}
 		}
 	}

@@ -105,7 +105,7 @@ func main() {
 		Cache:     cache,
 		Filter:    FilterMap[FilterLevelMid],
 	}
-	lowPNLMonitor.Init()
+	midPNLMonitor.Init()
 
 	highPNLMonitor := PNLMonitor{
 		Logger:    myLogger,
@@ -115,7 +115,7 @@ func main() {
 		Cache:     cache,
 		Filter:    FilterMap[FilterLevelHigh],
 	}
-	lowPNLMonitor.Init()
+	highPNLMonitor.Init()
 
 	superPNLMonitor := PNLMonitor{
 		Logger:    myLogger,
@@ -125,7 +125,7 @@ func main() {
 		Cache:     cache,
 		Filter:    FilterMap[FilterLevelSuper],
 	}
-	lowPNLMonitor.Init()
+	highPNLMonitor.Init()
 
 	shutdownCtx, shutdown := context.WithCancel(context.Background())
 

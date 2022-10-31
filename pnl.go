@@ -93,8 +93,8 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 				freePNLsFilter = append(freePNLsFilter, freePNL)
 			}
 
-			printGain, printLoss := buildPNLStr(freePNLsFilter, "5", "0.05")
-			reportGain, reportLoss := buildPNLStr(freePNLsFilter, "5", "0.05")
+			printGain, printLoss := buildPNLStr(freePNLsFilter, m.printFilterGainValue, m.printFilterLossPercent)
+			reportGain, reportLoss := buildPNLStr(freePNLsFilter, m.emailFilterGainValue, m.emailFilterLossPercent)
 
 			if printGain != "" || printLoss != "" {
 				fmt.Println(printGain + printLoss)
@@ -118,12 +118,12 @@ func (m *PNLMonitor) sendPNLReport(ctx context.Context) {
 			return
 		case content := <-m.reportCh:
 			subject := "Biance Investment PNL Report"
-			err := email.SendPNLReportWith126Mail(m.Logger, ctx, subject, content)
+			err := email.SendPNLReportWithQQMail(m.Logger, ctx, subject, content)
 			if err != nil {
-				m.Logger.ErrorOnError(err, "Failed to send email with 126 mailbox.")
-				err = email.SendPNLReportWithQQMail(m.Logger, ctx, subject, content)
+				m.Logger.DebugOnError(err, "Failed to send email with QQ mailbox.")
 				if err != nil {
-					m.Logger.ErrorOnError(err, "Failed to send email with qq mailbox")
+					err := email.SendPNLReportWith126Mail(m.Logger, ctx, subject, content)
+					m.Logger.ErrorOnError(err, "Failed to send email with 126 mailbox")
 				}
 			}
 		}

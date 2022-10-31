@@ -84,10 +84,13 @@ func main() {
 	//	MiniReportThreshold: miniReportThreshold,
 	//}
 
+	apiKey := ""
+	secretKey := ""
+
 	lowPNLMonitor := PNLMonitor{
 		Logger:    myLogger,
-		ApiKey:    "",
-		SecretKey: "",
+		ApiKey:    apiKey,
+		SecretKey: secretKey,
 		WP:        wg,
 		Cache:     cache,
 		Filter:    FilterMap[FilterLevelLow],
@@ -96,8 +99,8 @@ func main() {
 
 	midPNLMonitor := PNLMonitor{
 		Logger:    myLogger,
-		ApiKey:    "",
-		SecretKey: "",
+		ApiKey:    apiKey,
+		SecretKey: secretKey,
 		WP:        wg,
 		Cache:     cache,
 		Filter:    FilterMap[FilterLevelMid],
@@ -106,8 +109,8 @@ func main() {
 
 	highPNLMonitor := PNLMonitor{
 		Logger:    myLogger,
-		ApiKey:    "",
-		SecretKey: "",
+		ApiKey:    apiKey,
+		SecretKey: secretKey,
 		WP:        wg,
 		Cache:     cache,
 		Filter:    FilterMap[FilterLevelHigh],
@@ -116,8 +119,8 @@ func main() {
 
 	superPNLMonitor := PNLMonitor{
 		Logger:    myLogger,
-		ApiKey:    "",
-		SecretKey: "",
+		ApiKey:    apiKey,
+		SecretKey: secretKey,
 		WP:        wg,
 		Cache:     cache,
 		Filter:    FilterMap[FilterLevelSuper],

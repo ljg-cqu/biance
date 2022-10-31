@@ -84,14 +84,45 @@ func main() {
 	//	MiniReportThreshold: miniReportThreshold,
 	//}
 
-	pnlMonitor := PNLMonitor{
+	lowPNLMonitor := PNLMonitor{
 		Logger:    myLogger,
 		ApiKey:    "",
 		SecretKey: "",
 		WP:        wg,
 		Cache:     cache,
+		Filter:    FilterMap[FilterLevelLow],
 	}
-	pnlMonitor.Init()
+	lowPNLMonitor.Init()
+
+	midPNLMonitor := PNLMonitor{
+		Logger:    myLogger,
+		ApiKey:    "",
+		SecretKey: "",
+		WP:        wg,
+		Cache:     cache,
+		Filter:    FilterMap[FilterLevelMid],
+	}
+	lowPNLMonitor.Init()
+
+	highPNLMonitor := PNLMonitor{
+		Logger:    myLogger,
+		ApiKey:    "",
+		SecretKey: "",
+		WP:        wg,
+		Cache:     cache,
+		Filter:    FilterMap[FilterLevelHigh],
+	}
+	lowPNLMonitor.Init()
+
+	superPNLMonitor := PNLMonitor{
+		Logger:    myLogger,
+		ApiKey:    "",
+		SecretKey: "",
+		WP:        wg,
+		Cache:     cache,
+		Filter:    FilterMap[FilterLevelSuper],
+	}
+	lowPNLMonitor.Init()
 
 	shutdownCtx, shutdown := context.WithCancel(context.Background())
 
@@ -111,7 +142,16 @@ func main() {
 	//go priceHandler.Run(shutdownCtx)
 
 	wg.Add(1)
-	go pnlMonitor.Run(shutdownCtx)
+	go lowPNLMonitor.Run(shutdownCtx)
+
+	wg.Add(1)
+	go midPNLMonitor.Run(shutdownCtx)
+
+	wg.Add(1)
+	go highPNLMonitor.Run(shutdownCtx)
+
+	wg.Add(1)
+	go superPNLMonitor.Run(shutdownCtx)
 
 	wg.Wait()
 }

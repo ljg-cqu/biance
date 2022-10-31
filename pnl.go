@@ -52,7 +52,8 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 	defer tCheck.Stop()
 	defer m.WP.Done()
 
-	go m.sendPNLReport(ctx)
+	//go m.sendPNLReportWith126Mail(ctx)
+	go m.sendPNLReportWithQQMail(ctx)
 
 	for {
 		select {
@@ -103,7 +104,7 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 	}
 }
 
-func (m *PNLMonitor) sendPNLReport(ctx context.Context) {
+func (m *PNLMonitor) sendPNLReportWith126Mail(ctx context.Context) {
 	for {
 		select {
 		case <-ctx.Done():
@@ -117,6 +118,37 @@ func (m *PNLMonitor) sendPNLReport(ctx context.Context) {
 
 			err := backoff.RetryFnExponential10Times(m.Logger, ctx, time.Second, time.Second*10, func() (bool, error) {
 				emailCli, err := smtp.NewEmailClient(smtp.NetEase126Mail, &tls.Config{InsecureSkipVerify: true}, "ljg_cqu@126.com", "XROTXFGWZUILANPB")
+				if err != nil {
+					return true, errors.Wrapf(err, "failed to create email client.")
+				}
+				err = emailCli.Send(email)
+				if err != nil {
+					return true, errors.Wrapf(err, "failed to send email")
+				}
+				return false, nil
+			})
+			if err != nil {
+				m.Logger.ErrorOnError(err, "Failed to report price")
+				continue
+			}
+		}
+	}
+}
+
+func (m *PNLMonitor) sendPNLReportWithQQMail(ctx context.Context) {
+	for {
+		select {
+		case <-ctx.Done():
+			return
+		case content := <-m.reportCh:
+			email := mail.NewMSG()
+			email.SetFrom("Zealy <1025003548@qq.com>").
+				AddTo("ljg_cqu@126.com", "qq1025003548@gmail.com").
+				SetSubject("Biance Investment PNL Report")
+			email.SetBody(mail.TextPlain, content)
+
+			err := backoff.RetryFnExponential10Times(m.Logger, ctx, time.Second, time.Second*10, func() (bool, error) {
+				emailCli, err := smtp.NewEmailClient(smtp.QQMail, &tls.Config{InsecureSkipVerify: true}, "1025003548@qq.com", "ncoajiivbenpbfbh")
 				if err != nil {
 					return true, errors.Wrapf(err, "failed to create email client.")
 				}

@@ -143,7 +143,7 @@ func (m *PNLMonitor) sendPNLReportWithQQMail(ctx context.Context) {
 		case content := <-m.reportCh:
 			email := mail.NewMSG()
 			email.SetFrom("Zealy <1025003548@qq.com>").
-				AddTo("ljg_cqu@126.com", "qq1025003548@gmail.com").
+				AddTo("ljg_cqu@126.com", "1025003548@qq.com").
 				SetSubject("Biance Investment PNL Report")
 			email.SetBody(mail.TextPlain, content)
 

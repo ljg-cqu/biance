@@ -42,9 +42,9 @@ func (m *PNLMonitor) Init() {
 	m.client = &http.Client{}
 	m.userAssetURL = biance.URLs[biance.URLUserAsset]
 	m.symbolPriceURL = biance.URLs[biance.URLSymbolPrice]
-	m.checkPNLInterval = time.Second * 5
+	m.checkPNLInterval = time.Second * 30
 	m.reportCh = make(chan string, 1024)
-	m.miniReportInterval = time.Second * 180
+	m.miniReportInterval = time.Second * 300
 }
 
 func (m *PNLMonitor) Run(ctx context.Context) {
@@ -76,10 +76,12 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 			}
 
 			for _, freePNL := range freePNLs {
-				_, ok := tokenFilerMap[freePNL.Token]
-				if ok {
+				_, ok1 := tokenFilerMap[freePNL.Token]
+				_, ok2 := m.Cache.Get(freePNL.Token)
+				if ok1 || ok2 {
 					continue
 				}
+
 				freePNLsFilter = append(freePNLsFilter, freePNL)
 			}
 
@@ -92,6 +94,10 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 
 			if reportGain != "" || reportLoss != "" {
 				m.reportCh <- reportGain + reportLoss
+				for _, freePNLFilter := range freePNLsFilter {
+					m.Cache.SetWithTTL(freePNLFilter.Token, "", 1, m.miniReportInterval)
+					m.Cache.Wait()
+				}
 			}
 		}
 	}
@@ -103,11 +109,6 @@ func (m *PNLMonitor) sendPNLReport(ctx context.Context) {
 		case <-ctx.Done():
 			return
 		case content := <-m.reportCh:
-			_, ok := m.Cache.Get("reportPNL")
-			if ok {
-				continue
-			}
-
 			email := mail.NewMSG()
 			email.SetFrom("Zealy <ljg_cqu@126.com>").
 				AddTo("ljg_cqu@126.com", "qq1025003548@gmail.com").
@@ -115,7 +116,7 @@ func (m *PNLMonitor) sendPNLReport(ctx context.Context) {
 			email.SetBody(mail.TextPlain, content)
 
 			err := backoff.RetryFnExponential10Times(m.Logger, ctx, time.Second, time.Second*10, func() (bool, error) {
-				emailCli, err := smtp.NewEmailClient(smtp.NetEase126Mail, &tls.Config{InsecureSkipVerify: true}, "ljg_cqu@126.com", "CCODKEUPFWSQPQUW")
+				emailCli, err := smtp.NewEmailClient(smtp.NetEase126Mail, &tls.Config{InsecureSkipVerify: true}, "ljg_cqu@126.com", "XROTXFGWZUILANPB")
 				if err != nil {
 					return true, errors.Wrapf(err, "failed to create email client.")
 				}
@@ -129,8 +130,6 @@ func (m *PNLMonitor) sendPNLReport(ctx context.Context) {
 				m.Logger.ErrorOnError(err, "Failed to report price")
 				continue
 			}
-			m.Cache.SetWithTTL("reportPNL", "", 1, m.miniReportInterval)
-			m.Cache.Wait()
 		}
 	}
 }

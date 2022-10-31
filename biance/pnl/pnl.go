@@ -11,7 +11,6 @@ import (
 
 var tokenWithDollarPrincipal = map[asset.Token]string{
 	"MDX":   "1200",
-	"ALCX":  "1000",
 	"APT":   "1000",
 	"POLYX": "1000",
 }

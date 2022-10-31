@@ -78,7 +78,7 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 
 			for _, freePNL := range freePNLs {
 				_, ok1 := tokenFilerMap[freePNL.Token]
-				_, ok2 := m.Cache.Get(freePNL.Token)
+				_, ok2 := m.Cache.Get(string(freePNL.Token))
 				if ok1 || ok2 {
 					continue
 				}
@@ -87,7 +87,7 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 			}
 
 			printGain, printLoss := buildPNLStr(freePNLsFilter, "5", "0.05")
-			reportGain, reportLoss := buildPNLStr(freePNLsFilter, "10", "0.10")
+			reportGain, reportLoss := buildPNLStr(freePNLsFilter, "0.1", "0.010")
 
 			if printGain != "" || printLoss != "" {
 				fmt.Println(printGain + printLoss)
@@ -96,7 +96,7 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 			if reportGain != "" || reportLoss != "" {
 				m.reportCh <- reportGain + reportLoss
 				for _, freePNLFilter := range freePNLsFilter {
-					m.Cache.SetWithTTL(freePNLFilter.Token, "", 1, m.miniReportInterval)
+					m.Cache.SetWithTTL(string(freePNLFilter.Token), "", 1, m.miniReportInterval)
 					m.Cache.Wait()
 				}
 			}

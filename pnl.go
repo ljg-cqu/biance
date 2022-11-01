@@ -23,10 +23,10 @@ const (
 )
 
 var FilterMap = Filter{
-	FilterLevelLow:   {"5", "0.05", time.Second * 60, time.Minute * 15},
-	FilterLevelMid:   {"10", "0.10", time.Second * 30, time.Minute * 5},
-	FilterLevelHigh:  {"20", "0.15", time.Second * 15, time.Minute * 3},
-	FilterLevelSuper: {"40", "0.20", time.Second * 1, time.Minute * 1},
+	FilterLevelLow:   {"5", "0.05", time.Second * 1, time.Second * 60},
+	FilterLevelMid:   {"10", "0.10", time.Second * 1, time.Second * 45},
+	FilterLevelHigh:  {"20", "0.15", time.Second * 1, time.Second * 30},
+	FilterLevelSuper: {"40", "0.20", time.Second * 1, time.Second * 15},
 }
 
 type Filter map[FilterLevel]FilterGainValAndLossPercent
@@ -123,13 +123,9 @@ func (m *PNLMonitor) sendPNLReport(ctx context.Context) {
 		case content := <-m.reportCh:
 			subject := "Biance Investment PNL Report"
 			err := email.SendPNLReportWithQQMail(m.Logger, ctx, subject, content)
-			if err != nil {
-				m.Logger.DebugOnError(err, "Failed to send email with QQ mailbox.")
-				if err != nil {
-					err := email.SendPNLReportWith126Mail(m.Logger, ctx, subject, content)
-					m.Logger.ErrorOnError(err, "Failed to send email with 126 mailbox")
-				}
-			}
+			m.Logger.DebugOnError(err, "Failed to send email with QQ mailbox.")
+			err = email.SendPNLReportWith126Mail(m.Logger, ctx, subject, content)
+			m.Logger.ErrorOnError(err, "Failed to send email with 126 mailbox")
 		}
 	}
 }

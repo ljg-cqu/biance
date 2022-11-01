@@ -23,16 +23,16 @@ const (
 )
 
 var FilterMap = Filter{
-	FilterLevelLow:   {"6", "0.06", time.Second * 1, time.Second * 90},
-	FilterLevelMid:   {"12", "0.12", time.Second * 1, time.Second * 75},
-	FilterLevelHigh:  {"24", "0.24", time.Second * 1, time.Second * 60},
-	FilterLevelSuper: {"48", "0.48", time.Second * 1, time.Second * 45},
+	FilterLevelLow:   {"0.06", "0.06", time.Second * 1, time.Second * 90},
+	FilterLevelMid:   {"0.12", "0.12", time.Second * 1, time.Second * 75},
+	FilterLevelHigh:  {"0.24", "0.24", time.Second * 1, time.Second * 60},
+	FilterLevelSuper: {"0.48", "0.48", time.Second * 1, time.Second * 45},
 }
 
 type Filter map[FilterLevel]FilterGainValAndLossPercent
 
 type FilterGainValAndLossPercent struct {
-	GainVal           string
+	GainPercent       string
 	LossPercent       string
 	CheckPNLInterval  time.Duration
 	ReportPNLInterval time.Duration
@@ -101,7 +101,7 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 				freePNLsFilter = append(freePNLsFilter, freePNL)
 			}
 
-			gain, loss := buildReport(freePNLsFilter, m.Filter.GainVal, m.Filter.LossPercent)
+			gain, loss := buildReport(freePNLsFilter, m.Filter.GainPercent, m.Filter.LossPercent)
 			content := gain + loss
 
 			if gain != "" || loss != "" {
@@ -132,13 +132,13 @@ func (m *PNLMonitor) sendPNLReport(ctx context.Context) {
 	}
 }
 
-func buildReport(freePNLs pnl.FreePNLs, filterGainVal, filterLossPercent string) (string, string) {
+func buildReport(freePNLs pnl.FreePNLs, filterGainPercent, filterLossPercent string) (string, string) {
 	var filterGainPNLs []pnl.FreePNL
 	var filterLossPNLs []pnl.FreePNL
 	zeroGain, _ := new(big.Float).SetString("0")
 	zeroLoss, _ := new(big.Float).SetString("0")
 
-	filterGainValBig, _ := new(big.Float).SetString(filterGainVal)
+	filterGainPercentBig, _ := new(big.Float).SetString(filterGainPercent)
 	filterLossPercentBig, _ := new(big.Float).SetString(filterLossPercent)
 	var totalGain = zeroGain
 	var totalLoss = zeroLoss
@@ -146,7 +146,7 @@ func buildReport(freePNLs pnl.FreePNLs, filterGainVal, filterLossPercent string)
 	oneHundred, _ := new(big.Float).SetString("100")
 
 	for _, freePNL := range freePNLs {
-		if freePNL.PNLValue.Cmp(filterGainValBig) == 1 {
+		if freePNL.PNLPercent.Cmp(filterGainPercentBig) == 1 {
 			filterGainPNLs = append(filterGainPNLs, freePNL)
 			totalGain = new(big.Float).Add(totalGain, freePNL.PNLValue)
 			continue

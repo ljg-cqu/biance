@@ -10,6 +10,8 @@ import (
 	"syscall"
 )
 
+// TODO: auto night mode with cron
+
 func main() {
 	// Create logger
 	logger.DevMode = true

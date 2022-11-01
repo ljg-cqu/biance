@@ -23,10 +23,10 @@ const (
 )
 
 var FilterMap = Filter{
-	FilterLevelLow:   {"5", "0.05", time.Second * 1, time.Second * 60},
-	FilterLevelMid:   {"10", "0.10", time.Second * 1, time.Second * 45},
+	FilterLevelLow:   {"5", "0.05", time.Second * 1, time.Second * 30},
+	FilterLevelMid:   {"10", "0.10", time.Second * 1, time.Second * 30},
 	FilterLevelHigh:  {"20", "0.15", time.Second * 1, time.Second * 30},
-	FilterLevelSuper: {"40", "0.20", time.Second * 1, time.Second * 15},
+	FilterLevelSuper: {"40", "0.20", time.Second * 1, time.Second * 30},
 }
 
 type Filter map[FilterLevel]FilterGainValAndLossPercent

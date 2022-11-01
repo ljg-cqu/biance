@@ -2,6 +2,8 @@ package main
 
 import (
 	"context"
+	"flag"
+	"fmt"
 	"github.com/dgraph-io/ristretto"
 	"github.com/ljg-cqu/biance/logger"
 	"os"
@@ -13,6 +15,9 @@ import (
 // TODO: auto night mode with cron
 
 func main() {
+	var nightFlag = flag.Bool("night", false, "enable night mode")
+	flag.Parse()
+
 	// Create logger
 	logger.DevMode = true
 	logger.UseConsoleEncoder = true
@@ -156,20 +161,28 @@ func main() {
 	//wg.Add(1)
 	//go priceHandler.Run(shutdownCtx)
 
-	wg.Add(1)
-	go pnlMonitor1.Run(shutdownCtx)
+	normalPNLMonitors := func() {
+		wg.Add(1)
+		go pnlMonitor2.Run(shutdownCtx)
 
-	wg.Add(1)
-	go pnlMonitor2.Run(shutdownCtx)
+		wg.Add(1)
+		go pnlMonitor3.Run(shutdownCtx)
 
-	wg.Add(1)
-	go pnlMonitor3.Run(shutdownCtx)
+		wg.Add(1)
+		go pnlMonitor4.Run(shutdownCtx)
 
-	wg.Add(1)
-	go pnlMonitor4.Run(shutdownCtx)
-
-	wg.Add(1)
-	go pnlMonitor5.Run(shutdownCtx)
+		wg.Add(1)
+		go pnlMonitor5.Run(shutdownCtx)
+	}
+	if *nightFlag {
+		fmt.Println("Monitor PNL in night mode")
+		normalPNLMonitors()
+	} else {
+		fmt.Println("Monitor PNL in day mode")
+		wg.Add(1)
+		go pnlMonitor1.Run(shutdownCtx)
+		normalPNLMonitors()
+	}
 
 	wg.Wait()
 }

@@ -23,10 +23,10 @@ const (
 )
 
 var FilterMap = Filter{
-	FilterLevelLow:   {"5", "0.05", time.Second * 1, time.Second * 30},
-	FilterLevelMid:   {"10", "0.10", time.Second * 1, time.Second * 30},
-	FilterLevelHigh:  {"20", "0.15", time.Second * 1, time.Second * 30},
-	FilterLevelSuper: {"40", "0.20", time.Second * 1, time.Second * 30},
+	FilterLevelLow:   {"6", "0.06", time.Second * 1, time.Second * 90},
+	FilterLevelMid:   {"12", "0.12", time.Second * 1, time.Second * 75},
+	FilterLevelHigh:  {"24", "0.24", time.Second * 1, time.Second * 60},
+	FilterLevelSuper: {"48", "0.48", time.Second * 1, time.Second * 45},
 }
 
 type Filter map[FilterLevel]FilterGainValAndLossPercent
@@ -92,7 +92,8 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 
 			for _, freePNL := range freePNLs {
 				_, ok1 := tokenFilerMap[freePNL.Token]
-				_, ok2 := m.Cache.Get(string(freePNL.Token))
+				key := string(freePNL.Token) + m.Filter.ReportPNLInterval.String()
+				_, ok2 := m.Cache.Get(key)
 				if ok1 || ok2 {
 					continue
 				}
@@ -107,7 +108,8 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 				fmt.Println(content)
 				m.reportCh <- content
 				for _, freePNLFilter := range freePNLsFilter {
-					m.Cache.SetWithTTL(string(freePNLFilter.Token), "", 1, m.Filter.ReportPNLInterval)
+					key := string(freePNLFilter.Token) + m.Filter.ReportPNLInterval.String()
+					m.Cache.SetWithTTL(key, "", 1, m.Filter.ReportPNLInterval)
 					m.Cache.Wait()
 				}
 			}

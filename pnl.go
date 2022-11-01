@@ -100,7 +100,7 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 				freePNLsFilter = append(freePNLsFilter, freePNL)
 			}
 
-			gain, loss := loss(freePNLsFilter, m.Filter.GainVal, m.Filter.LossPercent)
+			gain, loss := buildReport(freePNLsFilter, m.Filter.GainVal, m.Filter.LossPercent)
 			content := gain + loss
 
 			if gain != "" || loss != "" {
@@ -134,7 +134,7 @@ func (m *PNLMonitor) sendPNLReport(ctx context.Context) {
 	}
 }
 
-func loss(freePNLs pnl.FreePNLs, filterGainVal, filterLossPercent string) (string, string) {
+func buildReport(freePNLs pnl.FreePNLs, filterGainVal, filterLossPercent string) (string, string) {
 	var filterGainPNLs []pnl.FreePNL
 	var filterLossPNLs []pnl.FreePNL
 	zeroGain, _ := new(big.Float).SetString("0")

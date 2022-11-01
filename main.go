@@ -87,45 +87,55 @@ func main() {
 	apiKey := ""
 	secretKey := ""
 
-	lowPNLMonitor := PNLMonitor{
+	pnlMonitor1 := PNLMonitor{
 		Logger:    myLogger,
 		ApiKey:    apiKey,
 		SecretKey: secretKey,
 		WP:        wg,
 		Cache:     cache,
-		Filter:    FilterMap[FilterLevelLow],
+		Filter:    FilterMap[FilterLevel1],
 	}
-	lowPNLMonitor.Init()
+	pnlMonitor1.Init()
 
-	midPNLMonitor := PNLMonitor{
+	pnlMonitor2 := PNLMonitor{
 		Logger:    myLogger,
 		ApiKey:    apiKey,
 		SecretKey: secretKey,
 		WP:        wg,
 		Cache:     cache,
-		Filter:    FilterMap[FilterLevelMid],
+		Filter:    FilterMap[FilterLevel2],
 	}
-	midPNLMonitor.Init()
+	pnlMonitor2.Init()
 
-	highPNLMonitor := PNLMonitor{
+	pnlMonitor3 := PNLMonitor{
 		Logger:    myLogger,
 		ApiKey:    apiKey,
 		SecretKey: secretKey,
 		WP:        wg,
 		Cache:     cache,
-		Filter:    FilterMap[FilterLevelHigh],
+		Filter:    FilterMap[FilterLevel3],
 	}
-	highPNLMonitor.Init()
+	pnlMonitor3.Init()
 
-	superPNLMonitor := PNLMonitor{
+	pnlMonitor4 := PNLMonitor{
 		Logger:    myLogger,
 		ApiKey:    apiKey,
 		SecretKey: secretKey,
 		WP:        wg,
 		Cache:     cache,
-		Filter:    FilterMap[FilterLevelSuper],
+		Filter:    FilterMap[FilterLevel4],
 	}
-	superPNLMonitor.Init()
+	pnlMonitor4.Init()
+
+	pnlMonitor5 := PNLMonitor{
+		Logger:    myLogger,
+		ApiKey:    apiKey,
+		SecretKey: secretKey,
+		WP:        wg,
+		Cache:     cache,
+		Filter:    FilterMap[FilterLevel5],
+	}
+	pnlMonitor4.Init()
 
 	shutdownCtx, shutdown := context.WithCancel(context.Background())
 
@@ -145,16 +155,19 @@ func main() {
 	//go priceHandler.Run(shutdownCtx)
 
 	wg.Add(1)
-	go lowPNLMonitor.Run(shutdownCtx)
+	go pnlMonitor1.Run(shutdownCtx)
 
 	wg.Add(1)
-	go midPNLMonitor.Run(shutdownCtx)
+	go pnlMonitor2.Run(shutdownCtx)
 
 	wg.Add(1)
-	go highPNLMonitor.Run(shutdownCtx)
+	go pnlMonitor3.Run(shutdownCtx)
 
 	wg.Add(1)
-	go superPNLMonitor.Run(shutdownCtx)
+	go pnlMonitor4.Run(shutdownCtx)
+
+	wg.Add(1)
+	go pnlMonitor5.Run(shutdownCtx)
 
 	wg.Wait()
 }

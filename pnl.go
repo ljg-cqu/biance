@@ -16,7 +16,8 @@ import (
 )
 
 const (
-	FilterLevel1 FilterLevel = iota
+	FilterLevel0 FilterLevel = iota
+	FilterLevel1
 	FilterLevel2
 	FilterLevel3
 	FilterLevel4
@@ -24,16 +25,17 @@ const (
 )
 
 var FilterMap = Filter{
-	FilterLevel1: {"0.05", "0.05", time.Second * 5, time.Minute * 5},
-	FilterLevel2: {"0.10", "0.10", time.Second * 4, time.Minute * 4},
-	FilterLevel3: {"0.15", "0.15", time.Second * 3, time.Minute * 3},
-	FilterLevel4: {"0.20", "0.20", time.Second * 2, time.Minute * 2},
-	FilterLevel5: {"0.25", "0.25", time.Second * 1, time.Minute * 1},
+	FilterLevel1: {FilterLevel1, "0.05", "0.05", time.Second * 5, time.Minute * 5},
+	FilterLevel2: {FilterLevel2, "0.10", "0.10", time.Second * 4, time.Minute * 4},
+	FilterLevel3: {FilterLevel3, "0.15", "0.15", time.Second * 3, time.Minute * 3},
+	FilterLevel4: {FilterLevel4, "0.20", "0.20", time.Second * 2, time.Minute * 2},
+	FilterLevel5: {FilterLevel5, "0.25", "0.25", time.Second * 1, time.Minute * 1},
 }
 
-type Filter map[FilterLevel]FilterGainValAndLossPercent
+type Filter map[FilterLevel]FilterGainValAndLoss
 
-type FilterGainValAndLossPercent struct {
+type FilterGainValAndLoss struct {
+	FilterLevel       FilterLevel
 	GainPercent       string
 	LossPercent       string
 	CheckPNLInterval  time.Duration
@@ -48,7 +50,7 @@ type PNLMonitor struct {
 	SecretKey string
 	WP        *sync.WaitGroup
 	Cache     *ristretto.Cache
-	Filter    FilterGainValAndLossPercent
+	Filter    FilterGainValAndLoss
 
 	client         biance.Client
 	userAssetURL   string
@@ -103,7 +105,7 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 				freePNLsFilter = append(freePNLsFilter, freePNL)
 			}
 
-			gain, loss := buildReport(freePNLsFilter, m.Filter.GainPercent, m.Filter.LossPercent)
+			gain, loss := buildReport(freePNLsFilter, m.Filter.FilterLevel, m.Filter.GainPercent, m.Filter.LossPercent)
 			content := gain + loss
 
 			if gain != "" || loss != "" {
@@ -134,7 +136,7 @@ func (m *PNLMonitor) sendPNLReport(ctx context.Context) {
 	}
 }
 
-func buildReport(freePNLs pnl.FreePNLs, filterLevel FilterLevel,filterGainPercent, filterLossPercent string) (string, string) {
+func buildReport(freePNLs pnl.FreePNLs, filterLevel FilterLevel, filterGainPercent, filterLossPercent string) (string, string) {
 	var filterGainPNLs []pnl.FreePNL
 	var filterLossPNLs []pnl.FreePNL
 	zeroGain, _ := new(big.Float).SetString("0")
@@ -164,7 +166,7 @@ func buildReport(freePNLs pnl.FreePNLs, filterLevel FilterLevel,filterGainPercen
 
 	if len(filterGainPNLs) > 0 {
 		gainInfoStr = fmt.Sprintf("\n+++++LEVEL:%v\n+++++TOKEN:%v PROFIT:%v\n-----TIME:%v\n",
-			filterLevel,len(filterGainPNLs), totalGain, time.Now())
+			filterLevel, len(filterGainPNLs), totalGain, time.Now())
 		for _, gainPNL := range filterGainPNLs {
 			gainInfoStr += fmt.Sprintf("%v %v => %v @%v%%\n", gainPNL.Symbol, gainPNL.PNLAmountConvertable,
 				gainPNL.PNLValue, new(big.Float).Mul(oneHundred, gainPNL.PNLPercent))
@@ -173,7 +175,7 @@ func buildReport(freePNLs pnl.FreePNLs, filterLevel FilterLevel,filterGainPercen
 
 	if len(filterLossPNLs) > 0 {
 		lossInfoStr = fmt.Sprintf("\n-----LEVEL:%v\n-----TOKEN:%v LOSS:%v\n-----%v\n",
-			filterLevel,len(filterLossPNLs), totalLoss, time.Now())
+			filterLevel, len(filterLossPNLs), totalLoss, time.Now())
 		for _, lossPNL := range filterLossPNLs {
 			lossInfoStr += fmt.Sprintf("%v %v @%v%%\n", lossPNL.Symbol,
 				lossPNL.PNLValue, new(big.Float).Mul(oneHundred, lossPNL.PNLPercent))

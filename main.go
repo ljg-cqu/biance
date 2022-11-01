@@ -142,7 +142,7 @@ func main() {
 		Cache:     cache,
 		Filter:    FilterMap[FilterLevel5],
 	}
-	pnlMonitor4.Init()
+	pnlMonitor5.Init()
 
 	shutdownCtx, shutdown := context.WithCancel(context.Background())
 

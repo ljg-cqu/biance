@@ -16,17 +16,19 @@ import (
 )
 
 const (
-	FilterLevelLow FilterLevel = iota
-	FilterLevelMid
-	FilterLevelHigh
-	FilterLevelSuper
+	FilterLevel1 FilterLevel = iota
+	FilterLevel2
+	FilterLevel3
+	FilterLevel4
+	FilterLevel5
 )
 
 var FilterMap = Filter{
-	FilterLevelLow:   {"0.05", "0.10", time.Second * 1, time.Second * 90},
-	FilterLevelMid:   {"0.12", "0.15", time.Second * 1, time.Second * 75},
-	FilterLevelHigh:  {"0.24", "0.25", time.Second * 1, time.Second * 60},
-	FilterLevelSuper: {"0.48", "0.50", time.Second * 1, time.Second * 45},
+	FilterLevel1: {"0.05", "0.05", time.Second * 5, time.Minute * 5},
+	FilterLevel2: {"0.10", "0.10", time.Second * 4, time.Minute * 4},
+	FilterLevel3: {"0.15", "0.15", time.Second * 3, time.Minute * 3},
+	FilterLevel4: {"0.20", "0.20", time.Second * 2, time.Minute * 2},
+	FilterLevel5: {"0.25", "0.25", time.Second * 1, time.Minute * 1},
 }
 
 type Filter map[FilterLevel]FilterGainValAndLossPercent

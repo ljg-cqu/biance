@@ -35,7 +35,7 @@ func (p FreePNLs) Len() int {
 }
 
 func (p FreePNLs) Less(i, j int) bool {
-	if p[i].PNLValue.Cmp(p[j].PNLValue) == 1 {
+	if p[i].PNLPercent.Cmp(p[j].PNLPercent) == 1 {
 		return true
 	}
 	return false

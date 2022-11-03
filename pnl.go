@@ -134,7 +134,7 @@ func (m *PNLMonitor) sendPNLReport(ctx context.Context) {
 			err := email.SendPNLReportWithQQMail(m.Logger, ctx, subject, content)
 			m.Logger.DebugOnError(err, "Failed to send email with QQ mailbox.")
 			err = email.SendPNLReportWith126Mail(m.Logger, ctx, subject, content)
-			m.Logger.ErrorOnError(err, "Failed to send email with 126 mailbox")
+			m.Logger.DebugOnError(err, "Failed to send email with 126 mailbox")
 		}
 	}
 }

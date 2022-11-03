@@ -167,8 +167,8 @@ func buildReport(freePNLs pnl.FreePNLs, filterLevel FilterLevel, filterGainPerce
 	if len(filterGainPNLs) > 0 {
 		gainInfoStr = fmt.Sprintf("\n+++++LEVEL:%v\n+++++TOKEN:%v PROFIT:%v\n-----TIME:%v\n",
 			filterLevel, len(filterGainPNLs), totalGain, time.Now())
-		for _, gainPNL := range filterGainPNLs {
-			gainInfoStr += fmt.Sprintf("%v %v => %v @%v%%\n", gainPNL.Symbol, gainPNL.PNLAmountConvertable,
+		for i, gainPNL := range filterGainPNLs {
+			gainInfoStr += fmt.Sprintf("(%v) %v %v => %v @%v%%\n", i, gainPNL.Symbol, gainPNL.PNLAmountConvertable,
 				gainPNL.PNLValue, new(big.Float).Mul(oneHundred, gainPNL.PNLPercent))
 		}
 	}
@@ -176,8 +176,8 @@ func buildReport(freePNLs pnl.FreePNLs, filterLevel FilterLevel, filterGainPerce
 	if len(filterLossPNLs) > 0 {
 		lossInfoStr = fmt.Sprintf("\n-----LEVEL:%v\n-----TOKEN:%v LOSS:%v\n-----%v\n",
 			filterLevel, len(filterLossPNLs), totalLoss, time.Now())
-		for _, lossPNL := range filterLossPNLs {
-			lossInfoStr += fmt.Sprintf("%v %v @%v%%\n", lossPNL.Symbol,
+		for i, lossPNL := range filterLossPNLs {
+			lossInfoStr += fmt.Sprintf("(%v) %v %v @%v%%\n", i, lossPNL.Symbol,
 				lossPNL.PNLValue, new(big.Float).Mul(oneHundred, lossPNL.PNLPercent))
 		}
 	}

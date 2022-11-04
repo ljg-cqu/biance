@@ -1,40 +1,74 @@
-module github.com/ljg-cqu/biance
+package email
 
-go 1.18
-
-require (
-	github.com/dgraph-io/badger/v3 v3.2103.3
-	github.com/dgraph-io/ristretto v0.1.1
-	github.com/google/uuid v1.3.0
-	github.com/lestrrat-go/backoff/v2 v2.0.8
-	github.com/ljg-cqu/core v0.0.0-20221104112658-39582ee86747
-	github.com/pkg/errors v0.9.1
-	github.com/sirupsen/logrus v1.9.0
-	github.com/stretchr/testify v1.8.0
-	github.com/xhit/go-simple-mail/v2 v2.12.0
-	go.uber.org/zap v1.23.0
+import (
+	"context"
+	"crypto/tls"
+	"github.com/ljg-cqu/biance/logger"
+	"github.com/ljg-cqu/biance/utils/backoff"
+	"github.com/ljg-cqu/core/smtp"
+	"github.com/pkg/errors"
+	mail "github.com/xhit/go-simple-mail/v2"
+	"time"
 )
 
-require (
-	github.com/cespare/xxhash v1.1.0 // indirect
-	github.com/cespare/xxhash/v2 v2.1.2 // indirect
-	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/dustin/go-humanize v1.0.0 // indirect
-	github.com/go-test/deep v1.0.8 // indirect
-	github.com/gogo/protobuf v1.3.2 // indirect
-	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b // indirect
-	github.com/golang/groupcache v0.0.0-20190702054246-869f871628b6 // indirect
-	github.com/golang/protobuf v1.3.1 // indirect
-	github.com/golang/snappy v0.0.3 // indirect
-	github.com/google/flatbuffers v1.12.1 // indirect
-	github.com/klauspost/compress v1.12.3 // indirect
-	github.com/lestrrat-go/option v1.0.0 // indirect
-	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/toorop/go-dkim v0.0.0-20201103131630-e1cd1a0a5208 // indirect
-	go.opencensus.io v0.22.5 // indirect
-	go.uber.org/atomic v1.9.0 // indirect
-	go.uber.org/multierr v1.7.0 // indirect
-	golang.org/x/net v0.0.0-20220127200216-cd36cc0744dd // indirect
-	golang.org/x/sys v0.0.0-20221010170243-090e33056c14 // indirect
-	gopkg.in/yaml.v3 v3.0.1 // indirect
-)
+func SendPNLReportWith126Mail(log logger.Logger, ctx context.Context, subject, content string) error {
+	email := mail.NewMSG()
+	email.SetFrom("Zealy <ljg_cqu@126.com>").
+		AddTo("ljg_cqu@163.com").
+		SetSubject(subject)
+	email.SetBody(mail.TextPlain, content)
+	err := backoff.RetryFnExponential10Times(log, ctx, time.Second, time.Second*10, func() (bool, error) {
+		emailCli, err := smtp.NewEmailClient(smtp.NetEase126Mail, &tls.Config{InsecureSkipVerify: true}, "ljg_cqu@126.com", "XROTXFGWZUILANPB")
+		if err != nil {
+			return false, errors.Wrapf(err, "failed to create 126 email client.")
+		}
+		err = emailCli.Send(email)
+		if err != nil {
+			return false, errors.Wrapf(err, "failed to send 126 email")
+		}
+		return false, nil
+	})
+	return errors.WithStack(err)
+}
+
+func SendPNLReportWith163Mail(log logger.Logger, ctx context.Context, subject, content string) error {
+	email := mail.NewMSG()
+	email.SetFrom("Zealy <ljg_cqu@163.com>").
+		AddTo("ljg_cqu@163.com").
+		SetSubject(subject)
+	email.SetBody(mail.TextPlain, content)
+
+	err := backoff.RetryFnExponential10Times(log, ctx, time.Second, time.Second*10, func() (bool, error) {
+		emailCli, err := smtp.NewEmailClient(smtp.NetEase163Mail, &tls.Config{InsecureSkipVerify: true}, "ljg_cqu@163.com", "QLVMFGJIHJEPBZOR")
+		if err != nil {
+			return false, errors.Wrapf(err, "failed to create 163 email client.")
+		}
+		err = emailCli.Send(email)
+		if err != nil {
+			return false, errors.Wrapf(err, "failed to send 163 email")
+		}
+		return false, nil
+	})
+	return errors.WithStack(err)
+}
+
+func SendPNLReportWithQQMail(log logger.Logger, ctx context.Context, subject, content string) error {
+	email := mail.NewMSG()
+	email.SetFrom("Zealy <1025003548@qq.com>").
+		AddTo("ljg_cqu@163.com").
+		SetSubject(subject)
+	email.SetBody(mail.TextPlain, content)
+
+	err := backoff.RetryFnExponential10Times(log, ctx, time.Second, time.Second*10, func() (bool, error) {
+		emailCli, err := smtp.NewEmailClient(smtp.QQMail, &tls.Config{InsecureSkipVerify: true}, "1025003548@qq.com", "ncoajiivbenpbfbh")
+		if err != nil {
+			return false, errors.Wrapf(err, "failed to create QQ email client.")
+		}
+		err = emailCli.Send(email)
+		if err != nil {
+			return false, errors.Wrapf(err, "failed to send QQ email")
+		}
+		return false, nil
+	})
+	return errors.WithStack(err)
+}

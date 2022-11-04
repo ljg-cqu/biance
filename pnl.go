@@ -48,29 +48,25 @@ type FilterGainValAndLoss struct {
 type FilterLevel int
 
 type PNLMonitor struct {
-	Logger          logger.Logger
-	ApiKey          string
-	SecretKey       string
-	WP              *sync.WaitGroup
-	Cache           *ristretto.Cache
-	Filter          FilterGainValAndLoss
-	EnableQQReport  bool
-	Enable126Report bool
+	Logger    logger.Logger
+	ApiKey    string
+	SecretKey string
+	WP        *sync.WaitGroup
+	Cache     *ristretto.Cache
+	Filter    FilterGainValAndLoss
 
 	client         biance.Client
 	userAssetURL   string
 	symbolPriceURL string
 
-	reportChQQ  chan string
-	reportCh126 chan string
+	emailReportCH chan string
 }
 
 func (m *PNLMonitor) Init() {
 	m.client = &http.Client{}
 	m.userAssetURL = biance.URLs[biance.URLUserAsset]
 	m.symbolPriceURL = biance.URLs[biance.URLSymbolPrice]
-	m.reportChQQ = make(chan string, 1024)
-	m.reportCh126 = make(chan string, 1024)
+	m.emailReportCH = make(chan string, 1024)
 }
 
 func (m *PNLMonitor) Run(ctx context.Context) {
@@ -78,14 +74,7 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 	defer tCheck.Stop()
 	defer m.WP.Done()
 
-	if m.EnableQQReport {
-		fmt.Println("Enable QQ email report")
-		go m.sendPNLReportQQ(ctx)
-	}
-	if m.Enable126Report {
-		fmt.Println("Enable 126 email report")
-		go m.sendPNLReport126(ctx)
-	}
+	go m.sendPNLReportWIthEmail(ctx)
 
 	for {
 		select {
@@ -124,8 +113,7 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 
 			if gain != "" || loss != "" {
 				fmt.Println(content)
-				m.reportChQQ <- content
-				m.reportCh126 <- content
+				m.emailReportCH <- content
 				for _, freePNLFilter := range freePNLsFilter {
 					key := string(freePNLFilter.Token) + m.Filter.ReportPNLInterval.String()
 					m.Cache.SetWithTTL(key, "", 1, m.Filter.ReportPNLInterval)
@@ -136,28 +124,26 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 	}
 }
 
-func (m *PNLMonitor) sendPNLReportQQ(ctx context.Context) {
+func (m *PNLMonitor) sendPNLReportWIthEmail(ctx context.Context) {
 	for {
 		select {
 		case <-ctx.Done():
 			return
-		case content := <-m.reportChQQ:
+		case content := <-m.emailReportCH:
 			subject := "Biance Investment PNL Report"
-			err := email.SendPNLReportWithQQMail(m.Logger, ctx, subject, content)
-			m.Logger.DebugOnError(err, "Failed to send email with QQ mailbox.")
-		}
-	}
-}
 
-func (m *PNLMonitor) sendPNLReport126(ctx context.Context) {
-	for {
-		select {
-		case <-ctx.Done():
-			return
-		case content := <-m.reportChQQ:
-			subject := "Biance Investment PNL Report"
-			err := email.SendPNLReportWith126Mail(m.Logger, ctx, subject, content)
-			m.Logger.DebugOnError(err, "Failed to send email with 126 mailbox")
+			err := email.SendPNLReportWith163Mail(m.Logger, ctx, subject, content)
+			m.Logger.DebugOnError(err, "Failed to send email with 163 mailbox")
+
+			if err != nil {
+				err = email.SendPNLReportWith126Mail(m.Logger, ctx, subject, content)
+				m.Logger.DebugOnError(err, "Failed to send email with 126 mailbox")
+			}
+
+			if err != nil {
+				err := email.SendPNLReportWithQQMail(m.Logger, ctx, subject, content)
+				m.Logger.DebugOnError(err, "Failed to send email with QQ mailbox.")
+			}
 		}
 	}
 }

@@ -62,15 +62,15 @@ func TestCheckFreePNLWithUSDTOrBUSD(t *testing.T) {
 
 	var gainInfoStr = fmt.Sprintf("\n++++++++++++++++++++tokens:%v profit:%v++++++++++++++++++++\n",
 		len(gainPNLs), totalGain)
-	for _, gainPNL := range gainPNLs {
-		gainInfoStr += fmt.Sprintf("%v %v => %v @%v%%\n", gainPNL.Symbol, gainPNL.PNLAmountConvertable,
+	for i, gainPNL := range gainPNLs {
+		gainInfoStr += fmt.Sprintf("(%v) %v %v => %v @%v%%\n", i, gainPNL.Symbol, gainPNL.PNLAmountConvertable,
 			gainPNL.PNLValue, new(big.Float).Mul(oneHundred, gainPNL.PNLPercent))
 	}
 
 	var lossInfoStr = fmt.Sprintf("--------------------tokens:%v loss:%v--------------------\n",
 		len(lossPNLs), totalLoss)
-	for _, lossPNL := range lossPNLs {
-		lossInfoStr += fmt.Sprintf("%v %v @%v%%\n", lossPNL.Symbol,
+	for i, lossPNL := range lossPNLs {
+		lossInfoStr += fmt.Sprintf("(%v) %v %v @%v%%\n", i, lossPNL.Symbol,
 			lossPNL.PNLValue, new(big.Float).Mul(oneHundred, lossPNL.PNLPercent))
 	}
 

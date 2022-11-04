@@ -16,8 +16,6 @@ import (
 
 func main() {
 	var levels = flag.String("reportLevels", "0 1 2 3 4 5 6", "report levels")
-	var emailQQ = flag.Bool("emailQQ", true, "qq email")
-	var email126 = flag.Bool("email126", false, "126 email")
 	flag.Parse()
 
 	levelsSplit := strings.Fields(*levels)
@@ -106,14 +104,12 @@ func main() {
 
 	if levelsMap["0"] {
 		pnlMonitor0 := PNLMonitor{
-			Logger:          myLogger,
-			ApiKey:          apiKey,
-			SecretKey:       secretKey,
-			WP:              wg,
-			Cache:           cache,
-			Filter:          FilterMap[FilterLevel0],
-			EnableQQReport:  *emailQQ,
-			Enable126Report: *email126,
+			Logger:    myLogger,
+			ApiKey:    apiKey,
+			SecretKey: secretKey,
+			WP:        wg,
+			Cache:     cache,
+			Filter:    FilterMap[FilterLevel0],
 		}
 		pnlMonitor0.Init()
 		wg.Add(1)
@@ -123,14 +119,12 @@ func main() {
 
 	if levelsMap["1"] {
 		pnlMonitor1 := PNLMonitor{
-			Logger:          myLogger,
-			ApiKey:          apiKey,
-			SecretKey:       secretKey,
-			WP:              wg,
-			Cache:           cache,
-			Filter:          FilterMap[FilterLevel1],
-			EnableQQReport:  *emailQQ,
-			Enable126Report: *email126,
+			Logger:    myLogger,
+			ApiKey:    apiKey,
+			SecretKey: secretKey,
+			WP:        wg,
+			Cache:     cache,
+			Filter:    FilterMap[FilterLevel1],
 		}
 		pnlMonitor1.Init()
 		wg.Add(1)
@@ -140,14 +134,12 @@ func main() {
 
 	if levelsMap["2"] {
 		pnlMonitor2 := PNLMonitor{
-			Logger:          myLogger,
-			ApiKey:          apiKey,
-			SecretKey:       secretKey,
-			WP:              wg,
-			Cache:           cache,
-			Filter:          FilterMap[FilterLevel2],
-			EnableQQReport:  *emailQQ,
-			Enable126Report: *email126,
+			Logger:    myLogger,
+			ApiKey:    apiKey,
+			SecretKey: secretKey,
+			WP:        wg,
+			Cache:     cache,
+			Filter:    FilterMap[FilterLevel2],
 		}
 		pnlMonitor2.Init()
 		wg.Add(1)
@@ -157,14 +149,12 @@ func main() {
 
 	if levelsMap["3"] {
 		pnlMonitor3 := PNLMonitor{
-			Logger:          myLogger,
-			ApiKey:          apiKey,
-			SecretKey:       secretKey,
-			WP:              wg,
-			Cache:           cache,
-			Filter:          FilterMap[FilterLevel3],
-			EnableQQReport:  *emailQQ,
-			Enable126Report: *email126,
+			Logger:    myLogger,
+			ApiKey:    apiKey,
+			SecretKey: secretKey,
+			WP:        wg,
+			Cache:     cache,
+			Filter:    FilterMap[FilterLevel3],
 		}
 		pnlMonitor3.Init()
 		wg.Add(1)
@@ -174,14 +164,12 @@ func main() {
 
 	if levelsMap["4"] {
 		pnlMonitor4 := PNLMonitor{
-			Logger:          myLogger,
-			ApiKey:          apiKey,
-			SecretKey:       secretKey,
-			WP:              wg,
-			Cache:           cache,
-			Filter:          FilterMap[FilterLevel4],
-			EnableQQReport:  *emailQQ,
-			Enable126Report: *email126,
+			Logger:    myLogger,
+			ApiKey:    apiKey,
+			SecretKey: secretKey,
+			WP:        wg,
+			Cache:     cache,
+			Filter:    FilterMap[FilterLevel4],
 		}
 		pnlMonitor4.Init()
 		wg.Add(1)
@@ -191,14 +179,12 @@ func main() {
 
 	if levelsMap["5"] {
 		pnlMonitor5 := PNLMonitor{
-			Logger:          myLogger,
-			ApiKey:          apiKey,
-			SecretKey:       secretKey,
-			WP:              wg,
-			Cache:           cache,
-			Filter:          FilterMap[FilterLevel5],
-			EnableQQReport:  *emailQQ,
-			Enable126Report: *email126,
+			Logger:    myLogger,
+			ApiKey:    apiKey,
+			SecretKey: secretKey,
+			WP:        wg,
+			Cache:     cache,
+			Filter:    FilterMap[FilterLevel5],
 		}
 		pnlMonitor5.Init()
 		wg.Add(1)
@@ -208,14 +194,12 @@ func main() {
 
 	if levelsMap["6"] {
 		pnlMonitor6 := PNLMonitor{
-			Logger:          myLogger,
-			ApiKey:          apiKey,
-			SecretKey:       secretKey,
-			WP:              wg,
-			Cache:           cache,
-			Filter:          FilterMap[FilterLevel6],
-			EnableQQReport:  *emailQQ,
-			Enable126Report: *email126,
+			Logger:    myLogger,
+			ApiKey:    apiKey,
+			SecretKey: secretKey,
+			WP:        wg,
+			Cache:     cache,
+			Filter:    FilterMap[FilterLevel6],
 		}
 		pnlMonitor6.Init()
 		wg.Add(1)

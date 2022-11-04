@@ -7,7 +7,7 @@ require (
 	github.com/dgraph-io/ristretto v0.1.1
 	github.com/google/uuid v1.3.0
 	github.com/lestrrat-go/backoff/v2 v2.0.8
-	github.com/ljg-cqu/core v0.0.0-20221031042531-38e186309d49
+	github.com/ljg-cqu/core v0.0.0-20221104112658-39582ee86747
 	github.com/pkg/errors v0.9.1
 	github.com/sirupsen/logrus v1.9.0
 	github.com/stretchr/testify v1.8.0

@@ -8,6 +8,7 @@ import (
 	"math/big"
 	"net/http"
 	"testing"
+	"strings"
 )
 
 func TestCheckFreePNLWithUSDTOrBUSD(t *testing.T) {

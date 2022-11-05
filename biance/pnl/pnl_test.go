@@ -7,8 +7,8 @@ import (
 	"github.com/stretchr/testify/require"
 	"math/big"
 	"net/http"
-	"testing"
 	"strings"
+	"testing"
 )
 
 func TestCheckFreePNLWithUSDTOrBUSD(t *testing.T) {
@@ -43,21 +43,25 @@ func TestCheckFreePNLWithUSDTOrBUSD(t *testing.T) {
 	zeroLoss, _ := new(big.Float).SetString("0")
 
 	gailThreshold, _ := new(big.Float).SetString("0.05")
-	lossThreshold, _ := new(big.Float).SetString("0.10")
+	lossThreshold, _ := new(big.Float).SetString("0.05")
 	var totalGain = zeroGain
 	var totalLoss = zeroLoss
 
 	oneHundred, _ := new(big.Float).SetString("100")
-
+	zero, _ := new(big.Float).SetString("0")
 	for _, freePNL := range freePNLsFilter {
-		if freePNL.PNLPercent.Cmp(gailThreshold) == 1 {
-			gainPNLs = append(gainPNLs, freePNL)
-			totalGain = new(big.Float).Add(totalGain, freePNL.PNLValue)
-			continue
-		}
-		if new(big.Float).Abs(freePNL.PNLPercent).Cmp(lossThreshold) == 1 {
-			lossPNLs = append(lossPNLs, freePNL)
-			totalLoss = new(big.Float).Add(totalLoss, freePNL.PNLValue)
+		switch freePNL.PNLPercent.Cmp(zero) {
+		case 1:
+			if freePNL.PNLPercent.Cmp(gailThreshold) == 1 {
+				gainPNLs = append(gainPNLs, freePNL)
+				totalGain = new(big.Float).Add(totalGain, freePNL.PNLValue)
+			}
+		case 0:
+		case -1:
+			if new(big.Float).Abs(freePNL.PNLPercent).Cmp(lossThreshold) == 1 {
+				lossPNLs = append(lossPNLs, freePNL)
+				totalLoss = new(big.Float).Add(totalLoss, freePNL.PNLValue)
+			}
 		}
 	}
 

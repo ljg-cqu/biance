@@ -15,7 +15,7 @@ var tokenWithDollarPrincipal = map[asset.Token]string{
 	//"POLYX": "1000",
 }
 
-var tokenWith200DollarPrincipal = []asset.Token{"MDX", "APT", "POLYX", "REN", "VOXEL", "TVK", "SC", "CHESS", "REI", "AVAX", "MATIC", "ATOM", "BETH", "CTSI", "ARPA", "HBAR", "AION", "FIO", "GLMR", "JOE", "KDA", "CFX", "XEC", "IOTX", "SLP", "AKRO", "DATA", "SUN", "ICX", "DOT", "OM", "KEY", "WING", "IDEX", "FLUX", "USTC", "PERP", "WRX", "RIF", "MC", "LOOM", "CTXC", "OXT", "CVP", "POND", "TRU", "CLV", "QI", "PERL", "MULTI", "FOR", "REQ", "PNT", "HIVE", "FIL", "COCOS", "ACA", "LTO", "LIT"}
+var tokenWith200DollarPrincipal = []asset.Token{"SNM", "ZEC", "PROS", "OMG", "UTK", "PEOPLE", "MINA", "SUSHI", "DYDX", "YGG", "MDX", "APT", "POLYX", "REN", "VOXEL", "TVK", "SC", "CHESS", "REI", "AVAX", "MATIC", "ATOM", "BETH", "CTSI", "ARPA", "HBAR", "AION", "FIO", "GLMR", "JOE", "KDA", "CFX", "XEC", "IOTX", "SLP", "AKRO", "DATA", "SUN", "ICX", "DOT", "OM", "KEY", "WING", "IDEX", "FLUX", "USTC", "PERP", "WRX", "RIF", "MC", "LOOM", "CTXC", "OXT", "CVP", "POND", "TRU", "CLV", "QI", "PERL", "MULTI", "FOR", "REQ", "PNT", "HIVE", "FIL", "COCOS", "ACA", "LTO", "LIT"}
 
 type FreePNL struct {
 	Token asset.Token

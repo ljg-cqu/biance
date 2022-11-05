@@ -160,19 +160,23 @@ func buildReport(freePNLs pnl.FreePNLs, filterLevel FilterLevel, filterGainPerce
 	var totalLoss = zeroLoss
 
 	oneHundred, _ := new(big.Float).SetString("100")
-
+	zero, _ := new(big.Float).SetString("0")
 	for _, freePNL := range freePNLs {
-		if freePNL.PNLPercent.Cmp(filterGainPercentBig) == 1 {
-			filterGainPNLs = append(filterGainPNLs, freePNL)
-			totalGain = new(big.Float).Add(totalGain, freePNL.PNLValue)
-			continue
-		}
-		if new(big.Float).Abs(freePNL.PNLPercent).Cmp(filterLossPercentBig) == 1 {
-			filterLossPNLs = append(filterLossPNLs, freePNL)
-			totalLoss = new(big.Float).Add(totalLoss, freePNL.PNLValue)
+		switch freePNL.PNLPercent.Cmp(zero) {
+		case 1:
+			if freePNL.PNLPercent.Cmp(filterGainPercentBig) == 1 {
+				filterGainPNLs = append(filterGainPNLs, freePNL)
+				totalGain = new(big.Float).Add(totalGain, freePNL.PNLValue)
+			}
+		case 0:
+		case -1:
+			if new(big.Float).Abs(freePNL.PNLPercent).Cmp(filterLossPercentBig) == 1 {
+				filterLossPNLs = append(filterLossPNLs, freePNL)
+				totalLoss = new(big.Float).Add(totalLoss, freePNL.PNLValue)
+			}
 		}
 	}
-
+	
 	var gainInfoStr string
 	var lossInfoStr string
 

@@ -26,13 +26,13 @@ const (
 )
 
 var FilterMap = Filter{
-	FilterLevel0: {FilterLevel0, "0.03", "0.06", time.Second * 1, time.Second * 210},
-	FilterLevel1: {FilterLevel1, "0.05", "0.09", time.Second * 1, time.Second * 180},
-	FilterLevel2: {FilterLevel2, "0.10", "0.13", time.Second * 1, time.Second * 150},
-	FilterLevel3: {FilterLevel3, "0.15", "0.195", time.Second * 1, time.Second * 120},
-	FilterLevel4: {FilterLevel4, "0.20", "0.26", time.Second * 1, time.Second * 90},
-	FilterLevel5: {FilterLevel5, "0.25", "0.325", time.Second * 1, time.Second * 60},
-	FilterLevel6: {FilterLevel6, "0.30", "0.39", time.Second * 1, time.Second * 30},
+	FilterLevel0: {FilterLevel0, "0.03", "0.05", time.Second * 7, time.Minute * 7},
+	FilterLevel1: {FilterLevel1, "0.05", "0.10", time.Second * 6, time.Minute * 6},
+	FilterLevel2: {FilterLevel2, "0.10", "0.15", time.Second * 5, time.Minute * 5},
+	FilterLevel3: {FilterLevel3, "0.15", "0.20", time.Second * 4, time.Minute * 4},
+	FilterLevel4: {FilterLevel4, "0.20", "0.25", time.Second * 3, time.Minute * 3},
+	FilterLevel5: {FilterLevel5, "0.25", "0.30", time.Second * 2, time.Minute * 2},
+	FilterLevel6: {FilterLevel6, "0.30", "0.35", time.Second * 1, time.Second * 1},
 }
 
 type Filter map[FilterLevel]FilterGainValAndLoss

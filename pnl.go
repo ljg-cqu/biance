@@ -26,13 +26,13 @@ const (
 )
 
 var FilterMap = Filter{
-	FilterLevel0: {FilterLevel0, "0.03", "0.05", time.Second * 7, time.Minute * 7},
-	FilterLevel1: {FilterLevel1, "0.05", "0.10", time.Second * 6, time.Minute * 6},
-	FilterLevel2: {FilterLevel2, "0.10", "0.15", time.Second * 5, time.Minute * 5},
-	FilterLevel3: {FilterLevel3, "0.15", "0.20", time.Second * 4, time.Minute * 4},
-	FilterLevel4: {FilterLevel4, "0.20", "0.25", time.Second * 3, time.Minute * 3},
-	FilterLevel5: {FilterLevel5, "0.25", "0.30", time.Second * 2, time.Minute * 2},
-	FilterLevel6: {FilterLevel6, "0.30", "0.35", time.Second * 1, time.Second * 1},
+	FilterLevel0: {FilterLevel0, "0.03", "0.03", time.Second * 1, time.Second * 120},
+	FilterLevel1: {FilterLevel1, "0.05", "0.05", time.Second * 1, time.Second * 105},
+	FilterLevel2: {FilterLevel2, "0.10", "0.10", time.Second * 1, time.Second * 90},
+	FilterLevel3: {FilterLevel3, "0.15", "0.15", time.Second * 1, time.Second * 75},
+	FilterLevel4: {FilterLevel4, "0.20", "0.20", time.Second * 1, time.Second * 60},
+	FilterLevel5: {FilterLevel5, "0.25", "0.25", time.Second * 1, time.Second * 45},
+	FilterLevel6: {FilterLevel6, "0.30", "0.30", time.Second * 1, time.Second * 30},
 }
 
 type Filter map[FilterLevel]FilterGainValAndLoss
@@ -59,14 +59,21 @@ type PNLMonitor struct {
 	userAssetURL   string
 	symbolPriceURL string
 
-	emailReportCH chan string
+	emailGainReportCH chan string
+	emailLossReportCH chan string
+
+	gailEmailAddress string
+	lossEmailAddress string
 }
 
 func (m *PNLMonitor) Init() {
 	m.client = &http.Client{}
 	m.userAssetURL = biance.URLs[biance.URLUserAsset]
 	m.symbolPriceURL = biance.URLs[biance.URLSymbolPrice]
-	m.emailReportCH = make(chan string, 1024)
+	m.emailGainReportCH = make(chan string, 1024)
+	m.emailLossReportCH = make(chan string, 1024)
+	m.gailEmailAddress = "ljg_cqu@163.com"
+	m.lossEmailAddress = "1035003548@qq.com"
 }
 
 func (m *PNLMonitor) Run(ctx context.Context) {
@@ -109,11 +116,21 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 			}
 
 			gain, loss := buildReport(freePNLsFilter, m.Filter.FilterLevel, m.Filter.GainPercent, m.Filter.LossPercent)
-			content := gain + loss
-
 			if gain != "" || loss != "" {
-				fmt.Println(content)
-				m.emailReportCH <- content
+				fmt.Println(gain + loss)
+			}
+
+			if gain != "" {
+				m.emailGainReportCH <- gain
+				for _, freePNLFilter := range freePNLsFilter {
+					key := string(freePNLFilter.Token) + m.Filter.ReportPNLInterval.String()
+					m.Cache.SetWithTTL(key, "", 1, m.Filter.ReportPNLInterval)
+					m.Cache.Wait()
+				}
+			}
+
+			if loss != "" {
+				m.emailLossReportCH <- loss
 				for _, freePNLFilter := range freePNLsFilter {
 					key := string(freePNLFilter.Token) + m.Filter.ReportPNLInterval.String()
 					m.Cache.SetWithTTL(key, "", 1, m.Filter.ReportPNLInterval)
@@ -129,22 +146,28 @@ func (m *PNLMonitor) sendPNLReportWIthEmail(ctx context.Context) {
 		select {
 		case <-ctx.Done():
 			return
-		case content := <-m.emailReportCH:
-			subject := "Biance Investment PNL Report"
-
-			err := email.SendPNLReportWith163Mail(m.Logger, ctx, subject, content)
-			m.Logger.DebugOnError(err, "Failed to send email with 163 mailbox")
-
-			if err != nil {
-				err = email.SendPNLReportWith126Mail(m.Logger, ctx, subject, content)
-				m.Logger.DebugOnError(err, "Failed to send email with 126 mailbox")
-			}
-
-			if err != nil {
-				err := email.SendPNLReportWithQQMail(m.Logger, ctx, subject, content)
-				m.Logger.DebugOnError(err, "Failed to send email with QQ mailbox.")
-			}
+		case content := <-m.emailGainReportCH:
+			subject := "Biance Investment Gain Report"
+			m.doSendPNLReportWIthEmail(ctx, subject, content, m.gailEmailAddress)
+		case content := <-m.emailLossReportCH:
+			subject := "Biance Investment Loss Report"
+			m.doSendPNLReportWIthEmail(ctx, subject, content, m.lossEmailAddress)
 		}
+	}
+}
+
+func (m *PNLMonitor) doSendPNLReportWIthEmail(ctx context.Context, subject, content, to string) {
+	err := email.SendPNLReportWith163Mail(m.Logger, ctx, subject, content, to)
+	m.Logger.DebugOnError(err, "Failed to send email with 163 mailbox")
+
+	if err != nil {
+		err = email.SendPNLReportWith126Mail(m.Logger, ctx, subject, content, to)
+		m.Logger.DebugOnError(err, "Failed to send email with 126 mailbox")
+	}
+
+	if err != nil {
+		err := email.SendPNLReportWithQQMail(m.Logger, ctx, subject, content, to)
+		m.Logger.DebugOnError(err, "Failed to send email with QQ mailbox.")
 	}
 }
 

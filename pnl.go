@@ -73,7 +73,7 @@ func (m *PNLMonitor) Init() {
 	m.emailGainReportCH = make(chan string, 1024)
 	m.emailLossReportCH = make(chan string, 1024)
 	m.gailEmailAddress = "ljg_cqu@163.com"
-	m.lossEmailAddress = "1035003548@qq.com"
+	m.lossEmailAddress = "1025003548@qq.com"
 }
 
 func (m *PNLMonitor) Run(ctx context.Context) {

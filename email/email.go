@@ -11,10 +11,10 @@ import (
 	"time"
 )
 
-func SendPNLReportWith126Mail(log logger.Logger, ctx context.Context, subject, content string) error {
+func SendPNLReportWith126Mail(log logger.Logger, ctx context.Context, subject, content, to string) error {
 	email := mail.NewMSG()
 	email.SetFrom("Zealy <ljg_cqu@126.com>").
-		AddTo("ljg_cqu@163.com").
+		AddTo(to).
 		SetSubject(subject)
 	email.SetBody(mail.TextPlain, content)
 	err := backoff.RetryFnExponential10Times(log, ctx, time.Second, time.Second*10, func() (bool, error) {
@@ -31,10 +31,10 @@ func SendPNLReportWith126Mail(log logger.Logger, ctx context.Context, subject, c
 	return errors.WithStack(err)
 }
 
-func SendPNLReportWith163Mail(log logger.Logger, ctx context.Context, subject, content string) error {
+func SendPNLReportWith163Mail(log logger.Logger, ctx context.Context, subject, content, to string) error {
 	email := mail.NewMSG()
 	email.SetFrom("Zealy <ljg_cqu@163.com>").
-		AddTo("ljg_cqu@163.com").
+		AddTo(to).
 		SetSubject(subject)
 	email.SetBody(mail.TextPlain, content)
 
@@ -52,10 +52,10 @@ func SendPNLReportWith163Mail(log logger.Logger, ctx context.Context, subject, c
 	return errors.WithStack(err)
 }
 
-func SendPNLReportWithQQMail(log logger.Logger, ctx context.Context, subject, content string) error {
+func SendPNLReportWithQQMail(log logger.Logger, ctx context.Context, subject, content, to string) error {
 	email := mail.NewMSG()
 	email.SetFrom("Zealy <1025003548@qq.com>").
-		AddTo("ljg_cqu@163.com").
+		AddTo(to).
 		SetSubject(subject)
 	email.SetBody(mail.TextPlain, content)
 

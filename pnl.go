@@ -64,6 +64,8 @@ type PNLMonitor struct {
 
 	gailEmailAddress string
 	lossEmailAddress string
+
+	lossReportTimeAmplifier time.Duration
 }
 
 func (m *PNLMonitor) Init() {
@@ -74,6 +76,7 @@ func (m *PNLMonitor) Init() {
 	m.emailLossReportCH = make(chan string, 1024)
 	m.gailEmailAddress = "ljg_cqu@163.com"
 	m.lossEmailAddress = "1025003548@qq.com"
+	m.lossReportTimeAmplifier = 5
 }
 
 func (m *PNLMonitor) Run(ctx context.Context) {
@@ -133,7 +136,7 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 				m.emailLossReportCH <- loss
 				for _, freePNLFilter := range freePNLsFilter {
 					key := string(freePNLFilter.Token) + m.Filter.ReportPNLInterval.String()
-					m.Cache.SetWithTTL(key, "", 1, m.Filter.ReportPNLInterval)
+					m.Cache.SetWithTTL(key, "", 1, m.Filter.ReportPNLInterval*m.lossReportTimeAmplifier)
 					m.Cache.Wait()
 				}
 			}

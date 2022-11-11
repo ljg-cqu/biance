@@ -103,6 +103,8 @@ func CheckFreePNLWithUSDTOrBUSD(client biance.Client, assetURL, priceURL, asset,
 	return freePNLs, nil
 }
 
+// TODO:
+
 func configPrincipalValue(pnls FreePNLs) {
 	var token200Map = make(map[asset.Token]string)
 	for _, token := range tokenWith200DollarPrincipal {
@@ -123,7 +125,7 @@ func configPrincipalValue(pnls FreePNLs) {
 			continue
 		}
 
-		fity, _ := new(big.Float).SetString("50")
+		fity, _ := new(big.Float).SetString("10")
 		if pnl.FreeValue.Cmp(fity) == -1 {
 			pricipal, _ := new(big.Float).SetString("1")
 			pnls[i].PrincipalValueInDollar = pricipal

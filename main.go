@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"flag"
+	"fmt"
 	"github.com/dgraph-io/ristretto"
 	"github.com/ljg-cqu/biance/logger"
 	"os"
@@ -16,7 +17,13 @@ import (
 
 func main() {
 	var levels = flag.String("reportLevels", "0 1 2 3 4 5 6", "report levels")
+	var reportGain = flag.Bool("reportGain", true, "report gain")
+	var reportLoss = flag.Bool("reportLoss", true, "report loss")
 	flag.Parse()
+
+	fmt.Printf("report levels: %v\n", *levels)
+	fmt.Printf("report gain: %v\n", *reportGain)
+	fmt.Printf("report loss: %v\n", *reportLoss)
 
 	levelsSplit := strings.Fields(*levels)
 	var levelsMap = make(map[string]bool)
@@ -104,12 +111,14 @@ func main() {
 
 	if levelsMap["0"] {
 		pnlMonitor0 := PNLMonitor{
-			Logger:    myLogger,
-			ApiKey:    apiKey,
-			SecretKey: secretKey,
-			WP:        wg,
-			Cache:     cache,
-			Filter:    FilterMap[FilterLevel0],
+			Logger:     myLogger,
+			ApiKey:     apiKey,
+			SecretKey:  secretKey,
+			WP:         wg,
+			Cache:      cache,
+			Filter:     FilterMap[FilterLevel0],
+			ReportGain: *reportGain,
+			ReportLoss: *reportLoss,
 		}
 		pnlMonitor0.Init()
 		wg.Add(1)
@@ -119,12 +128,14 @@ func main() {
 
 	if levelsMap["1"] {
 		pnlMonitor1 := PNLMonitor{
-			Logger:    myLogger,
-			ApiKey:    apiKey,
-			SecretKey: secretKey,
-			WP:        wg,
-			Cache:     cache,
-			Filter:    FilterMap[FilterLevel1],
+			Logger:     myLogger,
+			ApiKey:     apiKey,
+			SecretKey:  secretKey,
+			WP:         wg,
+			Cache:      cache,
+			Filter:     FilterMap[FilterLevel1],
+			ReportGain: *reportGain,
+			ReportLoss: *reportLoss,
 		}
 		pnlMonitor1.Init()
 		wg.Add(1)
@@ -134,12 +145,14 @@ func main() {
 
 	if levelsMap["2"] {
 		pnlMonitor2 := PNLMonitor{
-			Logger:    myLogger,
-			ApiKey:    apiKey,
-			SecretKey: secretKey,
-			WP:        wg,
-			Cache:     cache,
-			Filter:    FilterMap[FilterLevel2],
+			Logger:     myLogger,
+			ApiKey:     apiKey,
+			SecretKey:  secretKey,
+			WP:         wg,
+			Cache:      cache,
+			Filter:     FilterMap[FilterLevel2],
+			ReportGain: *reportGain,
+			ReportLoss: *reportLoss,
 		}
 		pnlMonitor2.Init()
 		wg.Add(1)
@@ -149,12 +162,14 @@ func main() {
 
 	if levelsMap["3"] {
 		pnlMonitor3 := PNLMonitor{
-			Logger:    myLogger,
-			ApiKey:    apiKey,
-			SecretKey: secretKey,
-			WP:        wg,
-			Cache:     cache,
-			Filter:    FilterMap[FilterLevel3],
+			Logger:     myLogger,
+			ApiKey:     apiKey,
+			SecretKey:  secretKey,
+			WP:         wg,
+			Cache:      cache,
+			Filter:     FilterMap[FilterLevel3],
+			ReportGain: *reportGain,
+			ReportLoss: *reportLoss,
 		}
 		pnlMonitor3.Init()
 		wg.Add(1)
@@ -164,12 +179,14 @@ func main() {
 
 	if levelsMap["4"] {
 		pnlMonitor4 := PNLMonitor{
-			Logger:    myLogger,
-			ApiKey:    apiKey,
-			SecretKey: secretKey,
-			WP:        wg,
-			Cache:     cache,
-			Filter:    FilterMap[FilterLevel4],
+			Logger:     myLogger,
+			ApiKey:     apiKey,
+			SecretKey:  secretKey,
+			WP:         wg,
+			Cache:      cache,
+			Filter:     FilterMap[FilterLevel4],
+			ReportGain: *reportGain,
+			ReportLoss: *reportLoss,
 		}
 		pnlMonitor4.Init()
 		wg.Add(1)
@@ -179,12 +196,14 @@ func main() {
 
 	if levelsMap["5"] {
 		pnlMonitor5 := PNLMonitor{
-			Logger:    myLogger,
-			ApiKey:    apiKey,
-			SecretKey: secretKey,
-			WP:        wg,
-			Cache:     cache,
-			Filter:    FilterMap[FilterLevel5],
+			Logger:     myLogger,
+			ApiKey:     apiKey,
+			SecretKey:  secretKey,
+			WP:         wg,
+			Cache:      cache,
+			Filter:     FilterMap[FilterLevel5],
+			ReportGain: *reportGain,
+			ReportLoss: *reportLoss,
 		}
 		pnlMonitor5.Init()
 		wg.Add(1)
@@ -194,12 +213,14 @@ func main() {
 
 	if levelsMap["6"] {
 		pnlMonitor6 := PNLMonitor{
-			Logger:    myLogger,
-			ApiKey:    apiKey,
-			SecretKey: secretKey,
-			WP:        wg,
-			Cache:     cache,
-			Filter:    FilterMap[FilterLevel6],
+			Logger:     myLogger,
+			ApiKey:     apiKey,
+			SecretKey:  secretKey,
+			WP:         wg,
+			Cache:      cache,
+			Filter:     FilterMap[FilterLevel6],
+			ReportGain: *reportGain,
+			ReportLoss: *reportLoss,
 		}
 		pnlMonitor6.Init()
 		wg.Add(1)

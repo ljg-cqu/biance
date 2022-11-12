@@ -59,6 +59,9 @@ type PNLMonitor struct {
 	userAssetURL   string
 	symbolPriceURL string
 
+	ReportGain bool
+	ReportLoss bool
+
 	emailGainReportCH chan string
 	emailLossReportCH chan string
 
@@ -123,7 +126,7 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 				fmt.Println(gain + loss)
 			}
 
-			if gain != "" {
+			if gain != "" && m.ReportGain {
 				m.emailGainReportCH <- gain
 				for _, freePNLFilter := range freePNLsFilter {
 					key := string(freePNLFilter.Token) + m.Filter.ReportPNLInterval.String()
@@ -132,7 +135,7 @@ func (m *PNLMonitor) Run(ctx context.Context) {
 				}
 			}
 
-			if loss != "" {
+			if loss != "" && m.ReportLoss {
 				m.emailLossReportCH <- loss
 				for _, freePNLFilter := range freePNLsFilter {
 					key := string(freePNLFilter.Token) + m.Filter.ReportPNLInterval.String()

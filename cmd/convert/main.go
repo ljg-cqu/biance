@@ -82,8 +82,8 @@ func main() {
 		zeroLoss, _ := new(big.Float).SetString("0")
 
 		// TODO: config it
-		gailThreshold, _ := new(big.Float).SetString("0.01")
-		lossThreshold, _ := new(big.Float).SetString("0.05")
+		gailThreshold, _ := new(big.Float).SetString("0.03")
+		lossThreshold, _ := new(big.Float).SetString("0.15")
 		var totalGain = zeroGain
 		var totalLoss = zeroLoss
 
@@ -146,7 +146,7 @@ func main() {
 			myLogger.ErrorOnError(err, "failed to write file")
 			fmt.Println(lossInfoStr)
 
-			if len(lossPNLs) > 0 {
+			if len(lossPNLs) > 0 { // TODO: emit when have enough balance
 				lossMax := lossPNLs[len(lossPNLs)-1]
 				token := string(lossMax.Token)
 				symbol := string(lossMax.Symbol)

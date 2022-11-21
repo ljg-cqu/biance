@@ -53,19 +53,14 @@ func main() {
 	priceURL := biance.URLs[biance.URLSymbolPrice]
 
 	for {
+		// TODO: handle errors
 		err := os.Remove(FileGainConvertFrom)
-		myLogger.ErrorOnError(err, "failed to delete file")
 		err = os.Remove(FileGainConvertTo)
-		myLogger.ErrorOnError(err, "failed to delete file")
 		err = os.Remove(FileGainConvertValue)
-		myLogger.ErrorOnError(err, "failed to delete file")
 
 		err = os.Remove(FileLossConvertTo)
-		myLogger.ErrorOnError(err, "failed to delete file")
 		err = os.Remove(FileLossConvertFrom)
-		myLogger.ErrorOnError(err, "failed to delete file")
 		err = os.Remove(FileLossConvertValue)
-		myLogger.ErrorOnError(err, "failed to delete file")
 
 		freePNLs, err := pnl.CheckFreePNLWithUSDTOrBUSD(client, assetURL, priceURL, "", *apiKey, *secretKey)
 		if err != nil {

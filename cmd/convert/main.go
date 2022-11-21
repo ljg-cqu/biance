@@ -120,12 +120,8 @@ func main() {
 		}
 
 		if *reportGain {
-			gainf, err := os.OpenFile("gain.txt", os.O_TRUNC|os.O_CREATE|os.O_WRONLY, 0644) // TODO: reuse writeFile
-			myLogger.ErrorOnError(err, "failed to open file")
-
-			_, err = gainf.WriteString(gainInfoStr)
-			myLogger.ErrorOnError(err, "failed to write string")
-
+			err := writeFile("gain.txt", gainInfoStr)
+			myLogger.ErrorOnError(err, "failed to write file")
 			fmt.Println(gainInfoStr)
 
 			if len(gainPNLs) > 0 {
@@ -146,11 +142,8 @@ func main() {
 		}
 
 		if *reportLoss {
-			lossf, err := os.OpenFile("loss.txt", os.O_TRUNC|os.O_CREATE|os.O_WRONLY, 0644) // TODO: reuse writeFile
-			myLogger.ErrorOnError(err, "failed to open file")
-
-			_, err = lossf.WriteString(lossInfoStr)
-			myLogger.ErrorOnError(err, "failed to write string")
+			err := writeFile("loss.txt", lossInfoStr)
+			myLogger.ErrorOnError(err, "failed to write file")
 			fmt.Println(lossInfoStr)
 
 			if len(lossPNLs) > 0 {
@@ -177,5 +170,6 @@ func main() {
 func writeFile(path, content string) error {
 	f, err := os.OpenFile(path, os.O_TRUNC|os.O_CREATE|os.O_WRONLY, 0644)
 	_, err = f.WriteString(content)
+	f.Close()
 	return err
 }

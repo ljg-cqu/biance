@@ -14,6 +14,16 @@ import (
 	"time"
 )
 
+const (
+	FileGainConvertFrom  = "gainConvertFrom.txt"
+	FileGainConvertTo    = "gainConvertTo.txt"
+	FileGainConvertValue = "gainConvertValue.txt"
+
+	FileLossConvertFrom  = "lossConvertFrom.txt"
+	FileLossConvertTo    = "lossConvertTo.txt"
+	FileLossConvertValue = "lossConvertValue.txt"
+)
+
 func main() {
 	var apiKey = flag.String("apiKey", "", "Binance API key")
 	var secretKey = flag.String("secretKey", "", "Binance secret key")
@@ -72,7 +82,7 @@ func main() {
 		zeroLoss, _ := new(big.Float).SetString("0")
 
 		// TODO: config it
-		gailThreshold, _ := new(big.Float).SetString("0.05")
+		gailThreshold, _ := new(big.Float).SetString("0.01")
 		lossThreshold, _ := new(big.Float).SetString("0.05")
 		var totalGain = zeroGain
 		var totalLoss = zeroLoss
@@ -110,24 +120,62 @@ func main() {
 		}
 
 		if *reportGain {
-			gainf, err := os.OpenFile("gain.txt", os.O_TRUNC|os.O_CREATE|os.O_WRONLY, 0644)
+			gainf, err := os.OpenFile("gain.txt", os.O_TRUNC|os.O_CREATE|os.O_WRONLY, 0644) // TODO: reuse writeFile
 			myLogger.ErrorOnError(err, "failed to open file")
 
 			_, err = gainf.WriteString(gainInfoStr)
 			myLogger.ErrorOnError(err, "failed to write string")
 
 			fmt.Println(gainInfoStr)
+
+			if len(gainPNLs) > 0 {
+				gainMax := gainPNLs[0]
+				token := string(gainMax.Token)
+				symbol := string(gainMax.Symbol)
+
+				// TODO: deal with data consistency
+				err := writeFile(FileGainConvertFrom, token)
+				myLogger.ErrorOnError(err, "failed to write file")
+
+				err = writeFile(FileGainConvertTo, strings.TrimPrefix(symbol, token))
+				myLogger.ErrorOnError(err, "failed to write file")
+
+				err = writeFile(FileGainConvertValue, gainMax.PNLAmountConvertable.String())
+				myLogger.ErrorOnError(err, "failed to write file")
+			}
 		}
 
 		if *reportLoss {
-			lossf, err := os.OpenFile("loss.txt", os.O_TRUNC|os.O_CREATE|os.O_WRONLY, 0644)
+			lossf, err := os.OpenFile("loss.txt", os.O_TRUNC|os.O_CREATE|os.O_WRONLY, 0644) // TODO: reuse writeFile
 			myLogger.ErrorOnError(err, "failed to open file")
 
 			_, err = lossf.WriteString(lossInfoStr)
 			myLogger.ErrorOnError(err, "failed to write string")
 			fmt.Println(lossInfoStr)
+
+			if len(lossPNLs) > 0 {
+				lossMax := lossPNLs[len(lossPNLs)-1]
+				token := string(lossMax.Token)
+				symbol := string(lossMax.Symbol)
+
+				// TODO: deal with data consistency
+				err := writeFile(FileLossConvertTo, token)
+				myLogger.ErrorOnError(err, "failed to write file")
+
+				err = writeFile(FileLossConvertFrom, strings.TrimPrefix(symbol, token))
+				myLogger.ErrorOnError(err, "failed to write file")
+
+				err = writeFile(FileLossConvertValue, strings.TrimPrefix(lossMax.PNLValue.String(), "-"))
+				myLogger.ErrorOnError(err, "failed to write file")
+			}
 		}
 
-		time.Sleep(time.Second * 5)
+		time.Sleep(time.Second * 1)
 	}
+}
+
+func writeFile(path, content string) error {
+	f, err := os.OpenFile(path, os.O_TRUNC|os.O_CREATE|os.O_WRONLY, 0644)
+	_, err = f.WriteString(content)
+	return err
 }

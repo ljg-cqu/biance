@@ -75,6 +75,8 @@ func main() {
 			"USDT": "",
 			"BUSD": "",
 			"VIDT": "",
+			"T":    "",
+			"AR":   "",
 		}
 
 		for _, freePNL := range freePNLs {
@@ -91,7 +93,7 @@ func main() {
 		zeroLoss, _ := new(big.Float).SetString("0")
 
 		// TODO: config it
-		gailThreshold, _ := new(big.Float).SetString("0.03")
+		gailThreshold, _ := new(big.Float).SetString("0.01")
 		lossThreshold, _ := new(big.Float).SetString("0.15")
 		var totalGain = zeroGain
 		var totalLoss = zeroLoss
@@ -172,7 +174,7 @@ func main() {
 			}
 		}
 
-		time.Sleep(time.Second * 1)
+		time.Sleep(time.Second * 3)
 	}
 }
 

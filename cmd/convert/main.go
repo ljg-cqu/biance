@@ -53,15 +53,6 @@ func main() {
 	priceURL := biance.URLs[biance.URLSymbolPrice]
 
 	for {
-		// TODO: handle errors
-		writeFile(FileGainConvertFrom, "xxxxxx")
-		writeFile(FileGainConvertTo, "xxxxxx")
-		writeFile(FileGainConvertValue, "xxxxxx")
-
-		writeFile(FileLossConvertTo, "xxxxxx")
-		writeFile(FileLossConvertFrom, "xxxxxx")
-		writeFile(FileLossConvertValue, "xxxxxx")
-
 		freePNLs, err := pnl.CheckFreePNLWithUSDTOrBUSD(client, assetURL, priceURL, "", *apiKey, *secretKey)
 		if err != nil {
 			myLogger.ErrorOnError(err, "failed to check pnl")
@@ -149,6 +140,10 @@ func main() {
 
 				err = writeFile(FileGainConvertValue, gainMax.PNLAmountConvertable.String())
 				myLogger.ErrorOnError(err, "failed to write file")
+			} else {
+				writeFile(FileGainConvertFrom, "xxxxxx")
+				writeFile(FileGainConvertTo, "xxxxxx")
+				writeFile(FileGainConvertValue, "xxxxxx")
 			}
 		}
 
@@ -171,10 +166,14 @@ func main() {
 
 				err = writeFile(FileLossConvertValue, strings.TrimPrefix(lossMax.PNLValue.String(), "-"))
 				myLogger.ErrorOnError(err, "failed to write file")
+			} else {
+				writeFile(FileLossConvertTo, "xxxxxx")
+				writeFile(FileLossConvertFrom, "xxxxxx")
+				writeFile(FileLossConvertValue, "xxxxxx")
 			}
 		}
 
-		time.Sleep(time.Second * 10)
+		time.Sleep(time.Second * 1)
 	}
 }
 

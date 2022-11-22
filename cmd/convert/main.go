@@ -54,13 +54,13 @@ func main() {
 
 	for {
 		// TODO: handle errors
-		err := os.Remove(FileGainConvertFrom)
-		err = os.Remove(FileGainConvertTo)
-		err = os.Remove(FileGainConvertValue)
+		writeFile(FileGainConvertFrom, "xxxxxx")
+		writeFile(FileGainConvertTo, "xxxxxx")
+		writeFile(FileGainConvertValue, "xxxxxx")
 
-		err = os.Remove(FileLossConvertTo)
-		err = os.Remove(FileLossConvertFrom)
-		err = os.Remove(FileLossConvertValue)
+		writeFile(FileLossConvertTo, "xxxxxx")
+		writeFile(FileLossConvertFrom, "xxxxxx")
+		writeFile(FileLossConvertValue, "xxxxxx")
 
 		freePNLs, err := pnl.CheckFreePNLWithUSDTOrBUSD(client, assetURL, priceURL, "", *apiKey, *secretKey)
 		if err != nil {
@@ -174,7 +174,7 @@ func main() {
 			}
 		}
 
-		time.Sleep(time.Second * 3)
+		time.Sleep(time.Second * 1)
 	}
 }
 

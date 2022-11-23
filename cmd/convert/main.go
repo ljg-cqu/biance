@@ -30,6 +30,9 @@ func main() {
 	var levels = flag.String("reportLevels", "0 1 2 3 4 5 6", "report levels")
 	var reportGain = flag.Bool("reportGain", true, "report gain")
 	var reportLoss = flag.Bool("reportLoss", true, "report loss")
+	var gainConvertT = flag.String("gainConvertT", "0.03", "gain convert threshold")
+	var lossConvertT = flag.String("lossConvertT", "0.15", "loss convert threshold")
+	var checkPNLInterval = flag.Int64("checkPNLInterval", 2, "check PNL interval in second")
 	flag.Parse()
 
 	fmt.Printf("report levels: %v\n", *levels)
@@ -61,6 +64,7 @@ func main() {
 
 		var freePNLsFilter pnl.FreePNLs
 
+		// TODO: config infile and watch it for changes
 		var tokenFilerMap = map[asset.Token]string{
 			"NBS":  "",
 			"USDT": "",
@@ -68,6 +72,8 @@ func main() {
 			"VIDT": "",
 			"T":    "",
 			"AR":   "",
+			"OM":   "",
+			"AST":  "",
 		}
 
 		for _, freePNL := range freePNLs {
@@ -84,8 +90,8 @@ func main() {
 		zeroLoss, _ := new(big.Float).SetString("0")
 
 		// TODO: config it
-		gailThreshold, _ := new(big.Float).SetString("0.01")
-		lossThreshold, _ := new(big.Float).SetString("0.15")
+		gailThreshold, _ := new(big.Float).SetString(*gainConvertT)
+		lossThreshold, _ := new(big.Float).SetString(*lossConvertT)
 		var totalGain = zeroGain
 		var totalLoss = zeroLoss
 
@@ -141,9 +147,9 @@ func main() {
 				err = writeFile(FileGainConvertValue, gainMax.PNLAmountConvertable.String())
 				myLogger.ErrorOnError(err, "failed to write file")
 			} else {
-				writeFile(FileGainConvertFrom, "xxxxxx")
-				writeFile(FileGainConvertTo, "xxxxxx")
-				writeFile(FileGainConvertValue, "xxxxxx")
+				writeFile(FileGainConvertFrom, "")
+				writeFile(FileGainConvertTo, "")
+				writeFile(FileGainConvertValue, "")
 			}
 		}
 
@@ -167,13 +173,14 @@ func main() {
 				err = writeFile(FileLossConvertValue, strings.TrimPrefix(lossMax.PNLValue.String(), "-"))
 				myLogger.ErrorOnError(err, "failed to write file")
 			} else {
-				writeFile(FileLossConvertTo, "xxxxxx")
-				writeFile(FileLossConvertFrom, "xxxxxx")
-				writeFile(FileLossConvertValue, "xxxxxx")
+				writeFile(FileLossConvertTo, "")
+				writeFile(FileLossConvertFrom, "")
+				writeFile(FileLossConvertValue, "")
 			}
 		}
 
-		time.Sleep(time.Second * 1)
+		interval := *checkPNLInterval
+		time.Sleep(time.Second * time.Duration(interval))
 	}
 }
 

@@ -33,6 +33,7 @@ func main() {
 	var gainConvertT = flag.String("gainConvertT", "0.01", "gain convert threshold")
 	var lossConvertT = flag.String("lossConvertT", "0.15", "loss convert threshold")
 	var checkPNLInterval = flag.Int64("checkPNLInterval", 1, "check PNL interval in second")
+	var excludeToken = flag.Bool("excludeToken", true, "exclude token to auto convert")
 	flag.Parse()
 
 	fmt.Printf("report levels: %v\n", *levels)
@@ -62,26 +63,29 @@ func main() {
 			continue
 		}
 
-		var freePNLsFilter pnl.FreePNLs
+		var freePNLsFilter = freePNLs
 
-		// TODO: config infile and watch it for changes
-		var tokenFilerMap = map[asset.Token]string{
-			"NBS":  "",
-			"USDT": "",
-			"BUSD": "",
-			"VIDT": "",
-			"T":    "",
-			"AR":   "",
-			"OM":   "",
-			"AST":  "",
-		}
-
-		for _, freePNL := range freePNLs {
-			_, ok := tokenFilerMap[freePNL.Token]
-			if ok {
-				continue
+		if *excludeToken {
+			freePNLsFilter = nil
+			// TODO: config infile and watch it for changes
+			var tokenFilerMap = map[asset.Token]string{
+				"NBS":  "",
+				"USDT": "",
+				"BUSD": "",
+				"VIDT": "",
+				"T":    "",
+				"AR":   "",
+				"OM":   "",
+				"AST":  "",
 			}
-			freePNLsFilter = append(freePNLsFilter, freePNL)
+
+			for _, freePNL := range freePNLs {
+				_, ok := tokenFilerMap[freePNL.Token]
+				if ok {
+					continue
+				}
+				freePNLsFilter = append(freePNLsFilter, freePNL)
+			}
 		}
 
 		var gainPNLs []pnl.FreePNL

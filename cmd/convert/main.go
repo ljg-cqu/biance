@@ -30,7 +30,7 @@ func main() {
 	var levels = flag.String("reportLevels", "0 1 2 3 4 5 6", "report levels")
 	var reportGain = flag.Bool("reportGain", true, "report gain")
 	var reportLoss = flag.Bool("reportLoss", true, "report loss")
-	var gainConvertT = flag.String("gainConvertT", "0.03", "gain convert threshold")
+	var gainConvertT = flag.String("gainConvertT", "0.01", "gain convert threshold")
 	var lossConvertT = flag.String("lossConvertT", "0.15", "loss convert threshold")
 	var checkPNLInterval = flag.Int64("checkPNLInterval", 1, "check PNL interval in second")
 	flag.Parse()

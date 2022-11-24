@@ -31,7 +31,7 @@ func main() {
 	var reportGain = flag.Bool("reportGain", true, "report gain")
 	var reportLoss = flag.Bool("reportLoss", true, "report loss")
 	var gainConvertT = flag.String("gainConvertT", "0.01", "gain convert threshold")
-	var lossConvertT = flag.String("lossConvertT", "0.10", "loss convert threshold")
+	var lossConvertT = flag.String("lossConvertT", "0.11", "loss convert threshold")
 	var checkPNLInterval = flag.Int64("checkPNLInterval", 1, "check PNL interval in second")
 	var excludeToken = flag.Bool("excludeToken", true, "exclude token to auto convert")
 	flag.Parse()

@@ -2,8 +2,8 @@
 {
 ; refresh page
 	IdleNumber := 0
-; common time duration
-	MouseMoveStopDur := 100
+; common sleep time
+	MouseMoveSleepTime := 100
 ; common positions
 	CurrencyGapPixelY := 66
 
@@ -73,11 +73,11 @@ loop
 		{
 			; set from token
 				MouseMove FromCurrencyEntryX, FromCurrencyEntryY
-				Sleep MouseMoveStopDur
+				Sleep MouseMoveSleepTime
 				Click
 				Sleep 2000
 				MouseMove FromCurrencyFieldX, FromCurrencyFieldY
-				Sleep MouseMoveStopDur
+				Sleep MouseMoveSleepTime
 				Click
 				Sleep 200
 				Send GainConvertFrom
@@ -136,23 +136,23 @@ loop
 
 			; set to token
 				MouseMove ToCurrencyEntryX, ToCurrencyEntryY
-				Sleep MouseMoveStopDur
+				Sleep MouseMoveSleepTime
 				Click
 				Sleep 2000
 				MouseMove ToCurrencyFieldX, ToCurrencyFieldY
-				Sleep MouseMoveStopDur
+				Sleep MouseMoveSleepTime
 				Click
 				Sleep 200
 				Send GainConvertTo
 				Sleep 200
 				MouseMove ToCurrency1X, ToCurrency1Y
-				Sleep MouseMoveStopDur
+				Sleep MouseMoveSleepTime
 				Click
 				Sleep 2000
 
 			; set convert value
 				MouseMove FromCurrencyValueFieldX, FromCurrencyValueFieldY
-				Sleep MouseMoveStopDur
+				Sleep MouseMoveSleepTime
 				Click
 				Sleep 200
 				Send GainConvertValue
@@ -160,20 +160,20 @@ loop
 
 			; preview conversion
 				MouseMove PreviewConversionButtonX, PreviewConversionButtonY
-				Sleep MouseMoveStopDur
+				Sleep MouseMoveSleepTime
 				Click
 				Sleep 2000
 				MouseMove PreviewConversionButtonXRisk, PreviewConversionButtonYRisk
-				Sleep MouseMoveStopDur
+				Sleep MouseMoveSleepTime
 				Click
 				Sleep 2000
 
 			; convert
 				MouseMove ConvertButtonX, ConvertButtonY
-				Sleep MouseMoveStopDur
+				Sleep MouseMoveSleepTime
 				Click
 				MouseMove ConvertButtonXVolatile, ConvertButtonYVolatile
-				Sleep MouseMoveStopDur
+				Sleep MouseMoveSleepTime
 				Click
 				Sleep 2000
 
@@ -199,27 +199,27 @@ loop
 		{
 			; set from tokenMOVR, limit to: BUSD, USDT
 				MouseMove FromCurrencyEntryX, FromCurrencyEntryY
-				Sleep MouseMoveStopDur
+				Sleep MouseMoveSleepTime
 				Click
 				Sleep 2000
 				MouseMove FromCurrencyFieldX, FromCurrencyFieldY
-				Sleep MouseMoveStopDur
+				Sleep MouseMoveSleepTime
 				Click
 				Sleep 200
 				Send LossConvertFrom
 				Sleep 200
 				MouseMove FromCurrency1X, FromCurrency1Y, 200
-				Sleep MouseMoveStopDur
+				Sleep MouseMoveSleepTime
 				Click
 				Sleep 2000
 
 			; set to token
 				MouseMove ToCurrencyEntryX, ToCurrencyEntryY
-				Sleep MouseMoveStopDur
+				Sleep MouseMoveSleepTime
 				Click
 				Sleep 2000
 				MouseMove ToCurrencyFieldX, ToCurrencyFieldY
-				Sleep MouseMoveStopDur
+				Sleep MouseMoveSleepTime
 				Click
 				Sleep 200
 				Send LossConvertTo
@@ -268,7 +268,7 @@ loop
 
 			; set convert value
 				MouseMove FromCurrencyValueFieldX, FromCurrencyValueFieldY
-				Sleep MouseMoveStopDur
+				Sleep MouseMoveSleepTime
 				Click
 				Sleep 200
 				Send LossConvertValue
@@ -276,20 +276,20 @@ loop
 
 			; preview conversion
 				MouseMove PreviewConversionButtonX, PreviewConversionButtonY
-				Sleep MouseMoveStopDur
+				Sleep MouseMoveSleepTime
 				Click
 				Sleep 2000
 				MouseMove PreviewConversionButtonXRisk, PreviewConversionButtonYRisk
-				Sleep MouseMoveStopDur
+				Sleep MouseMoveSleepTime
 				Click
 				Sleep 2000
 
 			; convert
 				MouseMove ConvertButtonX, ConvertButtonY
-				Sleep MouseMoveStopDur
+				Sleep MouseMoveSleepTime
 				Click
 				MouseMove ConvertButtonXVolatile, ConvertButtonYVolatile
-				Sleep MouseMoveStopDur
+				Sleep MouseMoveSleepTime
 				Click
 				Sleep 2000
 

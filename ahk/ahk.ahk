@@ -3,10 +3,6 @@
 {
 ; mouse move speed
     MouseMoveSpeed := 0
-; refresh page
-	PageIdleNumber := 0
-	MaxPageIdleNumber := 18000
-	SleepTimeToAdjustIdleNumber := 100
 ; common sleep time
     SleepTimeAfterRefreshPage := 3000
 	SleepTimeAfterMouseMove := 100
@@ -18,6 +14,23 @@
     SleepTimeAfterClickCurrencyOption := 1500
 
     SleepTimeAfterSendTxt := 100
+
+; login time control
+	LoggedInTimeCount := 0
+	MaxLoggedInTimeCount := 300 ;18000
+	SleepTimeToMeasureLoggedInTime := 100
+; Login positions
+    MenueX := 907
+    MenueY := 144
+
+    LoginX := 774
+    LoginY := 197
+
+    ContinueWithGoogleX := 216
+    ContinueWithGoogleY := 575
+
+    ChooseAccountX := 891
+    ChooseAccountY := 570
 
 ; common positions
 	CurrencyGapPixelY := 66
@@ -318,22 +331,29 @@ loop
 				Send "^{Tab}"
 		}
 
-		if (GainConvertFrom = "" && GainConvertTo = "" && GainConvertValue = "" && LossConvertFrom = "" && LossConvertTo = "" && LossConvertValue = "")
-		{
-			PageIdleNumber += 1
-			Sleep SleepTimeToAdjustIdleNumber
-		} else
-		{
-			PageIdleNumber := 0
-		}
-
-		if (PageIdleNumber > MaxPageIdleNumber )
-		{
-			Send "{F5}"
-			Sleep SleepTimeAfterRefreshPage
-			Send "^{Tab}"
-
-		; TODO: extract function
-	    }
+;		LoggedInTimeCount += 1
+;		Sleep SleepTimeToMeasureLoggedInTime
+;
+;		if (LoggedInTimeCount > MaxLoggedInTimeCount )
+;		{
+;			MouseMove MenueX, MenueY, MouseMoveSpeed
+;            Sleep SleepTimeAfterMouseMove
+;            Click
+;            Sleep 5000
+;            MouseMove LoginX, LoginY, MouseMoveSpeed
+;            Sleep SleepTimeAfterMouseMove
+;            Click
+;            Sleep 5000
+;            MouseMove ContinueWithGoogleX, ContinueWithGoogleY, MouseMoveSpeed
+;            Sleep SleepTimeAfterMouseMove
+;            Click
+;            Sleep 5000
+;            MouseMove ChooseAccountX, ChooseAccountY, MouseMoveSpeed
+;            Sleep SleepTimeAfterMouseMove
+;            Click
+;            Sleep 5000
+;			LoggedInTimeCount := 0
+;		; TODO: extract function
+;	    }
     }
 }

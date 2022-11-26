@@ -6,16 +6,16 @@
 	MaxPageIdleNumber := 60
 	SleepTimeToAdjustIdleNumber := 1000
 ; common sleep time
-    SleepTimeAfterRefreshPage := 6000
+    SleepTimeAfterRefreshPage := 5000
 	SleepTimeAfterMouseMove := 1
 
 	SleepTimeForAlternativeClick := 1
-	SleepTimeAfterClickActionButton := 1000
+	SleepTimeAfterClickActionButton := 500
 	SleepTimeAfterClickInputField := 1
-    SleepTimeAfterClickCurrencyEntry := 3000
-    SleepTimeAfterClickCurrencyOption := 1000
+    SleepTimeAfterClickCurrencyEntry := 1500
+    SleepTimeAfterClickCurrencyOption := 500
 
-    SleepTimeAfterSendTxt := 500
+    SleepTimeAfterSendTxt := 1
 
 ; common positions
 	CurrencyGapPixelY := 66

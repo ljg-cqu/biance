@@ -12,10 +12,10 @@
 	SleepTimeForAlternativeClick := 50
 	SleepTimeAfterClickActionButton := 1000
 	SleepTimeAfterClickInputField := 100
-    SleepTimeAfterClickCurrencyEntry := 2000
+    SleepTimeAfterClickCurrencyEntry := 2500
     SleepTimeAfterClickCurrencyOption := 1000
 
-    SleepTimeAfterSendTxt := 200
+    SleepTimeAfterSendTxt := 500
 
 ; common positions
 	CurrencyGapPixelY := 66

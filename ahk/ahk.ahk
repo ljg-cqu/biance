@@ -18,6 +18,9 @@
     SleepTimeAfterSendTxt := 200
 
 ; common positions
+    ValidPointOnBinanceConvertWindowX := 397
+    ValidPointOnBinanceConvertWindowY := 366
+
 	CurrencyGapPixelY := 66
 
 	FromCurrencyValueFieldX := 428
@@ -68,9 +71,6 @@
 
 loop
     {
-    ; activate convert window
-    WinActivate "Binance Convert"
-
 		; read value data
 			FileGainConvertFrom := "gainConvertFrom.txt"
 			FileGainConvertTo := "gainConvertTo.txt"
@@ -196,6 +196,8 @@ loop
 			; refresh web page
 				Send "{F5}" ; TODO: remove it after balance check by server side
 				Sleep SleepTimeAfterRefreshPage ;todo: window wait
+				MouseMove ValidPointOnBinanceConvertWindowX, ValidPointOnBinanceConvertWindowX
+                Sleep SleepTimeAfterMouseMove
 		}
 
 		FileLossConvertFrom := "lossConvertFrom.txt"
@@ -328,7 +330,9 @@ loop
 		{
 			Send "{F5}"
 			Sleep SleepTimeAfterRefreshPage
-		}
+			MouseMove ValidPointOnBinanceConvertWindowX, ValidPointOnBinanceConvertWindowX
+            Sleep SleepTimeAfterMouseMove
+
 		; TODO: extract function
 	}
 }

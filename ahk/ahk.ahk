@@ -5,8 +5,8 @@
     MouseMoveSpeed := 0
 ; refresh page
 	PageIdleNumber := 0
-	MaxPageIdleNumber := 60
-	SleepTimeToAdjustIdleNumber := 1000
+	MaxPageIdleNumber := 1800000
+	SleepTimeToAdjustIdleNumber := 1
 ; common sleep time
     SleepTimeAfterRefreshPage := 5000
 	SleepTimeAfterMouseMove := 1250
@@ -314,7 +314,7 @@ loop
 				Sleep SleepTimeAfterRefreshPage
 		}
 
-		if (GainConvertFrom != "" && GainConvertTo != "" && GainConvertValue != "" && LossConvertFrom != "" && LossConvertTo != "" && LossConvertValue != "")
+		if (GainConvertFrom = "" && GainConvertTo = "" && GainConvertValue = "" && LossConvertFrom = "" && LossConvertTo = "" && LossConvertValue = "")
 		{
 			PageIdleNumber += 1
 			Sleep SleepTimeToAdjustIdleNumber

@@ -147,11 +147,6 @@ loop
 				{
 					MouseMove FromCurrency5X, FromCurrency5Y, MouseMoveSpeed
 				}
-				if (GainConvertFrom = "AR") ;
-                {
-                    MouseMove FromCurrency5X, FromCurrency5Y, MouseMoveSpeed
-                }
-
 				Sleep SleepTimeAfterMouseMove
 				Click
 				;Sleep SleepTimeAfterClickCurrencyOption
@@ -280,12 +275,6 @@ loop
 				{
 					MouseMove ToCurrency2X, ToCurrency2Y, MouseMoveSpeed
 				}
-				if (LossConvertTo = "AR") ;
-                {
-                	MouseMove SelectCurrencyPanX, SelectCurrencyPanY, MouseMoveSpeed
-                    Click 1
-                    MouseMove ToCurrency5X, ToCurrency5Y, MouseMoveSpeed
-                }
 				Sleep SleepTimeAfterMouseMove
 				Click
 				;Sleep SleepTimeAfterClickCurrencyEntry

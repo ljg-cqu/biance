@@ -3,16 +3,16 @@
 {
 ; refresh page
 	PageIdleNumber := 0
-	MaxPageIdleNumber := 300
+	MaxPageIdleNumber := 60
 	SleepTimeToAdjustIdleNumber := 1000
 ; common sleep time
     SleepTimeAfterRefreshPage := 6000
-	SleepTimeAfterMouseMove := 50
+	SleepTimeAfterMouseMove := 100
 
 	SleepTimeForAlternativeClick := 50
 	SleepTimeAfterClickActionButton := 1000
 	SleepTimeAfterClickInputField := 100
-    SleepTimeAfterClickCurrencyEntry := 2500
+    SleepTimeAfterClickCurrencyEntry := 2000
     SleepTimeAfterClickCurrencyOption := 2000
 
     SleepTimeAfterSendTxt := 200

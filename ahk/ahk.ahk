@@ -9,7 +9,7 @@
 	SleepTimeToAdjustIdleNumber := 1000
 ; common sleep time
     SleepTimeAfterRefreshPage := 5000
-	SleepTimeAfterMouseMove := 1000
+	SleepTimeAfterMouseMove := 1250
 
 	;SleepTimeForAlternativeClick := 1
 	;SleepTimeAfterClickActionButton := 1

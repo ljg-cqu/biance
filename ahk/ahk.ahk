@@ -135,10 +135,6 @@ loop
 				{
 					MouseMove FromCurrency2X, FromCurrency2Y, MouseMoveSpeed
 				}
-				if (GainConvertFrom = "AR") ;
-                {
-                	MouseMove FromCurrency3X, FromCurrency3Y, MouseMoveSpeed
-                }
 				if (GainConvertFrom = "ETH") ;
 				{
 					MouseMove FromCurrency2X, FromCurrency2Y, MouseMoveSpeed
@@ -151,6 +147,10 @@ loop
 				{
 					MouseMove FromCurrency5X, FromCurrency5Y, MouseMoveSpeed
 				}
+				if (GainConvertFrom = "AR") ;
+                {
+                    MouseMove FromCurrency5X, FromCurrency5Y, MouseMoveSpeed
+                }
 
 				Sleep SleepTimeAfterMouseMove
 				Click
@@ -248,10 +248,6 @@ loop
 				;Sleep SleepTimeAfterSendTxt
 				MouseMove ToCurrency1X, ToCurrency1Y, MouseMoveSpeed
 				; OM, AST, T
-				if (LossConvertTo = "AR") ;
-				{
-					MouseMove ToCurrency2X, ToCurrency2Y, MouseMoveSpeed
-				}
 				if (LossConvertTo = "ONT") ;
 				{
 					MouseMove ToCurrency2X, ToCurrency2Y, MouseMoveSpeed

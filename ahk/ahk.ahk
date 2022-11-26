@@ -69,7 +69,7 @@
 loop
     {
     ; activate convert window
-    WinActivate, "Binance Convert"
+    WinActivate "Binance Convert"
 
 		; read value data
 			FileGainConvertFrom := "gainConvertFrom.txt"

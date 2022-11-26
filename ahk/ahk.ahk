@@ -127,6 +127,10 @@ loop
 				{
 					MouseMove FromCurrency2X, FromCurrency2Y, MouseMoveSpeed
 				}
+				if (GainConvertFrom = "OG")
+                {
+                	MouseMove FromCurrency2X, FromCurrency2Y, MouseMoveSpeed
+                }
 				if (GainConvertFrom = "BAR")
 				{
 					MouseMove FromCurrency2X, FromCurrency2Y, MouseMoveSpeed

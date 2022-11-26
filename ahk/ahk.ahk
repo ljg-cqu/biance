@@ -68,6 +68,7 @@
 
 loop
     {
+    ; activate convert window
 		; read value data
 			FileGainConvertFrom := "gainConvertFrom.txt"
 			FileGainConvertTo := "gainConvertTo.txt"

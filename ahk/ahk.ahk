@@ -8,7 +8,7 @@
 	MaxPageIdleNumber := 18000
 	SleepTimeToAdjustIdleNumber := 100
 ; common sleep time
-    SleepTimeAfterRefreshPage := 5000
+    SleepTimeAfterRefreshPage := 100
 	SleepTimeAfterMouseMove := 100
 
 	SleepTimeForAlternativeClick := 100
@@ -201,6 +201,7 @@ loop
 			; refresh web page
 				Send "{F5}" ; TODO: remove it after balance check by server side
 				Sleep SleepTimeAfterRefreshPage ;todo: window wait
+				Send "^{Tab}"
 		}
 
 		FileLossConvertFrom := "lossConvertFrom.txt"
@@ -314,6 +315,7 @@ loop
 			; refresh web page
 				Send "{F5}" ; TODO: remove it after balance check by server side
 				Sleep SleepTimeAfterRefreshPage
+				Send "^{Tab}"
 		}
 
 		if (GainConvertFrom = "" && GainConvertTo = "" && GainConvertValue = "" && LossConvertFrom = "" && LossConvertTo = "" && LossConvertValue = "")
@@ -329,6 +331,7 @@ loop
 		{
 			Send "{F5}"
 			Sleep SleepTimeAfterRefreshPage
+			Send "^{Tab}"
 
 		; TODO: extract function
 	    }

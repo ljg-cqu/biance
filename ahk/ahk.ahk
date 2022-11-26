@@ -1,9 +1,22 @@
 ^n::
+; run https://www.binance.com/en/convert?fromCoin=BUSD
 {
 ; refresh page
-	IdleNumber := 0
+	PageIdleNumber := 0
+	MaxPageIdleNumber := 300
+	SleepTimeToAdjustIdleNumber := 1000
 ; common sleep time
-	MouseMoveSleepTime := 100
+    SleepTimeAfterRefreshPage := 6000
+	SleepTimeAfterMouseMove := 50
+
+	SleepTimeForAlternativeClick := 50
+	SleepTimeAfterClickActionButton := 1000
+	SleepTimeAfterClickInputField := 50
+    SleepTimeAfterClickCurrencyEntry := 1000
+    SleepTimeAfterClickCurrencyOption := 1000
+
+    SleepTimeAfterSendTxt := 50
+
 ; common positions
 	CurrencyGapPixelY := 66
 
@@ -73,15 +86,15 @@ loop
 		{
 			; set from token
 				MouseMove FromCurrencyEntryX, FromCurrencyEntryY
-				Sleep MouseMoveSleepTime
+				Sleep SleepTimeAfterMouseMove
 				Click
-				Sleep 2000
+				Sleep SleepTimeAfterClickCurrencyEntry
 				MouseMove FromCurrencyFieldX, FromCurrencyFieldY
-				Sleep MouseMoveSleepTime
+				Sleep SleepTimeAfterMouseMove
 				Click
-				Sleep 200
+				Sleep SleepTimeAfterClickInputField
 				Send GainConvertFrom
-				Sleep 200
+				Sleep SleepTimeAfterSendTxt
 				MouseMove FromCurrency1X, FromCurrency1Y, 200
 
 				; AR, T, AST
@@ -130,56 +143,56 @@ loop
 					MouseMove FromCurrency5X, FromCurrency5Y
 				}
 
-				Sleep 200
+				Sleep SleepTimeAfterMouseMove
 				Click
-				Sleep 2000
+				Sleep SleepTimeAfterClickCurrencyOption
 
 			; set to token
 				MouseMove ToCurrencyEntryX, ToCurrencyEntryY
-				Sleep MouseMoveSleepTime
+				Sleep SleepTimeAfterMouseMove
 				Click
-				Sleep 2000
+				Sleep SleepTimeAfterClickCurrencyEntry
 				MouseMove ToCurrencyFieldX, ToCurrencyFieldY
-				Sleep MouseMoveSleepTime
+				Sleep SleepTimeAfterMouseMove
 				Click
-				Sleep 200
+				Sleep SleepTimeAfterClickInputField
 				Send GainConvertTo
-				Sleep 200
+				Sleep SleepTimeAfterSendTxt
 				MouseMove ToCurrency1X, ToCurrency1Y
-				Sleep MouseMoveSleepTime
+				Sleep SleepTimeAfterMouseMove
 				Click
-				Sleep 2000
+				Sleep SleepTimeAfterClickCurrencyOption
 
 			; set convert value
 				MouseMove FromCurrencyValueFieldX, FromCurrencyValueFieldY
-				Sleep MouseMoveSleepTime
+				Sleep SleepTimeAfterMouseMove
 				Click
-				Sleep 200
+				Sleep SleepTimeAfterClickInputField
 				Send GainConvertValue
-				Sleep 200
+				Sleep SleepTimeAfterSendTxt
 
 			; preview conversion
 				MouseMove PreviewConversionButtonX, PreviewConversionButtonY
-				Sleep MouseMoveSleepTime
+				Sleep SleepTimeAfterMouseMove
 				Click
-				Sleep 2000
+				Sleep SleepTimeForAlternativeClick
 				MouseMove PreviewConversionButtonXRisk, PreviewConversionButtonYRisk
-				Sleep MouseMoveSleepTime
+				Sleep SleepTimeAfterMouseMove
 				Click
-				Sleep 2000
+				Sleep SleepTimeAfterClickActionButton
 
 			; convert
 				MouseMove ConvertButtonX, ConvertButtonY
-				Sleep MouseMoveSleepTime
+				Sleep SleepTimeAfterMouseMove
 				Click
 				MouseMove ConvertButtonXVolatile, ConvertButtonYVolatile
-				Sleep MouseMoveSleepTime
+				Sleep SleepTimeAfterMouseMove
 				Click
-				Sleep 2000
+				Sleep SleepTimeAfterClickActionButton
 
 			; refresh web page
 				Send "{F5}" ; TODO: remove it after balance check by server side
-				Sleep 8000 ;todo: window wait
+				Sleep SleepTimeAfterRefreshPage ;todo: window wait
 		}
 
 		FileLossConvertFrom := "lossConvertFrom.txt"
@@ -199,31 +212,31 @@ loop
 		{
 			; set from tokenMOVR, limit to: BUSD, USDT
 				MouseMove FromCurrencyEntryX, FromCurrencyEntryY
-				Sleep MouseMoveSleepTime
+				Sleep SleepTimeAfterMouseMove
 				Click
-				Sleep 2000
+				Sleep SleepTimeAfterClickCurrencyEntry
 				MouseMove FromCurrencyFieldX, FromCurrencyFieldY
-				Sleep MouseMoveSleepTime
+				Sleep SleepTimeAfterMouseMove
 				Click
-				Sleep 200
+				Sleep SleepTimeAfterClickInputField
 				Send LossConvertFrom
-				Sleep 200
-				MouseMove FromCurrency1X, FromCurrency1Y, 200
-				Sleep MouseMoveSleepTime
+				Sleep SleepTimeAfterSendTxt
+				MouseMove FromCurrency1X, FromCurrency1Y
+				Sleep SleepTimeAfterMouseMove
 				Click
-				Sleep 2000
+				Sleep SleepTimeAfterClickCurrencyOption
 
 			; set to token
 				MouseMove ToCurrencyEntryX, ToCurrencyEntryY
-				Sleep MouseMoveSleepTime
+				Sleep SleepTimeAfterMouseMove
 				Click
-				Sleep 2000
+				Sleep SleepTimeAfterClickCurrencyEntry
 				MouseMove ToCurrencyFieldX, ToCurrencyFieldY
-				Sleep MouseMoveSleepTime
+				Sleep SleepTimeAfterMouseMove
 				Click
-				Sleep 200
+				Sleep SleepTimeAfterClickInputField
 				Send LossConvertTo
-				Sleep 200
+				Sleep SleepTimeAfterSendTxt
 				MouseMove ToCurrency1X, ToCurrency1Y
 				; OM, AST, T
 				if (LossConvertTo = "AR") ;
@@ -262,55 +275,56 @@ loop
 				{
 					MouseMove ToCurrency2X, ToCurrency2Y
 				}
-				Sleep 200
+				Sleep SleepTimeAfterMouseMove
 				Click
-				Sleep 2000
+				Sleep SleepTimeAfterClickCurrencyEntry
 
 			; set convert value
 				MouseMove FromCurrencyValueFieldX, FromCurrencyValueFieldY
-				Sleep MouseMoveSleepTime
+				Sleep SleepTimeAfterMouseMove
 				Click
-				Sleep 200
+				Sleep SleepTimeAfterClickInputField
 				Send LossConvertValue
-				Sleep 200
+				Sleep SleepTimeAfterSendTxt
 
 			; preview conversion
 				MouseMove PreviewConversionButtonX, PreviewConversionButtonY
-				Sleep MouseMoveSleepTime
+				Sleep SleepTimeAfterMouseMove
 				Click
-				Sleep 2000
+				Sleep SleepTimeForAlternativeClick
 				MouseMove PreviewConversionButtonXRisk, PreviewConversionButtonYRisk
-				Sleep MouseMoveSleepTime
+				Sleep SleepTimeAfterMouseMove
 				Click
-				Sleep 2000
+				Sleep SleepTimeAfterClickActionButton
 
 			; convert
 				MouseMove ConvertButtonX, ConvertButtonY
-				Sleep MouseMoveSleepTime
+				Sleep SleepTimeAfterMouseMove
 				Click
+				Sleep SleepTimeForAlternativeClick
 				MouseMove ConvertButtonXVolatile, ConvertButtonYVolatile
-				Sleep MouseMoveSleepTime
+				Sleep SleepTimeAfterMouseMove
 				Click
-				Sleep 2000
+				Sleep SleepTimeAfterClickActionButton
 
 			; refresh web page
 				Send "{F5}" ; TODO: remove it after balance check by server side
-				Sleep 8000
+				Sleep SleepTimeAfterRefreshPage
 		}
 
 		if (GainConvertFrom != "" && GainConvertTo != "" && GainConvertValue != "" && LossConvertFrom != "" && LossConvertTo != "" && LossConvertValue != "")
 		{
-			IdleNumber += 1
+			PageIdleNumber += 1
+			Sleep SleepTimeToAdjustIdleNumber
 		} else
 		{
-			IdleNumber := 0
-			Sleep 1000
+			PageIdleNumber := 0
 		}
 
-		if (IdleNumber > 300 )
+		if (PageIdleNumber > MaxPageIdleNumber )
 		{
 			Send "{F5}"
-			Sleep 8000
+			Sleep SleepTimeAfterRefreshPage
 		}
 		; TODO: extract function
 	}

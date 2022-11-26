@@ -22,6 +22,9 @@
 ; common positions
 	CurrencyGapPixelY := 66
 
+	SelectCurrencyPanX := 618
+	SelectCurrencyPanY := 798
+
 	FromCurrencyValueFieldX := 428
 	FromCurrencyValueFieldY := 478
 	FromCurrencyEntryX := 577
@@ -99,7 +102,7 @@ loop
 				;Sleep SleepTimeAfterSendTxt
 				MouseMove FromCurrency1X, FromCurrency1Y, MouseMoveSpeed
 
-				; AR, T, AST
+				; T, AST
 				if (GainConvertFrom = "ATA") ; TODO: add more token check ; TODO: reuse, image s.
 				{
 				MouseMove FromCurrency2X, FromCurrency2Y, MouseMoveSpeed
@@ -132,6 +135,10 @@ loop
 				{
 					MouseMove FromCurrency2X, FromCurrency2Y, MouseMoveSpeed
 				}
+				if (GainConvertFrom = "AR") ;
+                {
+                	MouseMove FromCurrency3X, FromCurrency3Y, MouseMoveSpeed
+                }
 				if (GainConvertFrom = "ETH") ;
 				{
 					MouseMove FromCurrency2X, FromCurrency2Y, MouseMoveSpeed
@@ -277,6 +284,12 @@ loop
 				{
 					MouseMove ToCurrency2X, ToCurrency2Y, MouseMoveSpeed
 				}
+				if (LossConvertTo = "AR") ;
+                {
+                	MouseMove SelectCurrencyPanX, SelectCurrencyPanY, MouseMoveSpeed
+                    Click 1
+                    MouseMove ToCurrency5X, ToCurrency5Y, MouseMoveSpeed
+                }
 				Sleep SleepTimeAfterMouseMove
 				Click
 				;Sleep SleepTimeAfterClickCurrencyEntry

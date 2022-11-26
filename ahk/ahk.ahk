@@ -334,5 +334,6 @@ loop
             Sleep SleepTimeAfterMouseMove
 
 		; TODO: extract function
-	}
+	    }
+    }
 }

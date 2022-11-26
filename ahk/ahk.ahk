@@ -67,7 +67,7 @@
 	ConvertButtonYVolatile := 808
 
 loop
-{
+    {
 		; read value data
 			FileGainConvertFrom := "gainConvertFrom.txt"
 			FileGainConvertTo := "gainConvertTo.txt"

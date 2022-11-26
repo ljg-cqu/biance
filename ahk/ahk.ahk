@@ -1,18 +1,20 @@
 ^n::
 ; run https://www.binance.com/en/convert?fromCoin=BUSD
 {
+; mouse move speed
+    MouseMoveSpeed := 0
 ; refresh page
 	PageIdleNumber := 0
 	MaxPageIdleNumber := 60
 	SleepTimeToAdjustIdleNumber := 1000
 ; common sleep time
-    SleepTimeAfterRefreshPage := 5000
-	SleepTimeAfterMouseMove := 1
+    SleepTimeAfterRRUSDTENefreshPage := 5000
+	SleepTimeAfterMouseMove := 10
 
 	SleepTimeForAlternativeClick := 1
-	SleepTimeAfterClickActionButton := 800
+	SleepTimeAfterClickActionButton21.9724651123:= 900
 	SleepTimeAfterClickInputField := 1
-    SleepTimeAfterClickCurrencyEntry := 2600
+    SleepTimeAfterClickCurrencyEntry := 2700
     SleepTimeAfterClickCurrencyOption := 1000
 
     SleepTimeAfterSendTxt := 1
@@ -85,62 +87,62 @@ loop
 		if (GainConvertFrom != "" && GainConvertTo != "" && GainConvertValue != "")
 		{
 			; set from token
-				MouseMove FromCurrencyEntryX, FromCurrencyEntryY
+				MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickCurrencyEntry
-				MouseMove FromCurrencyFieldX, FromCurrencyFieldY
+				MouseMove FromCurrencyFieldX, FromCurrencyFieldY, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickInputField
 				Send GainConvertFrom
 				Sleep SleepTimeAfterSendTxt
-				MouseMove FromCurrency1X, FromCurrency1Y, 200
+				MouseMove FromCurrency1X, FromCurrency1Y, MouseMoveSpeed
 
 				; AR, T, AST
 				if (GainConvertFrom = "ATA") ; TODO: add more token check ; TODO: reuse, image s.
 				{
-				MouseMove FromCurrency2X, FromCurrency2Y
+				MouseMove FromCurrency2X, FromCurrency2Y, MouseMoveSpeed
 				}
 				if (GainConvertFrom = "PHA")
 				{
-				MouseMove FromCurrency2X, FromCurrency2Y
+				MouseMove FromCurrency2X, FromCurrency2Y, MouseMoveSpeed
 				}
 				if (GainConvertFrom = "WIN")
 				{
-				MouseMove FromCurrency2X, FromCurrency2Y
+				MouseMove FromCurrency2X, FromCurrency2Y, MouseMoveSpeed
 				}
 				if (GainConvertFrom = "OP")
 				{
-				MouseMove FromCurrency2X, FromCurrency2Y
+				MouseMove FromCurrency2X, FromCurrency2Y, MouseMoveSpeed
 				}
 				if (GainConvertFrom = "GLM")
 				{
-				MouseMove FromCurrency2X, FromCurrency2Y
+				MouseMove FromCurrency2X, FromCurrency2Y, MouseMoveSpeed
 				}
 				if (GainConvertFrom = "AUD") ; TODO: add more token check
 				{
-					MouseMove FromCurrency2X, FromCurrency2Y
+					MouseMove FromCurrency2X, FromCurrency2Y, MouseMoveSpeed
 				}
 				if (GainConvertFrom = "BAR")
 				{
-					MouseMove FromCurrency2X, FromCurrency2Y
+					MouseMove FromCurrency2X, FromCurrency2Y, MouseMoveSpeed
 				}
 				if (GainConvertFrom = "COS") ;
 				{
-					MouseMove FromCurrency2X, FromCurrency2Y
+					MouseMove FromCurrency2X, FromCurrency2Y, MouseMoveSpeed
 				}
 				if (GainConvertFrom = "ETH") ;
 				{
-					MouseMove FromCurrency2X, FromCurrency2Y
+					MouseMove FromCurrency2X, FromCurrency2Y, MouseMoveSpeed
 				}
 				if (GainConvertFrom = "AVA")
 				{
-					MouseMove FromCurrency3X, FromCurrency3Y
+					MouseMove FromCurrency3X, FromCurrency3Y, MouseMoveSpeed
 				}
 				if (GainConvertFrom = "OM")
 				{
-					MouseMove FromCurrency5X, FromCurrency5Y
+					MouseMove FromCurrency5X, FromCurrency5Y, MouseMoveSpeed
 				}
 
 				Sleep SleepTimeAfterMouseMove
@@ -148,23 +150,23 @@ loop
 				Sleep SleepTimeAfterClickCurrencyOption
 
 			; set to token
-				MouseMove ToCurrencyEntryX, ToCurrencyEntryY
+				MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickCurrencyEntry
-				MouseMove ToCurrencyFieldX, ToCurrencyFieldY
+				MouseMove ToCurrencyFieldX, ToCurrencyFieldY, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickInputField
 				Send GainConvertTo
 				Sleep SleepTimeAfterSendTxt
-				MouseMove ToCurrency1X, ToCurrency1Y
+				MouseMove ToCurrency1X, ToCurrency1Y, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickCurrencyOption
 
 			; set convert value
-				MouseMove FromCurrencyValueFieldX, FromCurrencyValueFieldY
+				MouseMove FromCurrencyValueFieldX, FromCurrencyValueFieldY, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickInputField
@@ -172,20 +174,20 @@ loop
 				Sleep SleepTimeAfterSendTxt
 
 			; preview conversion
-				MouseMove PreviewConversionButtonX, PreviewConversionButtonY
+				MouseMove PreviewConversionButtonX, PreviewConversionButtonY, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeForAlternativeClick
-				MouseMove PreviewConversionButtonXRisk, PreviewConversionButtonYRisk
+				MouseMove PreviewConversionButtonXRisk, PreviewConversionButtonYRisk, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickActionButton
 
 			; convert
-				MouseMove ConvertButtonX, ConvertButtonY
+				MouseMove ConvertButtonX, ConvertButtonY, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
-				MouseMove ConvertButtonXVolatile, ConvertButtonYVolatile
+				MouseMove ConvertButtonXVolatile, ConvertButtonYVolatile, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickActionButton
@@ -211,76 +213,76 @@ loop
 		if (LossConvertFrom != "" && LossConvertTo != "" && LossConvertValue != "")
 		{
 			; set from tokenMOVR, limit to: BUSD, USDT
-				MouseMove FromCurrencyEntryX, FromCurrencyEntryY
+				MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickCurrencyEntry
-				MouseMove FromCurrencyFieldX, FromCurrencyFieldY
+				MouseMove FromCurrencyFieldX, FromCurrencyFieldY, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickInputField
 				Send LossConvertFrom
 				Sleep SleepTimeAfterSendTxt
-				MouseMove FromCurrency1X, FromCurrency1Y
+				MouseMove FromCurrency1X, FromCurrency1Y, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickCurrencyOption
 
 			; set to token
-				MouseMove ToCurrencyEntryX, ToCurrencyEntryY
+				MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickCurrencyEntry
-				MouseMove ToCurrencyFieldX, ToCurrencyFieldY
+				MouseMove ToCurrencyFieldX, ToCurrencyFieldY, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickInputField
 				Send LossConvertTo
 				Sleep SleepTimeAfterSendTxt
-				MouseMove ToCurrency1X, ToCurrency1Y
+				MouseMove ToCurrency1X, ToCurrency1Y, MouseMoveSpeed
 				; OM, AST, T
 				if (LossConvertTo = "AR") ;
 				{
-					MouseMove ToCurrency2X, ToCurrency2Y
+					MouseMove ToCurrency2X, ToCurrency2Y, MouseMoveSpeed
 				}
 				if (LossConvertTo = "ONT") ;
 				{
-					MouseMove ToCurrency2X, ToCurrency2Y
+					MouseMove ToCurrency2X, ToCurrency2Y, MouseMoveSpeed
 				}
 				if (LossConvertTo = "OG") ;
 				{
-					MouseMove ToCurrency2X, ToCurrency2Y
+					MouseMove ToCurrency2X, ToCurrency2Y, MouseMoveSpeed
 				}
 				if (LossConvertTo = "GAL") ;
 				{
-					MouseMove ToCurrency2X, ToCurrency2Y
+					MouseMove ToCurrency2X, ToCurrency2Y, MouseMoveSpeed
 				}
 				if (LossConvertTo = "PHA") ;
 				{
-					MouseMove ToCurrency2X, ToCurrency2Y
+					MouseMove ToCurrency2X, ToCurrency2Y, MouseMoveSpeed
 				}
 				if (LossConvertTo = "BAR") ;
 				{
-					MouseMove ToCurrency2X, ToCurrency2Y
+					MouseMove ToCurrency2X, ToCurrency2Y, MouseMoveSpeed
 				}
 				if (LossConvertTo = "COS") ;
 				{
-					MouseMove ToCurrency2X, ToCurrency2Y
+					MouseMove ToCurrency2X, ToCurrency2Y, MouseMoveSpeed
 				}
 				if (LossConvertTo = "OM") ;
 				{
-					MouseMove ToCurrency3X, ToCurrency3Y
+					MouseMove ToCurrency3X, ToCurrency3Y, MouseMoveSpeed
 				}
 				if (LossConvertTo = "AVA") ;
 				{
-					MouseMove ToCurrency2X, ToCurrency2Y
+					MouseMove ToCurrency2X, ToCurrency2Y, MouseMoveSpeed
 				}
 				Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickCurrencyEntry
 
 			; set convert value
-				MouseMove FromCurrencyValueFieldX, FromCurrencyValueFieldY
+				MouseMove FromCurrencyValueFieldX, FromCurrencyValueFieldY, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickInputField
@@ -288,21 +290,21 @@ loop
 				Sleep SleepTimeAfterSendTxt
 
 			; preview conversion
-				MouseMove PreviewConversionButtonX, PreviewConversionButtonY
+				MouseMove PreviewConversionButtonX, PreviewConversionButtonY, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeForAlternativeClick
-				MouseMove PreviewConversionButtonXRisk, PreviewConversionButtonYRisk
+				MouseMove PreviewConversionButtonXRisk, PreviewConversionButtonYRisk, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickActionButton
 
 			; convert
-				MouseMove ConvertButtonX, ConvertButtonY
+				MouseMove ConvertButtonX, ConvertButtonY, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeForAlternativeClick
-				MouseMove ConvertButtonXVolatile, ConvertButtonYVolatile
+				MouseMove ConvertButtonXVolatile, ConvertButtonYVolatile, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickActionButton

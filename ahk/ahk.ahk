@@ -8,11 +8,11 @@
 	MaxPageIdleNumber := 18000
 	SleepTimeToAdjustIdleNumber := 100
 ; common sleep time
-    SleepTimeAfterRefreshPage := 2000
+    SleepTimeAfterRefreshPage := 3000
 	SleepTimeAfterMouseMove := 100
 
 	SleepTimeForAlternativeClick := 100
-	SleepTimeAfterClickActionButton := 1000
+	SleepTimeAfterClickActionButton := 1500
 	SleepTimeAfterClickInputField := 100
     SleepTimeAfterClickCurrencyEntry := 2500
     SleepTimeAfterClickCurrencyOption := 1500

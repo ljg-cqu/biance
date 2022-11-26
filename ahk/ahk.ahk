@@ -9,15 +9,15 @@
 	SleepTimeToAdjustIdleNumber := 100
 ; common sleep time
     SleepTimeAfterRefreshPage := 5000
-	SleepTimeAfterMouseMove := 1250
+	SleepTimeAfterMouseMove := 100
 
-	;SleepTimeForAlternativeClick := 1
-	;SleepTimeAfterClickActionButton := 1
-	;SleepTimeAfterClickInputField := 1
-    ;SleepTimeAfterClickCurrencyEntry := 1
-    ;SleepTimeAfterClickCurrencyOption := 1
+	SleepTimeForAlternativeClick := 100
+	SleepTimeAfterClickActionButton := 1000
+	SleepTimeAfterClickInputField := 100
+    SleepTimeAfterClickCurrencyEntry := 2500
+    SleepTimeAfterClickCurrencyOption := 1500
 
-    ;SleepTimeAfterSendTxt := 1
+    SleepTimeAfterSendTxt := 100
 
 ; common positions
 	CurrencyGapPixelY := 66
@@ -93,13 +93,13 @@ loop
 				MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
-				;Sleep SleepTimeAfterClickCurrencyEntry
+				Sleep SleepTimeAfterClickCurrencyEntry
 				MouseMove FromCurrencyFieldX, FromCurrencyFieldY, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
-				;Sleep SleepTimeAfterClickInputField
+				Sleep SleepTimeAfterClickInputField
 				Send GainConvertFrom
-				;Sleep SleepTimeAfterSendTxt
+				Sleep SleepTimeAfterSendTxt
 				MouseMove FromCurrency1X, FromCurrency1Y, MouseMoveSpeed
 
 				; T, AST
@@ -153,41 +153,41 @@ loop
 				}
 				Sleep SleepTimeAfterMouseMove
 				Click
-				;Sleep SleepTimeAfterClickCurrencyOption
+				Sleep SleepTimeAfterClickCurrencyOption
 
 			; set to token
 				MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
-				;Sleep SleepTimeAfterClickCurrencyEntry
+				Sleep SleepTimeAfterClickCurrencyEntry
 				MouseMove ToCurrencyFieldX, ToCurrencyFieldY, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
-				;Sleep SleepTimeAfterClickInputField
+				Sleep SleepTimeAfterClickInputField
 				Send GainConvertTo
-				;Sleep SleepTimeAfterSendTxt
+				Sleep SleepTimeAfterSendTxt
 				MouseMove ToCurrency1X, ToCurrency1Y, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
-				;Sleep SleepTimeAfterClickCurrencyOption
+				Sleep SleepTimeAfterClickCurrencyOption
 
 			; set convert value
 				MouseMove FromCurrencyValueFieldX, FromCurrencyValueFieldY, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
-				;Sleep SleepTimeAfterClickInputField
+				Sleep SleepTimeAfterClickInputField
 				Send GainConvertValue
-				;Sleep SleepTimeAfterSendTxt
+				Sleep SleepTimeAfterSendTxt
 
 			; preview conversion
 				MouseMove PreviewConversionButtonX, PreviewConversionButtonY, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
-				;Sleep SleepTimeForAlternativeClick
+				Sleep SleepTimeForAlternativeClick
 				MouseMove PreviewConversionButtonXRisk, PreviewConversionButtonYRisk, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
-				;Sleep SleepTimeAfterClickActionButton
+				Sleep SleepTimeAfterClickActionButton
 
 			; convert
 				MouseMove ConvertButtonX, ConvertButtonY, MouseMoveSpeed
@@ -196,7 +196,7 @@ loop
 				MouseMove ConvertButtonXVolatile, ConvertButtonYVolatile, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
-				;Sleep SleepTimeAfterClickActionButton
+				Sleep SleepTimeAfterClickActionButton
 
 			; refresh web page
 				Send "{F5}" ; TODO: remove it after balance check by server side
@@ -222,29 +222,29 @@ loop
 				MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
-				;Sleep SleepTimeAfterClickCurrencyEntry
+				Sleep SleepTimeAfterClickCurrencyEntry
 				MouseMove FromCurrencyFieldX, FromCurrencyFieldY, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
-				;Sleep SleepTimeAfterClickInputField
+				Sleep SleepTimeAfterClickInputField
 				Send LossConvertFrom
-				;Sleep SleepTimeAfterSendTxt
+				Sleep SleepTimeAfterSendTxt
 				MouseMove FromCurrency1X, FromCurrency1Y, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
-				;Sleep SleepTimeAfterClickCurrencyOption
+				Sleep SleepTimeAfterClickCurrencyOption
 
 			; set to token
 				MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
-				;Sleep SleepTimeAfterClickCurrencyEntry
+				Sleep SleepTimeAfterClickCurrencyEntry
 				MouseMove ToCurrencyFieldX, ToCurrencyFieldY, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
-				;Sleep SleepTimeAfterClickInputField
+				Sleep SleepTimeAfterClickInputField
 				Send LossConvertTo
-				;Sleep SleepTimeAfterSendTxt
+				Sleep SleepTimeAfterSendTxt
 				MouseMove ToCurrency1X, ToCurrency1Y, MouseMoveSpeed
 				; OM, AST, T
 				if (LossConvertTo = "ONT") ;
@@ -281,35 +281,35 @@ loop
 				}
 				Sleep SleepTimeAfterMouseMove
 				Click
-				;Sleep SleepTimeAfterClickCurrencyEntry
+				Sleep SleepTimeAfterClickCurrencyEntry
 
 			; set convert value
 				MouseMove FromCurrencyValueFieldX, FromCurrencyValueFieldY, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
-				;Sleep SleepTimeAfterClickInputField
+				Sleep SleepTimeAfterClickInputField
 				Send LossConvertValue
-				;Sleep SleepTimeAfterSendTxt
+				Sleep SleepTimeAfterSendTxt
 
 			; preview conversion
 				MouseMove PreviewConversionButtonX, PreviewConversionButtonY, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
-				;Sleep SleepTimeForAlternativeClick
+				Sleep SleepTimeForAlternativeClick
 				MouseMove PreviewConversionButtonXRisk, PreviewConversionButtonYRisk, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
-				;Sleep SleepTimeAfterClickActionButton
+				Sleep SleepTimeAfterClickActionButton
 
 			; convert
 				MouseMove ConvertButtonX, ConvertButtonY, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
-				;Sleep SleepTimeForAlternativeClick
+				Sleep SleepTimeForAlternativeClick
 				MouseMove ConvertButtonXVolatile, ConvertButtonYVolatile, MouseMoveSpeed
 				Sleep SleepTimeAfterMouseMove
 				Click
-				;Sleep SleepTimeAfterClickActionButton
+				Sleep SleepTimeAfterClickActionButton
 
 			; refresh web page
 				Send "{F5}" ; TODO: remove it after balance check by server side

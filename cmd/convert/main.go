@@ -74,6 +74,7 @@ func main() {
 				"BUSD": "",
 				"VIDT": "",
 				"T":    "",
+				"FOR":  "",
 				"OM":   "",
 				"AR":   "",
 				"AST":  "",

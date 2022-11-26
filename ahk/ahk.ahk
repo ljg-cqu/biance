@@ -13,7 +13,7 @@
 	SleepTimeAfterClickActionButton := 1000
 	SleepTimeAfterClickInputField := 1
     SleepTimeAfterClickCurrencyEntry := 2500
-    SleepTimeAfterClickCurrencyOption := 1
+    SleepTimeAfterClickCurrencyOption := 1000
 
     SleepTimeAfterSendTxt := 500
 

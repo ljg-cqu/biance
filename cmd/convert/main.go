@@ -148,7 +148,7 @@ func main() {
 				err = writeFile(FileGainConvertTo, strings.TrimPrefix(symbol, token))
 				myLogger.ErrorOnError(err, "failed to write file")
 
-				err = writeFile(FileGainConvertValue, gainMax.PNLAmountConvertable.String())
+				err = writeFile(FileGainConvertValue, gainMax.PNLAmountConvertable.Text('f', 10))
 				myLogger.ErrorOnError(err, "failed to write file")
 			} else {
 				writeFile(FileGainConvertFrom, "")
@@ -174,7 +174,7 @@ func main() {
 				err = writeFile(FileLossConvertFrom, strings.TrimPrefix(symbol, token))
 				myLogger.ErrorOnError(err, "failed to write file")
 
-				err = writeFile(FileLossConvertValue, strings.TrimPrefix(lossMax.PNLValue.String(), "-"))
+				err = writeFile(FileLossConvertValue, strings.TrimPrefix(lossMax.PNLValue.Text('f', 10), "-"))
 				myLogger.ErrorOnError(err, "failed to write file")
 			} else {
 				writeFile(FileLossConvertTo, "")

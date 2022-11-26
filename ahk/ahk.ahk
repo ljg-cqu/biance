@@ -5,8 +5,8 @@
     MouseMoveSpeed := 0
 ; refresh page
 	PageIdleNumber := 0
-	MaxPageIdleNumber := 1800000
-	SleepTimeToAdjustIdleNumber := 1
+	MaxPageIdleNumber := 18000
+	SleepTimeToAdjustIdleNumber := 100
 ; common sleep time
     SleepTimeAfterRefreshPage := 5000
 	SleepTimeAfterMouseMove := 1250

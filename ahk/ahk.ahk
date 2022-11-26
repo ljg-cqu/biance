@@ -8,7 +8,7 @@
 	MaxPageIdleNumber := 18000
 	SleepTimeToAdjustIdleNumber := 100
 ; common sleep time
-    SleepTimeAfterRefreshPage := 100
+    SleepTimeAfterRefreshPage := 1000
 	SleepTimeAfterMouseMove := 100
 
 	SleepTimeForAlternativeClick := 100

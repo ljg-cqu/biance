@@ -10,10 +10,10 @@
 	SleepTimeAfterMouseMove := 1
 
 	SleepTimeForAlternativeClick := 1
-	SleepTimeAfterClickActionButton := 500
+	SleepTimeAfterClickActionButton := 800
 	SleepTimeAfterClickInputField := 1
-    SleepTimeAfterClickCurrencyEntry := 2500
-    SleepTimeAfterClickCurrencyOption := 500
+    SleepTimeAfterClickCurrencyEntry := 2600
+    SleepTimeAfterClickCurrencyOption := 1000
 
     SleepTimeAfterSendTxt := 1
 

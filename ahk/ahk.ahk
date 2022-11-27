@@ -3,7 +3,7 @@
 ; run https://www.binance.com/en/convert?fromCoin=BUSD
 {
 ; token icon path
-    TokenIconPath = "W:\github.com\ljg-cqu\binance\biance\static\tokenicon"
+    TokenIconPath := "W:\github.com\ljg-cqu\binance\biance\static\tokenicon"
 ; mouse move speed
     MouseMoveSpeed := 0
     SleepTimeAfterRefreshPage := 3000
@@ -123,213 +123,237 @@ loop
 				if (GainConvertFrom = "ACA")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\ACA.png")
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
+                    {        MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterGainConvertFromTokenLocated
-                    else
-                             LableProcessLossConvert:
+                    } else
+                            Goto LableProcessLossConvert
 				}
 				if (GainConvertFrom = "ANT")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\ANT.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterGainConvertFromTokenLocated
-                    else
-                             LableProcessLossConvert:
+                    } else
+                             Goto LableProcessLossConvert
 				}
 				if (GainConvertFrom = "AR")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\AR.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterGainConvertFromTokenLocated
-                    else
-                             LableProcessLossConvert:
+                    } else
+                             Goto LableProcessLossConvert
 				}
 				if (GainConvertFrom = "ATA")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\ATA.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterGainConvertFromTokenLocated
-                    else
-                             LableProcessLossConvert:
+                    } else
+                             Goto LableProcessLossConvert
 				}
 				if (GainConvertFrom = "AUD")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\AUD.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterGainConvertFromTokenLocated
-                    else
-                             LableProcessLossConvert:
+                    } else
+                             Goto LableProcessLossConvert
 				}
 				if (GainConvertFrom = "AVA")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\AVA.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterGainConvertFromTokenLocated
-                    else
-                             LableProcessLossConvert:
+                    } else
+                             Goto LableProcessLossConvert
 				}
 				if (GainConvertFrom = "BAR")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\BAR.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterGainConvertFromTokenLocated
-                    else
-                             LableProcessLossConvert:
+                    } else
+                             Goto LableProcessLossConvert
 				}
-				if (GainConvertFrom = "BNB") ;
+				if (GainConvertFrom = "BNB")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\BNB.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterGainConvertFromTokenLocated
-                    else
-                             LableProcessLossConvert:
+                    } else
+                             Goto LableProcessLossConvert
 				}
-				if (GainConvertFrom = "BTC") ;
-                {
+				if (GainConvertFrom = "BTC")
+				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\BTC.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterGainConvertFromTokenLocated
-                    else
-                             LableProcessLossConvert:
-                }
-				if (GainConvertFrom = "COS") ;
+                    } else
+                             Goto LableProcessLossConvert
+				}
+				if (GainConvertFrom = "COS")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\COS.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterGainConvertFromTokenLocated
-                    else
-                             LableProcessLossConvert:
+                    } else
+                             Goto LableProcessLossConvert
 				}
 				if (GainConvertFrom = "ETH")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\ETH.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterGainConvertFromTokenLocated
-                    else
-                             LableProcessLossConvert:
+                    } else
+                             Goto LableProcessLossConvert
 				}
 				if (GainConvertFrom = "FOR")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\FOR.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterGainConvertFromTokenLocated
-                    else
-                             LableProcessLossConvert:
+                    } else
+                             Goto LableProcessLossConvert
 				}
 				if (GainConvertFrom = "GAL")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\GAL.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterGainConvertFromTokenLocated
-                    else
-                             LableProcessLossConvert:
+                    } else
+                             Goto LableProcessLossConvert
 				}
 				if (GainConvertFrom = "GBP")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\GBP.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterGainConvertFromTokenLocated
-                    else
-                             LableProcessLossConvert:
+                    } else
+                             Goto LableProcessLossConvert
 				}
 				if (GainConvertFrom = "GLM")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\GLM.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterGainConvertFromTokenLocated
-                    else
-                             LableProcessLossConvert:
+                    } else
+                             Goto LableProcessLossConvert
 				}
 				if (GainConvertFrom = "OG")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\OG.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterGainConvertFromTokenLocated
-                    else
-                             LableProcessLossConvert:
+                    } else
+                             Goto LableProcessLossConvert
 				}
 				if (GainConvertFrom = "OM")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\OM.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterGainConvertFromTokenLocated
-                    else
-                             LableProcessLossConvert:
+                    } else
+                             Goto LableProcessLossConvert
 				}
 				if (GainConvertFrom = "ONT")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\ONT.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterGainConvertFromTokenLocated
-                    else
-                             LableProcessLossConvert:
+                    } else
+                             Goto LableProcessLossConvert
 				}
 				if (GainConvertFrom = "OP")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\OP.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterGainConvertFromTokenLocated
-                    else
-                             LableProcessLossConvert:
-
+                    } else
+                             Goto LableProcessLossConvert
 				}
 				if (GainConvertFrom = "ORN")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\ORN.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterGainConvertFromTokenLocated
-                    else
-                             LableProcessLossConvert:
+                    } else
+                             Goto LableProcessLossConvert
 				}
 				if (GainConvertFrom = "PHA")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\PHA.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterGainConvertFromTokenLocated
-                    else
-                             LableProcessLossConvert:
+                    } else
+                             Goto LableProcessLossConvert
 				}
 				if (GainConvertFrom = "REP")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\REP.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterGainConvertFromTokenLocated
-                    else
-                             LableProcessLossConvert:
+                    } else
+                             Goto LableProcessLossConvert
 				}
 				if (GainConvertFrom = "SC")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\SC.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterGainConvertFromTokenLocated
-                    else
-                             LableProcessLossConvert:
+                    } else
+                             Goto LableProcessLossConvert
 				}
 				if (GainConvertFrom = "T")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\T.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterGainConvertFromTokenLocated
-                    else
-                             LableProcessLossConvert:
-
+                    } else
+                             Goto LableProcessLossConvert
 				}
 				if (GainConvertFrom = "WIN")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\WIN.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterGainConvertFromTokenLocated
-                    else
-                             LableProcessLossConvert:
+                    } else
+                             Goto LableProcessLossConvert
 				}
 				if (GainConvertFrom = "YFI")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\YFI.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterGainConvertFromTokenLocated
-                    else
-                             LableProcessLossConvert:
+                    } else
+                             Goto LableProcessLossConvert
 				}
+
 
                 LabelAfterGainConvertFromTokenLocated:
 				Sleep SleepTimeAfterMouseMove
@@ -429,215 +453,238 @@ loop
 				Send LossConvertTo
 				Sleep SleepTimeAfterSendTxt
 				MouseMove ToCurrency1X, ToCurrency1Y, MouseMoveSpeed
-			if (LossConvertTo = "ACA")
+				if (LossConvertTo = "ACA")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\ACA.png")
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
+                    {        MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterLossConvertToTokenLocated
-                    else
-                             LableProcessGainConvert:
+                    } else
+                            Goto LableProcessGainConvert
 				}
 				if (LossConvertTo = "ANT")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\ANT.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterLossConvertToTokenLocated
-                    else
-                             LableProcessGainConvert:
+                    } else
+                             Goto LableProcessGainConvert
 				}
 				if (LossConvertTo = "AR")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\AR.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterLossConvertToTokenLocated
-                    else
-                             LableProcessGainConvert:
+                    } else
+                             Goto LableProcessGainConvert
 				}
 				if (LossConvertTo = "ATA")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\ATA.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterLossConvertToTokenLocated
-                    else
-                             LableProcessGainConvert:
+                    } else
+                             Goto LableProcessGainConvert
 				}
 				if (LossConvertTo = "AUD")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\AUD.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterLossConvertToTokenLocated
-                    else
-                             LableProcessGainConvert:
+                    } else
+                             Goto LableProcessGainConvert
 				}
 				if (LossConvertTo = "AVA")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\AVA.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterLossConvertToTokenLocated
-                    else
-                             LableProcessGainConvert:
+                    } else
+                             Goto LableProcessGainConvert
 				}
 				if (LossConvertTo = "BAR")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\BAR.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterLossConvertToTokenLocated
-                    else
-                             LableProcessGainConvert:
+                    } else
+                             Goto LableProcessGainConvert
 				}
-				if (LossConvertTo = "BNB") ;
+				if (LossConvertTo = "BNB")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\BNB.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterLossConvertToTokenLocated
-                    else
-                             LableProcessGainConvert:
+                    } else
+                             Goto LableProcessGainConvert
 				}
-				if (LossConvertTo = "BTC") ;
-                {
+				if (LossConvertTo = "BTC")
+				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\BTC.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterLossConvertToTokenLocated
-                    else
-                             LableProcessGainConvert:
-                }
-				if (LossConvertTo = "COS") ;
+                    } else
+                             Goto LableProcessGainConvert
+				}
+				if (LossConvertTo = "COS")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\COS.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterLossConvertToTokenLocated
-                    else
-                             LableProcessGainConvert:
+                    } else
+                             Goto LableProcessGainConvert
 				}
 				if (LossConvertTo = "ETH")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\ETH.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterLossConvertToTokenLocated
-                    else
-                             LableProcessGainConvert:
+                    } else
+                             Goto LableProcessGainConvert
 				}
 				if (LossConvertTo = "FOR")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\FOR.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterLossConvertToTokenLocated
-                    else
-                             LableProcessGainConvert:
+                    } else
+                             Goto LableProcessGainConvert
 				}
 				if (LossConvertTo = "GAL")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\GAL.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterLossConvertToTokenLocated
-                    else
-                             LableProcessGainConvert:
+                    } else
+                             Goto LableProcessGainConvert
 				}
 				if (LossConvertTo = "GBP")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\GBP.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterLossConvertToTokenLocated
-                    else
-                             LableProcessGainConvert:
+                    } else
+                             Goto LableProcessGainConvert
 				}
 				if (LossConvertTo = "GLM")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\GLM.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterLossConvertToTokenLocated
-                    else
-                             LableProcessGainConvert:
+                    } else
+                             Goto LableProcessGainConvert
 				}
 				if (LossConvertTo = "OG")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\OG.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterLossConvertToTokenLocated
-                    else
-                             LableProcessGainConvert:
+                    } else
+                             Goto LableProcessGainConvert
 				}
 				if (LossConvertTo = "OM")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\OM.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterLossConvertToTokenLocated
-                    else
-                             LableProcessGainConvert:
+                    } else
+                             Goto LableProcessGainConvert
 				}
 				if (LossConvertTo = "ONT")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\ONT.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterLossConvertToTokenLocated
-                    else
-                             LableProcessGainConvert:
+                    } else
+                             Goto LableProcessGainConvert
 				}
 				if (LossConvertTo = "OP")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\OP.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterLossConvertToTokenLocated
-                    else
-                             LableProcessGainConvert:
-
+                    } else
+                             Goto LableProcessGainConvert
 				}
 				if (LossConvertTo = "ORN")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\ORN.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterLossConvertToTokenLocated
-                    else
-                             LableProcessGainConvert:
+                    } else
+                             Goto LableProcessGainConvert
 				}
 				if (LossConvertTo = "PHA")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\PHA.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterLossConvertToTokenLocated
-                    else
-                             LableProcessGainConvert:
+                    } else
+                             Goto LableProcessGainConvert
 				}
 				if (LossConvertTo = "REP")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\REP.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterLossConvertToTokenLocated
-                    else
-                             LableProcessGainConvert:
+                    } else
+                             Goto LableProcessGainConvert
 				}
 				if (LossConvertTo = "SC")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\SC.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterLossConvertToTokenLocated
-                    else
-                             LableProcessGainConvert:
+                    } else
+                             Goto LableProcessGainConvert
 				}
 				if (LossConvertTo = "T")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\T.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterLossConvertToTokenLocated
-                    else
-                             LableProcessGainConvert:
-
+                    } else
+                             Goto LableProcessGainConvert
 				}
 				if (LossConvertTo = "WIN")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\WIN.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterLossConvertToTokenLocated
-                    else
-                             LableProcessGainConvert:
+                    } else
+                             Goto LableProcessGainConvert
 				}
 				if (LossConvertTo = "YFI")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, TokenIconPath+"\YFI.png")
+                    {
                             MouseMove FoundX, FoundY, MouseMoveSpeed
                             Goto LabelAfterLossConvertToTokenLocated
-                    else
-                             LableProcessGainConvert:
+                    } else
+                             Goto LableProcessGainConvert
 				}
 
 				LabelAfterLossConvertToTokenLocated:

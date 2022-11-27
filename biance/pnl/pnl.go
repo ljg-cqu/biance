@@ -17,9 +17,9 @@ var tokenWithDollarPrincipal = map[asset.Token]string{
 
 var tokenWith200DollarPrincipal = []asset.Token{
 	"NULS", "ASR", "MOB", "DF", "BOND", "VTHO", "ANKR", "MBOX", "ALPINE", "HIGH",
-	"ZEC", "PROS", "OMG", "UTK", "PEOPLE", "MINA", "SUSHI", "DYDX", "YGG",
-	"APT", "POLYX", "REN", "VOXEL", "TVK", "SC", "CHESS", "REI", "AVAX",
-	"MATIC", "ATOM", "BETH", "CTSI", "HBAR", "AION", "GLMR", "JOE",
+	"ZEC", "PROS", "OMG", "UTK", "PEOPLE", "MINA", "SUSHI", "DYDX", "YGG", "YFII", "RAY",
+	"APT", "POLYX", "REN", "VOXEL", "TVK", "SC", "CHESS", "REI", "AVAX", "SANTOS",
+	"MATIC", "ATOM", "BETH", "CTSI", "HBAR", "AION", "GLMR", "JOE", "UFT", "PORTO",
 	"KDA", "CFX", "XEC", "IOTX", "SLP", "AKRO", "DATA", "SUN", "ICX", "DOT",
 	"KEY", "WING", "IDEX", "USTC", "PERP", "RIF", "MC", "PLA", "OSMO", "OG", "RAD", "ZRX",
 	"LOOM", "OXT", "CVP", "POND", "TRU", "CLV", "QI", "PERL", "MULTI", "ERN",

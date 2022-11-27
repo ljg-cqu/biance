@@ -1,3 +1,4 @@
+#p::Pause  ; Win+P
 ^n::
 ; run https://www.binance.com/en/convert?fromCoin=BUSD
 {

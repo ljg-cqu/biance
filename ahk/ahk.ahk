@@ -284,10 +284,6 @@ loop
 				{
 					MouseMove ToCurrency3X, ToCurrency3Y, MouseMoveSpeed
 				}
-				if (LossConvertTo = "AVA") ;
-				{
-					MouseMove ToCurrency2X, ToCurrency2Y, MouseMoveSpeed
-				}
 				Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickCurrencyEntry

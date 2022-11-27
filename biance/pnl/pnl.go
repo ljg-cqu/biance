@@ -20,7 +20,7 @@ var tokenWith200DollarPrincipal = []asset.Token{
 	"ZEC", "PROS", "OMG", "UTK", "PEOPLE", "MINA", "SUSHI", "DYDX", "YGG", "YFII", "RAY",
 	"APT", "POLYX", "REN", "VOXEL", "TVK", "SC", "CHESS", "REI", "AVAX", "SANTOS",
 	"MATIC", "ATOM", "BETH", "CTSI", "HBAR", "AION", "GLMR", "JOE", "UFT", "PORTO",
-	"KDA", "CFX", "XEC", "IOTX", "SLP", "AKRO", "DATA", "SUN", "ICX", "DOT",
+	"KDA", "CFX", "XEC", "IOTX", "SLP", "AKRO", "DATA", "SUN", "ICX", "DOT", "MBL",
 	"KEY", "WING", "IDEX", "USTC", "PERP", "RIF", "MC", "PLA", "OSMO", "OG", "RAD", "ZRX",
 	"LOOM", "OXT", "CVP", "POND", "TRU", "CLV", "QI", "PERL", "MULTI", "ERN",
 	"REQ", "PNT", "HIVE", "FIL", "COCOS", "LTO", "DREP", "LDO", "PROM", "RLC", "AUCTION",

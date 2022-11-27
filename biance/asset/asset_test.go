@@ -12,8 +12,8 @@ import (
 
 func TestGetAssetWithUSDTOrBUSDFreeValue(t *testing.T) {
 	client := &http.Client{}
-	apiKey := ""
-	secretKey := ""
+	apiKey := "f4e3ss8FqJdTgmJGQ5ZPfZa39x37eBi9MCrs8tfXtqwGY0CeBc1HA1YrZq6Au2fB"
+	secretKey := "EE2WXi7v0cuOTsREu3CmYtLpJclLtGPVgKKGJLMMwDJ7xq97nvXZejjgoouMQzcE"
 	assetURL := biance.URLs[biance.URLUserAsset]
 	priceURL := biance.URLs[biance.URLSymbolPrice]
 	userAssets, err := GetAssetWithUSDTOrBUSDFreeValue(client, assetURL, priceURL, "", apiKey, secretKey)

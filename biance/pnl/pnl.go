@@ -25,7 +25,7 @@ var tokenWith200DollarPrincipal = []asset.Token{
 	"LOOM", "OXT", "CVP", "POND", "TRU", "CLV", "QI", "PERL", "MULTI", "ERN", "FIO",
 	"REQ", "PNT", "HIVE", "FIL", "COCOS", "LTO", "DREP", "LDO", "PROM", "RLC", "AUCTION",
 	"WNXM", "POWR", "SUPER", "KLAY", "AMP", "STMX", "KAVA", "BNT", "EGLD", "SRM", "BURGER",
-	"MIR", "MITH", "BEAM", "SCRT", "LRC", "NEO", "ONG", "NMR", "BSW"}
+	"MIR", "MITH", "BEAM", "SCRT", "LRC", "NEO", "ONG", "NMR", "BSW", "FOR"}
 
 type FreePNL struct {
 	Token asset.Token

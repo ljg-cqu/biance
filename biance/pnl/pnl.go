@@ -1,11 +1,13 @@
 package pnl
 
 import (
+	"encoding/json"
 	"github.com/ljg-cqu/biance/biance"
 	"github.com/ljg-cqu/biance/biance/asset"
 	"github.com/ljg-cqu/biance/biance/price"
 	"github.com/pkg/errors"
 	"math/big"
+	"os"
 	"sort"
 )
 
@@ -15,6 +17,8 @@ var tokenWithDollarPrincipal = map[asset.Token]string{
 	//"POLYX": "1000",
 }
 
+// DEPRECATED
+// Load from config file
 var tokenWith200DollarPrincipal = []asset.Token{
 	"NULS", "ASR", "MOB", "DF", "BOND", "VTHO", "ANKR", "MBOX", "ALPINE", "HIGH", "TKO",
 	"ZEC", "PROS", "OMG", "UTK", "PEOPLE", "MINA", "SUSHI", "DYDX", "YGG", "YFII", "RAY",
@@ -106,8 +110,19 @@ func CheckFreePNLWithUSDTOrBUSD(client biance.Client, assetURL, priceURL, asset,
 // TODO:
 
 func configPrincipalValue(pnls FreePNLs) {
+	bytes, err := os.ReadFile("./config/principal/200.json") // TODO: config it externally
+	if err != nil {
+		panic(errors.Wrapf(err, "failed to read file to config principal"))
+	}
+
+	var tokens200 []asset.Token
+	err = json.Unmarshal(bytes, &tokens200)
+	if err != nil {
+		panic(errors.Wrapf(err, "failed to parse principal config"))
+	}
+
 	var token200Map = make(map[asset.Token]string)
-	for _, token := range tokenWith200DollarPrincipal {
+	for _, token := range tokens200 {
 		token200Map[token] = ""
 	}
 

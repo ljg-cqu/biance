@@ -5,15 +5,15 @@
     MouseMoveSpeed := 0
 ; common sleep time
     SleepTimeAfterRefreshPage := 3000
-	SleepTimeAfterMouseMove := 100
+	SleepTimeAfterMouseMove := 50
 
-	SleepTimeForAlternativeClick := 100
-	SleepTimeAfterClickActionButton := 1500
-	SleepTimeAfterClickInputField := 100
-    SleepTimeAfterClickCurrencyEntry := 2500
-    SleepTimeAfterClickCurrencyOption := 1500
+	SleepTimeForAlternativeClick := 50
+	SleepTimeAfterClickActionButton := 1000
+	SleepTimeAfterClickInputField := 50
+    SleepTimeAfterClickCurrencyEntry := 2000
+    SleepTimeAfterClickCurrencyOption := 1000
 
-    SleepTimeAfterSendTxt := 100
+    SleepTimeAfterSendTxt := 50
 
 ; login time control
 	LoggedInTimeCount := 0
@@ -140,10 +140,6 @@ loop
 				{
 					MouseMove FromCurrency2X, FromCurrency2Y, MouseMoveSpeed
 				}
-				if (GainConvertFrom = "OG")
-                {
-                	MouseMove FromCurrency2X, FromCurrency2Y, MouseMoveSpeed
-                }
 				if (GainConvertFrom = "BAR")
 				{
 					MouseMove FromCurrency2X, FromCurrency2Y, MouseMoveSpeed

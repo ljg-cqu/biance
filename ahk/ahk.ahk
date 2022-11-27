@@ -147,6 +147,10 @@ loop
 				{
 					MouseMove FromCurrency2X, FromCurrency2Y, MouseMoveSpeed
 				}
+				if (GainConvertFrom = "BTC") ;
+                {
+                	MouseMove FromCurrency2X, FromCurrency2Y, MouseMoveSpeed
+                }
 				if (GainConvertFrom = "ETH") ;
 				{
 					MouseMove FromCurrency2X, FromCurrency2Y, MouseMoveSpeed

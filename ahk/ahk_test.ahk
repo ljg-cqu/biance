@@ -2,7 +2,7 @@
 {
 ;CoordMode "Pixel"
 
-if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\AR.png")
+if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\AR.png")
        {
         MsgBox "The icon was found at " FoundX "x" FoundY
         Sleep 3000

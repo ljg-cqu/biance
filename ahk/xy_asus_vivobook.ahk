@@ -1,28 +1,28 @@
-; common positions
+; xy_asus_vivobook common positions https://www.binance.com/en/convert?fromCoin=BUSD
 	CurrencyGapPixelY := 66
 
-	SelectCurrencyPanX := 618
-	SelectCurrencyPanY := 798
+	SelectCurrencyPanX := 951
+	SelectCurrencyPanY := 1127
 
-	FromCurrencyValueFieldX := 617
-	FromCurrencyValueFieldY := 597
-	FromCurrencyEntryX := 863
-	FromCurrencyEntryY := 600
-	FromCurrencyFieldX := 684
-	FromCurrencyFieldY := 668
-	FromCurrency1X := 684
-	FromCurrency1Y := 743
-	FromCurrency2X := 714
+	FromCurrencyValueFieldX := 661
+	FromCurrencyValueFieldY := 600
+	FromCurrencyEntryX := 868
+	FromCurrencyEntryY := 592
+	FromCurrencyFieldX := 700
+	FromCurrencyFieldY := 664
+	FromCurrency1X := 711
+	FromCurrency1Y := 740
+	FromCurrency2X := 711
 	FromCurrency2Y := 831
 	FromCurrency3X := 704
-	FromCurrency3Y := 914
+	FromCurrency3Y := 920
 	FromCurrency4X := 692
-	FromCurrency4Y := 994
+	FromCurrency4Y := 1005
 	FromCurrency5X := 688
-	FromCurrency5Y := 1078
+	FromCurrency5Y := 1081
 
 	ToCurrencyValueFieldX := 605
-	ToCurrencyValueFieldY := 844
+	ToCurrencyValueFieldY := 846
 	ToCurrencyEntryX := 864
 	ToCurrencyEntryY := 838
 	ToCurrencyFieldX := 687
@@ -39,7 +39,7 @@
 	ToCurrency5Y := 1080
 
 	PreviewConversionButtonX := 710
-	PreviewConversionButtonY := 994
+	PreviewConversionButtonY := 940
 
 	PreviewConversionButtonXRisk := 727
 	PreviewConversionButtonYRisk := 1029

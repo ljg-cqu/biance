@@ -1,11 +1,11 @@
 ; common sleep time
     SleepTimeAfterRefreshPage := 3000
-	SleepTimeAfterMouseMove := 50
+	SleepTimeAfterMouseMove := 10
 
-	SleepTimeForAlternativeClick := 50
-	SleepTimeAfterClickActionButton := 1000
-	SleepTimeAfterClickInputField := 50
-    SleepTimeAfterClickCurrencyEntry := 2000
-    SleepTimeAfterClickCurrencyOption := 1000
+	SleepTimeForAlternativeClick := 10
+	SleepTimeAfterClickActionButton := 600
+	SleepTimeAfterClickInputField := 10
+    SleepTimeAfterClickCurrencyEntry := 1000
+    SleepTimeAfterClickCurrencyOption := 500
 
-    SleepTimeAfterSendTxt := 50
+    SleepTimeAfterSendTxt := 10

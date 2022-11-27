@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/dgraph-io/ristretto"
+	"github.com/ljg-cqu/biance/biance/pnl"
 	"github.com/ljg-cqu/biance/logger"
 	"os"
 	"os/signal"
@@ -19,11 +20,14 @@ func main() {
 	var levels = flag.String("reportLevels", "0 1 2 3 4 5 6", "report levels")
 	var reportGain = flag.Bool("reportGain", true, "report gain")
 	var reportLoss = flag.Bool("reportLoss", true, "report loss")
+	var configPath = flag.String("configPath", "", "config path")
 	flag.Parse()
 
 	fmt.Printf("report levels: %v\n", *levels)
 	fmt.Printf("report gain: %v\n", *reportGain)
 	fmt.Printf("report loss: %v\n", *reportLoss)
+
+	pnl.Principal200ConfigPath = fmt.Sprintf("%s/principal200.json", *configPath)
 
 	levelsSplit := strings.Fields(*levels)
 	var levelsMap = make(map[string]bool)

@@ -34,6 +34,7 @@ func main() {
 	var lossConvertT = flag.String("lossConvertT", "0.10", "loss convert threshold")
 	var checkPNLInterval = flag.Int64("checkPNLInterval", 100, "check PNL interval in milli-second")
 	var excludeToken = flag.Bool("excludeToken", true, "exclude token to auto convert")
+	var configPath = flag.String("configPath", "", "config path")
 	flag.Parse()
 
 	fmt.Printf("report levels: %v\n", *levels)
@@ -55,6 +56,8 @@ func main() {
 	client := &http.Client{}
 	assetURL := biance.URLs[biance.URLUserAsset]
 	priceURL := biance.URLs[biance.URLSymbolPrice]
+
+	pnl.Principal200ConfigPath = fmt.Sprintf("%s/principal200.json", *configPath)
 
 	for {
 		freePNLs, err := pnl.CheckFreePNLWithUSDTOrBUSD(client, assetURL, priceURL, "", *apiKey, *secretKey)

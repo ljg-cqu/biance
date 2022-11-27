@@ -11,6 +11,8 @@ import (
 	"sort"
 )
 
+var Principal200ConfigPath = ""
+
 var tokenWithDollarPrincipal = map[asset.Token]string{
 	//"MDX":   "1200",
 	//"APT":   "1000",
@@ -110,7 +112,7 @@ func CheckFreePNLWithUSDTOrBUSD(client biance.Client, assetURL, priceURL, asset,
 // TODO:
 
 func configPrincipalValue(pnls FreePNLs) {
-	bytes, err := os.ReadFile("./config/principal/200.json") // TODO: config it externally
+	bytes, err := os.ReadFile(Principal200ConfigPath) // TODO: config it externally
 	if err != nil {
 		panic(errors.Wrapf(err, "failed to read file to config principal"))
 	}

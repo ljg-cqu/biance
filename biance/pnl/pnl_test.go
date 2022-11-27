@@ -1,6 +1,7 @@
 package pnl
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/ljg-cqu/biance/biance"
 	"github.com/ljg-cqu/biance/biance/asset"
@@ -116,5 +117,17 @@ func TestExtractToken(t *testing.T) {
 		}
 		tokens += fmt.Sprintf("%q,", symbol)
 	}
+	fmt.Println(tokens)
+}
+
+func TestMarshalTokens(t *testing.T) {
+	bytes, err := json.Marshal(tokenWith200DollarPrincipal)
+	require.Nil(t, err)
+	res := fmt.Sprintf("%s", bytes)
+	fmt.Println(res)
+
+	var tokens []asset.Token
+	err = json.Unmarshal([]byte(res), &tokens)
+	require.Nil(t, err)
 	fmt.Println(tokens)
 }

@@ -89,7 +89,6 @@
 
 loop
     {
-        LableProcessGainConvert:
 		; read value data
 			FileGainConvertFrom := "gainConvertFrom.txt"
 			FileGainConvertTo := "gainConvertTo.txt"
@@ -108,15 +107,16 @@ loop
 		{
 			; set from token
 				MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
-				Sleep SleepTimeAfterMouseMove
+				;Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickCurrencyEntry
 				MouseMove FromCurrencyFieldX, FromCurrencyFieldY, MouseMoveSpeed
-				Sleep SleepTimeAfterMouseMove
+				;Sleep SleepTimeAfterMouseMove
 				Click
-				Sleep SleepTimeAfterClickInputField
+				;Sleep SleepTimeAfterClickInputField
+				Send "^a"
 				Send GainConvertFrom
-				Sleep SleepTimeAfterSendTxt
+				Sleep SleepTimeAfterSendCurrencyTxt
 				MouseMove FromCurrency1X, FromCurrency1Y, MouseMoveSpeed
 
                 ; TODO: goto
@@ -124,293 +124,294 @@ loop
 				if (GainConvertFrom = "ACA")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\ACA.png")
-                    {        MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterGainConvertFromTokenLocated
-                    } ;} else
-                            ;Goto LableProcessLossConvert
+                    {        MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                            Goto LabelAfterGainConvertFromTokenLocated
+                    } else
+                            Goto LabelGainRefreshPage
 				}
 				if (GainConvertFrom = "ANT")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\ANT.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterGainConvertFromTokenLocated
-                    } ;} else
-                             ;Goto LableProcessLossConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                           Goto LabelAfterGainConvertFromTokenLocated
+                    } else
+                             Goto LabelGainRefreshPage
 				}
 				if (GainConvertFrom = "AR")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\AR.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterGainConvertFromTokenLocated
-                    } ;} else
-                             ;Goto LableProcessLossConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                           Goto LabelAfterGainConvertFromTokenLocated
+                    } else
+                             Goto LabelGainRefreshPage
 				}
 				if (GainConvertFrom = "ATA")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\ATA.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterGainConvertFromTokenLocated
-                    } ;} else
-                             ;Goto LableProcessLossConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                           Goto LabelAfterGainConvertFromTokenLocated
+                    } else
+                             Goto LabelGainRefreshPage
 				}
 				if (GainConvertFrom = "AUD")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\AUD.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterGainConvertFromTokenLocated
-                    } ;} else
-                             ;Goto LableProcessLossConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                           Goto LabelAfterGainConvertFromTokenLocated
+                    } else
+                             Goto LabelGainRefreshPage
 				}
 				if (GainConvertFrom = "AVA")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\AVA.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterGainConvertFromTokenLocated
-                    } ;} else
-                             ;Goto LableProcessLossConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                           Goto LabelAfterGainConvertFromTokenLocated
+                    } else
+                             Goto LabelGainRefreshPage
 				}
 				if (GainConvertFrom = "BAR")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\BAR.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterGainConvertFromTokenLocated
-                    } ;} else
-                             ;Goto LableProcessLossConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                           Goto LabelAfterGainConvertFromTokenLocated
+                    } else
+                             Goto LabelGainRefreshPage
 				}
 				if (GainConvertFrom = "BNB")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\BNB.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterGainConvertFromTokenLocated
-                    } ;} else
-                             ;Goto LableProcessLossConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                           Goto LabelAfterGainConvertFromTokenLocated
+                    } else
+                             Goto LabelGainRefreshPage
 				}
 				if (GainConvertFrom = "BTC")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\BTC.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterGainConvertFromTokenLocated
-                    } ;} else
-                             ;Goto LableProcessLossConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                           Goto LabelAfterGainConvertFromTokenLocated
+                    } else
+                             Goto LabelGainRefreshPage
 				}
 				if (GainConvertFrom = "COS")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\COS.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterGainConvertFromTokenLocated
-                    } ;} else
-                             ;Goto LableProcessLossConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                           Goto LabelAfterGainConvertFromTokenLocated
+                    } else
+                             Goto LabelGainRefreshPage
 				}
 				if (GainConvertFrom = "ETH")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\ETH.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterGainConvertFromTokenLocated
-                    } ;} else
-                             ;Goto LableProcessLossConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                           Goto LabelAfterGainConvertFromTokenLocated
+                    } else
+                             Goto LabelGainRefreshPage
 				}
 				if (GainConvertFrom = "FOR")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\FOR.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterGainConvertFromTokenLocated
-                    } ;} else
-                             ;Goto LableProcessLossConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                           Goto LabelAfterGainConvertFromTokenLocated
+                    } else
+                             Goto LabelGainRefreshPage
 				}
 				if (GainConvertFrom = "GAL")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\GAL.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterGainConvertFromTokenLocated
-                    } ;} else
-                             ;Goto LableProcessLossConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                           Goto LabelAfterGainConvertFromTokenLocated
+                    } else
+                             Goto LabelGainRefreshPage
 				}
 				if (GainConvertFrom = "GBP")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\GBP.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterGainConvertFromTokenLocated
-                    } ;} else
-                             ;Goto LableProcessLossConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                           Goto LabelAfterGainConvertFromTokenLocated
+                    } else
+                             Goto LabelGainRefreshPage
 				}
 				if (GainConvertFrom = "GLM")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\GLM.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterGainConvertFromTokenLocated
-                    } ;} else
-                             ;Goto LableProcessLossConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                           Goto LabelAfterGainConvertFromTokenLocated
+                    } else
+                             Goto LabelGainRefreshPage
 				}
 				if (GainConvertFrom = "OG")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\OG.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterGainConvertFromTokenLocated
-                    } ;} else
-                             ;Goto LableProcessLossConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                           Goto LabelAfterGainConvertFromTokenLocated
+                    } else
+                             Goto LabelGainRefreshPage
 				}
 				if (GainConvertFrom = "OM")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\OM.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterGainConvertFromTokenLocated
-                    } ;} else
-                             ;Goto LableProcessLossConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                           Goto LabelAfterGainConvertFromTokenLocated
+                    } else
+                             Goto LabelGainRefreshPage
 				}
 				if (GainConvertFrom = "ONT")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\ONT.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterGainConvertFromTokenLocated
-                    } ;} else
-                             ;Goto LableProcessLossConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                           Goto LabelAfterGainConvertFromTokenLocated
+                    } else
+                             Goto LabelGainRefreshPage
 				}
 				if (GainConvertFrom = "OP")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\OP.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterGainConvertFromTokenLocated
-                    } ;} else
-                             ;Goto LableProcessLossConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                           Goto LabelAfterGainConvertFromTokenLocated
+                    } else
+                             Goto LabelGainRefreshPage
 				}
 				if (GainConvertFrom = "ORN")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\ORN.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterGainConvertFromTokenLocated
-                    } ;} else
-                             ;Goto LableProcessLossConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                           Goto LabelAfterGainConvertFromTokenLocated
+                    } else
+                             Goto LabelGainRefreshPage
 				}
 				if (GainConvertFrom = "PHA")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\PHA.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterGainConvertFromTokenLocated
-                    } ;} else
-                             ;Goto LableProcessLossConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                           Goto LabelAfterGainConvertFromTokenLocated
+                    } else
+                             Goto LabelGainRefreshPage
 				}
 				if (GainConvertFrom = "REP")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\REP.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterGainConvertFromTokenLocated
-                    } ;} else
-                             ;Goto LableProcessLossConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                           Goto LabelAfterGainConvertFromTokenLocated
+                    } else
+                             Goto LabelGainRefreshPage
 				}
 				if (GainConvertFrom = "SC")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\SC.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterGainConvertFromTokenLocated
-                    } ;} else
-                             ;Goto LableProcessLossConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                           Goto LabelAfterGainConvertFromTokenLocated
+                    } else
+                             Goto LabelGainRefreshPage
 				}
 				if (GainConvertFrom = "T")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\T.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterGainConvertFromTokenLocated
-                    } ;} else
-                             ;Goto LableProcessLossConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                           Goto LabelAfterGainConvertFromTokenLocated
+                    } else
+                             Goto LabelGainRefreshPage
 				}
 				if (GainConvertFrom = "WIN")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\WIN.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterGainConvertFromTokenLocated
-                    } ;} else
-                             ;Goto LableProcessLossConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                           Goto LabelAfterGainConvertFromTokenLocated
+                    } else
+                             Goto LabelGainRefreshPage
 				}
 				if (GainConvertFrom = "YFI")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\YFI.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterGainConvertFromTokenLocated
-                    } ;} else
-                             ;Goto LableProcessLossConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                           Goto LabelAfterGainConvertFromTokenLocated
+                    } else
+                             Goto LabelGainRefreshPage
 				}
 
 
                 LabelAfterGainConvertFromTokenLocated:
-				Sleep SleepTimeAfterMouseMove
+				;Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickCurrencyOption
 
 			; set to token: BUSD, or USDT
 				MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
-				Sleep SleepTimeAfterMouseMove
+				;Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickCurrencyEntry
 				MouseMove ToCurrencyFieldX, ToCurrencyFieldY, MouseMoveSpeed
-				Sleep SleepTimeAfterMouseMove
+				;Sleep SleepTimeAfterMouseMove
 				Click
-				Sleep SleepTimeAfterClickInputField
+				;Sleep SleepTimeAfterClickInputField
+				Send "^a"
 				Send GainConvertTo
-				Sleep SleepTimeAfterSendTxt
+				Sleep SleepTimeAfterSendCurrencyTxt
 				MouseMove ToCurrency1X, ToCurrency1Y, MouseMoveSpeed
-				Sleep SleepTimeAfterMouseMove
+				;Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickCurrencyOption
 
 			; set convert value
 				MouseMove FromCurrencyValueFieldX, FromCurrencyValueFieldY, MouseMoveSpeed
-				Sleep SleepTimeAfterMouseMove
+				;Sleep SleepTimeAfterMouseMove
 				Click
-				Sleep SleepTimeAfterClickInputField
+				;Sleep SleepTimeAfterClickInputField
 				Send GainConvertValue
 				Sleep SleepTimeAfterSendTxt
 
 			; preview conversion
 				MouseMove PreviewConversionButtonX, PreviewConversionButtonY, MouseMoveSpeed
-				Sleep SleepTimeAfterMouseMove
+				;Sleep SleepTimeAfterMouseMove
 				Click
-				Sleep SleepTimeForAlternativeClick
+				;Sleep SleepTimeForAlternativeClick
 				MouseMove PreviewConversionButtonXRisk, PreviewConversionButtonYRisk, MouseMoveSpeed
-				Sleep SleepTimeAfterMouseMove
+				;Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickActionButton
 
 			; convert
 				MouseMove ConvertButtonX, ConvertButtonY, MouseMoveSpeed
-				Sleep SleepTimeAfterMouseMove
+				;Sleep SleepTimeAfterMouseMove
 				Click
 				MouseMove ConvertButtonXVolatile, ConvertButtonYVolatile, MouseMoveSpeed
-				Sleep SleepTimeAfterMouseMove
+				;Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickActionButton
 
 			; refresh web page
+			LabelGainRefreshPage:
 				Send "{F5}" ; TODO: remove it after balance check by server side
 				Sleep SleepTimeAfterRefreshPage ;todo: window wait
 				Send "^{Tab}"
 		}
 
-        LableProcessLossConvert:
 		FileLossConvertFrom := "lossConvertFrom.txt"
 		FileLossConvertTo := "lossConvertTo.txt"
 		FileLossConvertValue := "lossConvertValue.txt"
@@ -428,300 +429,303 @@ loop
 		{
 			; set from tokenMOVR, limit to: BUSD, USDT
 				MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
-				Sleep SleepTimeAfterMouseMove
+				;Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickCurrencyEntry
 				MouseMove FromCurrencyFieldX, FromCurrencyFieldY, MouseMoveSpeed
-				Sleep SleepTimeAfterMouseMove
+				;Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickInputField
+				Send "^a"
 				Send LossConvertFrom
-				Sleep SleepTimeAfterSendTxt
+				Sleep SleepTimeAfterSendCurrencyTxt
 				MouseMove FromCurrency1X, FromCurrency1Y, MouseMoveSpeed
-				Sleep SleepTimeAfterMouseMove
+				;Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickCurrencyOption
 
 			; set to token
 				MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
-				Sleep SleepTimeAfterMouseMove
+				;Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickCurrencyEntry
 				MouseMove ToCurrencyFieldX, ToCurrencyFieldY, MouseMoveSpeed
-				Sleep SleepTimeAfterMouseMove
+				;Sleep SleepTimeAfterMouseMove
 				Click
-				Sleep SleepTimeAfterClickInputField
+				;Sleep SleepTimeAfterClickInputField
+				Send "^a"
 				Send LossConvertTo
-				Sleep SleepTimeAfterSendTxt
+				Sleep SleepTimeAfterSendCurrencyTxt
 				MouseMove ToCurrency1X, ToCurrency1Y, MouseMoveSpeed
 				if (LossConvertTo = "ACA")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\ACA.png")
-                    {        MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterLossConvertToTokenLocated
-                    } ;} else
-                            ;Goto LableProcessGainConvert
+                    {        MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                            Goto LabelAfterLossConvertToTokenLocated
+                    } else
+                            Goto LabelLossRefreshPage
 				}
 				if (LossConvertTo = "ANT")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\ANT.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterLossConvertToTokenLocated
-                    } ;} else
-                             ;Goto LableProcessGainConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                            Goto LabelAfterLossConvertToTokenLocated
+                    } else
+                             Goto LabelLossRefreshPage
 				}
 				if (LossConvertTo = "AR")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\AR.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterLossConvertToTokenLocated
-                    } ;} else
-                             ;Goto LableProcessGainConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                            Goto LabelAfterLossConvertToTokenLocated
+                    } else
+                             Goto LabelLossRefreshPage
 				}
 				if (LossConvertTo = "ATA")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\ATA.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterLossConvertToTokenLocated
-                    } ;} else
-                             ;Goto LableProcessGainConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                            Goto LabelAfterLossConvertToTokenLocated
+                    } else
+                             Goto LabelLossRefreshPage
 				}
 				if (LossConvertTo = "AUD")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\AUD.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterLossConvertToTokenLocated
-                    } ;} else
-                             ;Goto LableProcessGainConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                            Goto LabelAfterLossConvertToTokenLocated
+                    } else
+                             Goto LabelLossRefreshPage
 				}
 				if (LossConvertTo = "AVA")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\AVA.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterLossConvertToTokenLocated
-                    } ;} else
-                             ;Goto LableProcessGainConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                            Goto LabelAfterLossConvertToTokenLocated
+                    } else
+                             Goto LabelLossRefreshPage
 				}
 				if (LossConvertTo = "BAR")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\BAR.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterLossConvertToTokenLocated
-                    } ;} else
-                             ;Goto LableProcessGainConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                            Goto LabelAfterLossConvertToTokenLocated
+                    } else
+                             Goto LabelLossRefreshPage
 				}
 				if (LossConvertTo = "BNB")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\BNB.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterLossConvertToTokenLocated
-                    } ;} else
-                             ;Goto LableProcessGainConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                            Goto LabelAfterLossConvertToTokenLocated
+                    } else
+                             Goto LabelLossRefreshPage
 				}
 				if (LossConvertTo = "BTC")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\BTC.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterLossConvertToTokenLocated
-                    } ;} else
-                             ;Goto LableProcessGainConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                            Goto LabelAfterLossConvertToTokenLocated
+                    } else
+                             Goto LabelLossRefreshPage
 				}
 				if (LossConvertTo = "COS")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\COS.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterLossConvertToTokenLocated
-                    } ;} else
-                             ;Goto LableProcessGainConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                            Goto LabelAfterLossConvertToTokenLocated
+                    } else
+                             Goto LabelLossRefreshPage
 				}
 				if (LossConvertTo = "ETH")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\ETH.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterLossConvertToTokenLocated
-                    } ;} else
-                             ;Goto LableProcessGainConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                            Goto LabelAfterLossConvertToTokenLocated
+                    } else
+                             Goto LabelLossRefreshPage
 				}
 				if (LossConvertTo = "FOR")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\FOR.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterLossConvertToTokenLocated
-                    } ;} else
-                             ;Goto LableProcessGainConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                            Goto LabelAfterLossConvertToTokenLocated
+                    } else
+                             Goto LabelLossRefreshPage
 				}
 				if (LossConvertTo = "GAL")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\GAL.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterLossConvertToTokenLocated
-                    } ;} else
-                             ;Goto LableProcessGainConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                            Goto LabelAfterLossConvertToTokenLocated
+                    } else
+                             Goto LabelLossRefreshPage
 				}
 				if (LossConvertTo = "GBP")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\GBP.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterLossConvertToTokenLocated
-                    } ;} else
-                             ;Goto LableProcessGainConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                            Goto LabelAfterLossConvertToTokenLocated
+                    } else
+                             Goto LabelLossRefreshPage
 				}
 				if (LossConvertTo = "GLM")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\GLM.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterLossConvertToTokenLocated
-                    } ;} else
-                             ;Goto LableProcessGainConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                            Goto LabelAfterLossConvertToTokenLocated
+                    } else
+                             Goto LabelLossRefreshPage
 				}
 				if (LossConvertTo = "OG")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\OG.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterLossConvertToTokenLocated
-                    } ;} else
-                             ;Goto LableProcessGainConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                            Goto LabelAfterLossConvertToTokenLocated
+                    } else
+                             Goto LabelLossRefreshPage
 				}
 				if (LossConvertTo = "OM")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\OM.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterLossConvertToTokenLocated
-                    } ;} else
-                             ;Goto LableProcessGainConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                            Goto LabelAfterLossConvertToTokenLocated
+                    } else
+                             Goto LabelLossRefreshPage
 				}
 				if (LossConvertTo = "ONT")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\ONT.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterLossConvertToTokenLocated
-                    } ;} else
-                             ;Goto LableProcessGainConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                            Goto LabelAfterLossConvertToTokenLocated
+                    } else
+                             Goto LabelLossRefreshPage
 				}
 				if (LossConvertTo = "OP")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\OP.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterLossConvertToTokenLocated
-                    } ;} else
-                             ;Goto LableProcessGainConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                            Goto LabelAfterLossConvertToTokenLocated
+                    } else
+                             Goto LabelLossRefreshPage
 				}
 				if (LossConvertTo = "ORN")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\ORN.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterLossConvertToTokenLocated
-                    } ;} else
-                             ;Goto LableProcessGainConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                            Goto LabelAfterLossConvertToTokenLocated
+                    } else
+                             Goto LabelLossRefreshPage
 				}
 				if (LossConvertTo = "PHA")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\PHA.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterLossConvertToTokenLocated
-                    } ;} else
-                             ;Goto LableProcessGainConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                            Goto LabelAfterLossConvertToTokenLocated
+                    } else
+                             Goto LabelLossRefreshPage
 				}
 				if (LossConvertTo = "REP")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\REP.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterLossConvertToTokenLocated
-                    } ;} else
-                             ;Goto LableProcessGainConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                            Goto LabelAfterLossConvertToTokenLocated
+                    } else
+                             Goto LabelLossRefreshPage
 				}
 				if (LossConvertTo = "SC")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\SC.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterLossConvertToTokenLocated
-                    } ;} else
-                             ;Goto LableProcessGainConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                            Goto LabelAfterLossConvertToTokenLocated
+                    } else
+                             Goto LabelLossRefreshPage
 				}
 				if (LossConvertTo = "T")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\T.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterLossConvertToTokenLocated
-                    } ;} else
-                             ;Goto LableProcessGainConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                            Goto LabelAfterLossConvertToTokenLocated
+                    } else
+                             Goto LabelLossRefreshPage
 				}
 				if (LossConvertTo = "WIN")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\WIN.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterLossConvertToTokenLocated
-                    } ;} else
-                             ;Goto LableProcessGainConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                            Goto LabelAfterLossConvertToTokenLocated
+                    } else
+                             Goto LabelLossRefreshPage
 				}
 				if (LossConvertTo = "YFI")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\YFI.png")
                     {
-                            MouseMove FoundX, FoundY, MouseMoveSpeed
-                            ;Goto LabelAfterLossConvertToTokenLocated
-                    } ;} else
-                             ;Goto LableProcessGainConvert
+                            MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                            Goto LabelAfterLossConvertToTokenLocated
+                    } else
+                             Goto LabelLossRefreshPage
 				}
 
 				LabelAfterLossConvertToTokenLocated:
-				Sleep SleepTimeAfterMouseMove
+				;Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickCurrencyEntry
 
 			; set convert value
 				MouseMove FromCurrencyValueFieldX, FromCurrencyValueFieldY, MouseMoveSpeed
-				Sleep SleepTimeAfterMouseMove
+				;Sleep SleepTimeAfterMouseMove
 				Click
-				Sleep SleepTimeAfterClickInputField
+				;Sleep SleepTimeAfterClickInputField
 				Send LossConvertValue
 				Sleep SleepTimeAfterSendTxt
 
 			; preview conversion
 				MouseMove PreviewConversionButtonX, PreviewConversionButtonY, MouseMoveSpeed
-				Sleep SleepTimeAfterMouseMove
+				;Sleep SleepTimeAfterMouseMove
 				Click
-				Sleep SleepTimeForAlternativeClick
+				;Sleep SleepTimeForAlternativeClick
 				MouseMove PreviewConversionButtonXRisk, PreviewConversionButtonYRisk, MouseMoveSpeed
-				Sleep SleepTimeAfterMouseMove
+				;Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickActionButton
 
 			; convert
 				MouseMove ConvertButtonX, ConvertButtonY, MouseMoveSpeed
-				Sleep SleepTimeAfterMouseMove
+				;Sleep SleepTimeAfterMouseMove
 				Click
-				Sleep SleepTimeForAlternativeClick
+				;Sleep SleepTimeForAlternativeClick
 				MouseMove ConvertButtonXVolatile, ConvertButtonYVolatile, MouseMoveSpeed
-				Sleep SleepTimeAfterMouseMove
+				;Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickActionButton
 
 			; refresh web page
+			LabelLossRefreshPage:
 				Send "{F5}" ; TODO: remove it after balance check by server side
 				Sleep SleepTimeAfterRefreshPage
 				Send "^{Tab}"

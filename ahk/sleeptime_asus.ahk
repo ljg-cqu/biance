@@ -10,3 +10,4 @@
      SleepTimeAfterClickCurrencyOption := 1000
 
      SleepTimeAfterSendTxt := 10
+     SleepTimeAfterSendCurrencyTxt := 600

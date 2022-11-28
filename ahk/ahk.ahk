@@ -146,8 +146,17 @@ loop
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
                            Goto LabelAfterGainConvertFromTokenLocated
-                    } else
+                    } else {
+                            MouseMove SelectCurrencyPanx, SelectCurrencyPanY, MouseMoveSpeed
+                            Click 8
+                            Sleep SleepAfterClickSlider
+                            if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\AR.png")
+                            {
+                                MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                                Goto LabelAfterGainConvertFromTokenLocated
+                            } else
                              Goto LabelGainRefreshPage
+                    }
 				}
 				if (GainConvertFrom = "ATA")
 				{
@@ -491,8 +500,17 @@ loop
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
                             Goto LabelAfterLossConvertToTokenLocated
-                    } else
-                             Goto LabelLossRefreshPage
+                    } else {
+                            MouseMove SelectCurrencyPanX, SelectCurrencyPanY, MouseMoveSpeed
+                            Click 8
+                            Sleep SleepAfterClickSlider
+                            if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\AR.png")
+                            {
+                                    MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                                    Goto LabelAfterLossConvertToTokenLocated
+                            } else
+                                Goto LabelLossRefreshPage
+                    }
 				}
 				if (LossConvertTo = "ATA")
 				{

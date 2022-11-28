@@ -353,8 +353,23 @@ loop
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
                            Goto LabelAfterGainConvertFromTokenLocated
-                    } else
-                             Goto LabelGainRefreshPage
+                    } else {
+                            MouseMove SelectCurrencyPanX, SelectCurrencyPanY, MouseMoveSpeed
+                            LoopTs := 0
+                            LoopT:
+                            Click 8
+                            if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\T.png")
+                             {
+                                 MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                                  Goto LabelAfterGainConvertFromTokenLocated
+                              } else {
+                                LoopTs += 1
+                                if LoopTs > 10
+                                    Goto LabelGainRefreshPage
+                                else
+                                    Goto LoopT
+                              }
+                    }
 				}
 				if (GainConvertFrom = "WIN")
 				{
@@ -701,14 +716,29 @@ loop
                     } else
                              Goto LabelLossRefreshPage
 				}
-				if (LossConvertTo = "T")
+		        if (LossConvertTo = "T")
 				{
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\T.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
-                            Goto LabelAfterLossConvertToTokenLocated
-                    } else
-                             Goto LabelLossRefreshPage
+                           Goto LabelAfterLossConvertToTokenLocated
+                    } else {
+                            MouseMove SelectCurrencyPanX, SelectCurrencyPanY, MouseMoveSpeed
+                            LossLoopTs := 0
+                            LossLoopT:
+                            Click 8
+                            if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\T.png")
+                             {
+                                 MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                                  Goto LabelAfterLossConvertToTokenLocated
+                              } else {
+                                LossLoopTs += 1
+                                if LossLoopTs > 10
+                                    Goto LabelLossRefreshPage
+                                else
+                                    Goto LossLoopT
+                              }
+                    }
 				}
 				if (LossConvertTo = "WIN")
 				{

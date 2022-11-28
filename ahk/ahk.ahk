@@ -105,6 +105,9 @@ loop
 				GainConvertValue := FileRead(FileGainConvertValue)
 			}
 
+        if (GainConvertFrom = "T")
+            GainConvertTo = "BUSD"
+
 		if (GainConvertFrom != "" && GainConvertTo != "" && GainConvertValue != "")
 		{
 			; set from token
@@ -460,6 +463,9 @@ loop
 			LossConvertTo := FileRead(FileLossConvertTo)
 			LossConvertValue := FileRead(FileLossConvertValue)
 		}
+
+     if (LossConvertTo = "T")
+            LossConvertFrom = "BUSD"
 
 		if (LossConvertFrom != "" && LossConvertTo != "" && LossConvertValue != "")
 		{

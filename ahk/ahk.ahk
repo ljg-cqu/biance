@@ -368,7 +368,7 @@ loop
                                   Goto LabelAfterGainConvertFromTokenLocated
                               } else {
                                 LoopTs += 1
-                                if LoopTs > 10
+                                if LoopTs > 20
                                     Goto LabelGainRefreshPage
                                 else
                                     Goto LoopT
@@ -741,7 +741,7 @@ loop
                                   Goto LabelAfterLossConvertToTokenLocated
                               } else {
                                 LossLoopTs += 1
-                                if LossLoopTs > 10
+                                if LossLoopTs > 20
                                     Goto LabelLossRefreshPage
                                 else
                                     Goto LossLoopT

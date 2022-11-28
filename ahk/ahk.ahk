@@ -358,6 +358,7 @@ loop
                             LoopTs := 0
                             LoopT:
                             Click 8
+                            Sleep SleepAfterClickSlider
                             if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\T.png")
                              {
                                  MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -727,6 +728,7 @@ loop
                             LossLoopTs := 0
                             LossLoopT:
                             Click 8
+                            Sleep SleepAfterClickSlider
                             if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\T.png")
                              {
                                  MouseMove FoundX+20, FoundY+20, MouseMoveSpeed

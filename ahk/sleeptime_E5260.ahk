@@ -10,3 +10,5 @@
 
     SleepTimeAfterSendTxt := 100
     SleepTimeAfterSendCurrencyTxt := 600
+
+    SleepAfterClickSlider := 600

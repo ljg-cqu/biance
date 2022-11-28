@@ -18,6 +18,8 @@
      SleepTimeAfterSendTxt := 10
      SleepTimeAfterSendCurrencyTxt := 600
 
+     SleepAfterClickSlider := 600
+
 ; login time control
 	LoggedInTimeCount := 0
 	MaxLoggedInTimeCount := 300 ;18000
@@ -270,8 +272,17 @@ loop
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
                            Goto LabelAfterGainConvertFromTokenLocated
-                    } else
-                             Goto LabelGainRefreshPage
+                    } else {
+                           MouseMove SelectCurrencyPanX, SelectCurrencyPanY, MouseMoveSpeed
+                           Click 4
+                           Sleep SleepAfterClickSlider
+                           if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\OM.png")
+                            {
+                              MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                              Goto LabelAfterGainConvertFromTokenLocated
+                             } else
+                              Goto LabelGainRefreshPage
+                    }
 				}
 				if (GainConvertFrom = "ONT")
 				{
@@ -606,8 +617,17 @@ loop
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
                             Goto LabelAfterLossConvertToTokenLocated
-                    } else
-                             Goto LabelLossRefreshPage
+                    } else {
+                            MouseMove SelectCurrencyPanX, SelectCurrencyPanY, MouseMoveSpeed
+                            Click 4
+                            Sleep SleepAfterClickSlider
+                            if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\OM.png")
+                             {
+                                  MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
+                                  Goto LabelAfterLossConvertToTokenLocated
+                              } else
+                                Goto LabelLossRefreshPage
+                    }
 				}
 				if (LossConvertTo = "ONT")
 				{

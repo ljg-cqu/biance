@@ -106,7 +106,7 @@ loop
 			}
 
         if (GainConvertFrom = "T")
-            GainConvertTo = "BUSD"
+            GainConvertTo := "BUSD"
 
 		if (GainConvertFrom != "" && GainConvertTo != "" && GainConvertValue != "")
 		{
@@ -465,7 +465,7 @@ loop
 		}
 
      if (LossConvertTo = "T")
-            LossConvertFrom = "BUSD"
+            LossConvertFrom := "BUSD"
 
 		if (LossConvertFrom != "" && LossConvertTo != "" && LossConvertValue != "")
 		{

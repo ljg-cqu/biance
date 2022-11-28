@@ -4,18 +4,19 @@
 {
 ; token icon path
     TokenIconPath := "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook"
-; mouse move speed
-    MouseMoveSpeed := 0
-    SleepTimeAfterRefreshPage := 3000
-	SleepTimeAfterMouseMove := 50
+; common sleep time
+     MouseMoveSpeed := 0
+     SleepTimeAfterRefreshPage := 3000
+     SleepTimeAfterMouseMove := 50
 
-	SleepTimeForAlternativeClick := 10
-	SleepTimeAfterClickActionButton := 1000
-	SleepTimeAfterClickInputField := 10
-    SleepTimeAfterClickCurrencyEntry := 1500
-    SleepTimeAfterClickCurrencyOption := 1000
+     SleepTimeForAlternativeClick := 10
+     SleepTimeAfterClickActionButton := 1000
+     SleepTimeAfterClickInputField := 10
+     SleepTimeAfterClickCurrencyEntry := 1600
+     SleepTimeAfterClickCurrencyOption := 1000
 
-    SleepTimeAfterSendTxt := 10
+     SleepTimeAfterSendTxt := 10
+     SleepTimeAfterSendCurrencyTxt := 600
 
 ; login time control
 	LoggedInTimeCount := 0

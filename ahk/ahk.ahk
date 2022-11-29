@@ -19,7 +19,8 @@
      SleepTimeAfterSendCurrencyTxt := 600
 
      SleepAfterClickSlider := 600
-
+; random
+    RandomNumber := 0
 ; login time control
 	LoggedInTimeCount := 0
 	MaxLoggedInTimeCount := 300 ;18000
@@ -114,6 +115,12 @@ loop
                             }
                     }
              }
+
+        if (RandomNumber = 0)
+            MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
+        else
+            MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
+        Sleep SleepTimeAfterMouseMove
 
 		; read value data
 			FileGainConvertFrom := "gainConvertFrom.txt"

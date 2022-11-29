@@ -127,7 +127,7 @@ loop
             RandomNumber := 0
             }
         WinActivate "Binance Convert"
-        WinActivate "mintty"
+        WinActivate "ahk_class mintty"
         Sleep SleepTimeAfterMouseMove
 
 		; read value data

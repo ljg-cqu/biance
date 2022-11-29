@@ -126,6 +126,8 @@ loop
             MouseMove FromCurrencyEntryX+200+50, FromCurrencyEntryY+100+50, MouseMoveSpeed
             RandomNumber := 0
             }
+        WinActivate "Binance Convert"
+        WinActivate "mintty"
         Sleep SleepTimeAfterMouseMove
 
 		; read value data

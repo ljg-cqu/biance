@@ -118,8 +118,10 @@ loop
 
         if (RandomNumber = 0)
             MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
+            RandomNumber := 1
         else
             MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
+            RandomNumber := 0
         Sleep SleepTimeAfterMouseMove
 
 		; read value data

@@ -123,7 +123,7 @@ loop
             }
         else
         {
-            MouseMove FromCurrencyEntryX+200+20, FromCurrencyEntryY+100+20, MouseMoveSpeed
+            MouseMove FromCurrencyEntryX+200+50, FromCurrencyEntryY+100+50, MouseMoveSpeed
             RandomNumber := 0
             }
         Sleep SleepTimeAfterMouseMove

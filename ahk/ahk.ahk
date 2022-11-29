@@ -126,12 +126,18 @@ loop
             MouseMove FromCurrencyEntryX+200+50, FromCurrencyEntryY+100+50, MouseMoveSpeed
             RandomNumber := 0
             }
-        WinActivate "Binance Convert"
-        WinActivate "ahk_id 591806"
-        WinActivate "ahk_id 329390"
-        WinActivate "ahk_id 1050594"
-        WinActivate "ahk_id 394802"
-        WinActivate "ahk_id 329432"
+        if !WinActive("Binance Convert")
+               WinActivate "Binance Convert"
+        if !WinActive("ahk_id 591806")
+            WinActivate "ahk_id 591806"
+        if !WinActive("ahk_id 329390")
+            WinActivate "ahk_id 329390"
+        if !WinActive("ahk_id 1050594")
+            WinActivate "ahk_id 1050594"
+        if !WinActive("ahk_id 394802")
+            WinActivate "ahk_id 394802"
+        if !WinActive("ahk_id 329432")
+            WinActivate "ahk_id 329432"
         Sleep SleepTimeAfterMouseMove
 
 		; read value data

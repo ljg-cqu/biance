@@ -126,6 +126,7 @@ loop
             MouseMove FromCurrencyEntryX+200+50, FromCurrencyEntryY+100+50, MouseMoveSpeed
             RandomNumber := 0
             }
+        ; TODO: add group.
         if !WinActive("Binance Convert")
                WinActivate "Binance Convert"
 ;        if !WinActive("ahk_id 591806")

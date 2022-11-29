@@ -1,5 +1,5 @@
 ; common sleep time
-    SleepTimeAfterRefreshPage := 3000
+    SleepTimeAfterRefreshPage := 4000
 	SleepTimeAfterMouseMove := 100
 
 	SleepTimeForAlternativeClick := 100

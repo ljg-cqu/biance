@@ -6,7 +6,7 @@
     TokenIconPath := "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook"
 ; common sleep time
      MouseMoveSpeed := 0
-     SleepTimeAfterRefreshPage := 3000
+     SleepTimeAfterRefreshPage := 4000
      SleepTimeAfterMouseMove := 50
 
      SleepTimeForAlternativeClick := 10
@@ -128,6 +128,7 @@ loop
                 ; TODO: not foud abnormal case
 				if (GainConvertFrom = "ACA")
 				{
+				    MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\ACA.png")
                     {        MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
                             Goto LabelAfterGainConvertFromTokenLocated
@@ -136,6 +137,7 @@ loop
 				}
 				if (GainConvertFrom = "ANT")
 				{
+				    MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\ANT.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -145,6 +147,7 @@ loop
 				}
 				if (GainConvertFrom = "AR")
 				{
+				    MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\AR.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -163,6 +166,7 @@ loop
 				}
 				if (GainConvertFrom = "ATA")
 				{
+				    MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\ATA.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -172,6 +176,7 @@ loop
 				}
 				if (GainConvertFrom = "AUD")
 				{
+				    MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\AUD.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -181,6 +186,7 @@ loop
 				}
 				if (GainConvertFrom = "AVA")
 				{
+				    MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\AVA.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -190,6 +196,7 @@ loop
 				}
 				if (GainConvertFrom = "BAR")
 				{
+				    MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\BAR.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -199,6 +206,7 @@ loop
 				}
 				if (GainConvertFrom = "BNB")
 				{
+				    MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\BNB.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -208,6 +216,7 @@ loop
 				}
 				if (GainConvertFrom = "BTC")
 				{
+				    MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\BTC.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -217,6 +226,7 @@ loop
 				}
 				if (GainConvertFrom = "COS")
 				{
+				    MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\COS.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -226,6 +236,7 @@ loop
 				}
 				if (GainConvertFrom = "ETH")
 				{
+				    MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\ETH.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -235,6 +246,7 @@ loop
 				}
 				if (GainConvertFrom = "FOR")
 				{
+				    MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\FOR.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -244,6 +256,7 @@ loop
 				}
 				if (GainConvertFrom = "GAL")
 				{
+				    MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\GAL.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -253,6 +266,7 @@ loop
 				}
 				if (GainConvertFrom = "GBP")
 				{
+				    MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\GBP.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -262,6 +276,7 @@ loop
 				}
 				if (GainConvertFrom = "GLM")
 				{
+				    MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\GLM.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -271,6 +286,7 @@ loop
 				}
 				if (GainConvertFrom = "OG")
 				{
+				    MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\OG.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -280,6 +296,7 @@ loop
 				}
 				if (GainConvertFrom = "OM")
 				{
+				    MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\OM.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -298,6 +315,7 @@ loop
 				}
 				if (GainConvertFrom = "ONT")
 				{
+				    MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\ONT.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -307,6 +325,7 @@ loop
 				}
 				if (GainConvertFrom = "OP")
 				{
+				    MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\OP.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -316,6 +335,7 @@ loop
 				}
 				if (GainConvertFrom = "ORN")
 				{
+				    MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\ORN.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -325,6 +345,7 @@ loop
 				}
 				if (GainConvertFrom = "PHA")
 				{
+				    MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\PHA.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -334,6 +355,7 @@ loop
 				}
 				if (GainConvertFrom = "REP")
 				{
+				    MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\REP.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -343,6 +365,7 @@ loop
 				}
 				if (GainConvertFrom = "SC")
 				{
+				    MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\SC.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -352,6 +375,7 @@ loop
 				}
 				if (GainConvertFrom = "T")
 				{
+				    MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\T.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -377,6 +401,7 @@ loop
 				}
 				if (GainConvertFrom = "WIN")
 				{
+				    MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\WIN.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -386,6 +411,7 @@ loop
 				}
 				if (GainConvertFrom = "YFI")
 				{
+				    MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\YFI.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -501,6 +527,7 @@ loop
 				MouseMove ToCurrency1X, ToCurrency1Y, MouseMoveSpeed
 				if (LossConvertTo = "ACA")
 				{
+				    MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\ACA.png")
                     {        MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
                             Goto LabelAfterLossConvertToTokenLocated
@@ -509,6 +536,7 @@ loop
 				}
 				if (LossConvertTo = "ANT")
 				{
+				    MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\ANT.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -518,6 +546,7 @@ loop
 				}
 				if (LossConvertTo = "AR")
 				{
+				    MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\AR.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -536,6 +565,7 @@ loop
 				}
 				if (LossConvertTo = "ATA")
 				{
+				    MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\ATA.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -545,6 +575,7 @@ loop
 				}
 				if (LossConvertTo = "AUD")
 				{
+				    MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\AUD.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -554,6 +585,7 @@ loop
 				}
 				if (LossConvertTo = "AVA")
 				{
+				    MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\AVA.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -563,6 +595,7 @@ loop
 				}
 				if (LossConvertTo = "BAR")
 				{
+				    MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\BAR.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -572,6 +605,7 @@ loop
 				}
 				if (LossConvertTo = "BNB")
 				{
+				    MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\BNB.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -581,6 +615,7 @@ loop
 				}
 				if (LossConvertTo = "BTC")
 				{
+				    MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\BTC.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -590,6 +625,7 @@ loop
 				}
 				if (LossConvertTo = "COS")
 				{
+				    MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\COS.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -599,6 +635,7 @@ loop
 				}
 				if (LossConvertTo = "ETH")
 				{
+				    MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\ETH.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -608,6 +645,7 @@ loop
 				}
 				if (LossConvertTo = "FOR")
 				{
+				    MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\FOR.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -617,6 +655,7 @@ loop
 				}
 				if (LossConvertTo = "GAL")
 				{
+				    MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\GAL.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -626,6 +665,7 @@ loop
 				}
 				if (LossConvertTo = "GBP")
 				{
+				    MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\GBP.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -635,6 +675,7 @@ loop
 				}
 				if (LossConvertTo = "GLM")
 				{
+				    MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\GLM.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -644,6 +685,7 @@ loop
 				}
 				if (LossConvertTo = "OG")
 				{
+				    MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\OG.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -653,6 +695,7 @@ loop
 				}
 				if (LossConvertTo = "OM")
 				{
+				    MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\OM.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -671,6 +714,7 @@ loop
 				}
 				if (LossConvertTo = "ONT")
 				{
+				    MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\ONT.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -680,6 +724,7 @@ loop
 				}
 				if (LossConvertTo = "OP")
 				{
+				    MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\OP.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -689,6 +734,7 @@ loop
 				}
 				if (LossConvertTo = "ORN")
 				{
+				    MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\ORN.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -698,6 +744,7 @@ loop
 				}
 				if (LossConvertTo = "PHA")
 				{
+				    MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\PHA.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -707,6 +754,7 @@ loop
 				}
 				if (LossConvertTo = "REP")
 				{
+				    MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\REP.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -716,6 +764,7 @@ loop
 				}
 				if (LossConvertTo = "SC")
 				{
+				    MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\SC.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -725,6 +774,7 @@ loop
 				}
 		        if (LossConvertTo = "T")
 				{
+				    MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\T.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -750,6 +800,7 @@ loop
 				}
 				if (LossConvertTo = "WIN")
 				{
+				    MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\WIN.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed
@@ -759,6 +810,7 @@ loop
 				}
 				if (LossConvertTo = "YFI")
 				{
+				    MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
 				    if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook\YFI.png")
                     {
                             MouseMove FoundX+20, FoundY+20, MouseMoveSpeed

@@ -1,3 +1,4 @@
+https://www.binance.com/en/convert?walletType=SPOT&fromCoin=USDT
 ; common sleep time
       MouseMoveSpeed := 0
       SleepTimeAfterRefreshPage := 3200

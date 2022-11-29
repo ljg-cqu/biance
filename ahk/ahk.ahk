@@ -118,12 +118,12 @@ loop
 
         if (RandomNumber = 0)
         {
-            MouseMove FromCurrencyEntryX, FromCurrencyEntryY, MouseMoveSpeed
+            MouseMove FromCurrencyEntryX+100, FromCurrencyEntryY+100, MouseMoveSpeed
             RandomNumber := 1
             }
         else
         {
-            MouseMove ToCurrencyEntryX, ToCurrencyEntryY, MouseMoveSpeed
+            MouseMove ToCurrencyEntryX+100, ToCurrencyEntryY+100, MouseMoveSpeed
             RandomNumber := 0
             }
         Sleep SleepTimeAfterMouseMove

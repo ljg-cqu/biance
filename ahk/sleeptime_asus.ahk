@@ -6,7 +6,7 @@
       SleepTimeForAlternativeClick := 10
       SleepTimeAfterClickActionButton := 1000
       SleepTimeAfterClickInputField := 10
-      SleepTimeAfterClickCurrencyEntry := 1200
+      SleepTimeAfterClickCurrencyEntry := 1300
       SleepTimeAfterClickCurrencyOption := 500
 
       SleepTimeAfterSendTxt := 10

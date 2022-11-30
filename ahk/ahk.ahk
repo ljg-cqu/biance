@@ -115,7 +115,7 @@ loop
                             }
                     }
              }
-
+    ; activate mouse
         if (RandomNumber = 0)
         {
             MouseMove FromCurrencyEntryX+200, FromCurrencyEntryY+100, MouseMoveSpeed
@@ -126,9 +126,14 @@ loop
             MouseMove FromCurrencyEntryX+200+50, FromCurrencyEntryY+100+50, MouseMoveSpeed
             RandomNumber := 0
             }
+
+    ; activate window
         ; TODO: add group.
-        if !WinActive("Binance Convert")
-               WinActivate "Binance Convert"
+        if WinExist("Binance Convert") {
+             if !WinActive("Binance Convert")
+                       WinActivate "Binance Convert"
+        }
+
 ;        if !WinActive("ahk_id 591806")
 ;            WinActivate "ahk_id 591806"
 ;        if !WinActive("ahk_id 329390")

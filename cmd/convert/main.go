@@ -118,6 +118,8 @@ func main() {
 							writeFile(FileLossConvertFrom, "")
 							writeFile(FileLossConvertValue, "")
 						}
+					default:
+						myLogger.Error("wrong converted path provided")
 					}
 				}
 			case err, ok := <-watcher.Errors:

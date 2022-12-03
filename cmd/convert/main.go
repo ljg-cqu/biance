@@ -40,6 +40,7 @@ func main() {
 	var checkPNLInterval = flag.Int64("checkPNLInterval", 100, "check PNL interval in milli-second")
 	var excludeToken = flag.Bool("excludeToken", true, "exclude token to auto convert")
 	var configPath = flag.String("configPath", "", "config path")
+	var convertedPath = flag.String("convertedPath", "", "converted path")
 	flag.Parse()
 
 	fmt.Printf("report levels: %v\n", *levels)
@@ -72,7 +73,7 @@ func main() {
 	watcher, err := fsnotify.NewWatcher()
 	myLogger.FatalOnError(err, "failed to create fs watcher")
 	defer watcher.Close()
-	err = watcher.Add("./converted")
+	err = watcher.Add(*convertedPath)
 	myLogger.FatalOnError(err, "failed to add path for fs watcher")
 	if err != nil {
 		log.Fatal(err)

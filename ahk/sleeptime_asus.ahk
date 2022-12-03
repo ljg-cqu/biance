@@ -1,16 +1,16 @@
 https://www.binance.com/en/convert?walletType=SPOT&fromCoin=USDT
 ; common sleep time
-      MouseMoveSpeed := 0
-      SleepTimeAfterRefreshPage := 3200
-      SleepTimeAfterMouseMove := 50
+     MouseMoveSpeed := 0
+     SleepTimeAfterRefreshPage := 2000
+     SleepTimeAfterMouseMove := 25
 
-      SleepTimeForAlternativeClick := 10
-      SleepTimeAfterClickActionButton := 1000
-      SleepTimeAfterClickInputField := 10
-      SleepTimeAfterClickCurrencyEntry := 1300
-      SleepTimeAfterClickCurrencyOption := 500
+     SleepTimeForAlternativeClick := 5
+     SleepTimeAfterClickActionButton := 600
+     SleepTimeAfterClickInputField := 5
+     SleepTimeAfterClickCurrencyEntry := 600
+     SleepTimeAfterClickCurrencyOption := 500
 
-      SleepTimeAfterSendTxt := 10
-      SleepTimeAfterSendCurrencyTxt := 600
+     SleepTimeAfterSendTxt := 5
+     SleepTimeAfterSendCurrencyTxt := 600
 
-      SleepAfterClickSlider := 600
+     SleepAfterClickSlider := 200

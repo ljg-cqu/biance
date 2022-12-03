@@ -88,7 +88,6 @@ func main() {
 				return
 			case event, ok := <-watcher.Events:
 				myLogger.DebugOnTrue(!ok, "fs watcher event not ok")
-				myLogger.Debug("got fs watcher event", []logger.Field{{"fsEvent", event}}...)
 				if event.Has(fsnotify.Write) {
 					convertedToken, err := os.ReadFile(event.Name)
 					if err != nil {

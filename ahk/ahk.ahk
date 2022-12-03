@@ -6,7 +6,7 @@
     TokenIconPath := "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook"
 ; common sleep time
      MouseMoveSpeed := 0
-     SleepTimeAfterRefreshPage := 100
+     SleepTimeAfterRefreshPage := 1600
      SleepTimeAfterMouseMove := 25
 
      SleepTimeForAlternativeClick := 5

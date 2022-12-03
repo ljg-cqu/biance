@@ -37,7 +37,7 @@ func main() {
 	var reportLoss = flag.Bool("reportLoss", true, "report loss")
 	var gainConvertT = flag.String("gainConvertT", "0.011", "gain convert threshold")
 	var lossConvertT = flag.String("lossConvertT", "0.10", "loss convert threshold")
-	var checkPNLInterval = flag.Int64("checkPNLInterval", 100, "check PNL interval in milli-second")
+	var checkPNLInterval = flag.Int64("checkPNLInterval", 1000, "check PNL interval in milli-second")
 	var excludeToken = flag.Bool("excludeToken", true, "exclude token to auto convert")
 	var configPath = flag.String("configPath", "", "config path")
 	var convertedPath = flag.String("convertedPath", "", "converted path")
@@ -80,7 +80,6 @@ func main() {
 	}
 
 	shutdownCtx, shutdown := context.WithCancel(context.Background())
-
 	go func() {
 		for {
 			select {

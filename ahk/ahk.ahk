@@ -525,6 +525,11 @@ loop
 				Click
 				Sleep SleepTimeAfterClickActionButton
 
+			; mark converted
+			FileDelete ".\converted\gainConverted.txt"
+    		FileAppend gainConvertFrom, ".\converted\gainConverted.txt"
+
+
 			; refresh web page
 			LabelGainRefreshPage:
 				Send "{F5}" ; TODO: remove it after balance check by server side
@@ -906,6 +911,10 @@ loop
 				;Sleep SleepTimeAfterMouseMove
 				Click
 				Sleep SleepTimeAfterClickActionButton
+
+			; mark converted
+            FileDelete ".\converted\lossConverted.txt"
+			FileAppend lossConvertTo, ".\converted\lossConverted.txt"
 
 			; refresh web page
 			LabelLossRefreshPage:

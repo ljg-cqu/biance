@@ -6,7 +6,7 @@
     TokenIconPath := "W:\github.com\ljg-cqu\binance\biance\static\tokenicon\asusvivobook"
 ; common sleep time
      MouseMoveSpeed := 0
-     SleepTimeAfterRefreshPage := 2000
+     SleepTimeAfterRefreshPage := 100
      SleepTimeAfterMouseMove := 25
 
      SleepTimeForAlternativeClick := 5
@@ -523,12 +523,10 @@ loop
 				MouseMove ConvertButtonXVolatile, ConvertButtonYVolatile, MouseMoveSpeed
 				;Sleep SleepTimeAfterMouseMove
 				Click
-				Sleep SleepTimeAfterClickActionButton
-
 			; mark converted
-			FileDelete ".\converted\gainConverted.txt"
-    		FileAppend gainConvertFrom, ".\converted\gainConverted.txt"
-
+			    FileDelete ".\converted\gainConverted.txt"
+    		    FileAppend gainConvertFrom, ".\converted\gainConverted.txt"
+				Sleep SleepTimeAfterClickActionButton
 
 			; refresh web page
 			LabelGainRefreshPage:
@@ -910,11 +908,10 @@ loop
 				MouseMove ConvertButtonXVolatile, ConvertButtonYVolatile, MouseMoveSpeed
 				;Sleep SleepTimeAfterMouseMove
 				Click
+            ; mark converted
+                FileDelete ".\converted\lossConverted.txt"
+		    	FileAppend lossConvertTo, ".\converted\lossConverted.txt"
 				Sleep SleepTimeAfterClickActionButton
-
-			; mark converted
-            FileDelete ".\converted\lossConverted.txt"
-			FileAppend lossConvertTo, ".\converted\lossConverted.txt"
 
 			; refresh web page
 			LabelLossRefreshPage:

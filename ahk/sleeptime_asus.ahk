@@ -8,9 +8,9 @@ https://www.binance.com/en/convert?walletType=SPOT&fromCoin=USDT
      SleepTimeAfterClickActionButton := 600
      SleepTimeAfterClickInputField := 5
      SleepTimeAfterClickCurrencyEntry := 600
-     SleepTimeAfterClickCurrencyOption := 500
+     SleepTimeAfterClickCurrencyOption := 600
 
      SleepTimeAfterSendTxt := 5
-     SleepTimeAfterSendCurrencyTxt := 600
+     SleepTimeAfterSendCurrencyTxt := 700
 
      SleepAfterClickSlider := 200

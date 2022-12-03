@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/dgraph-io/badger/v3 v3.2103.3
 	github.com/dgraph-io/ristretto v0.1.1
+	github.com/fsnotify/fsnotify v1.6.0
 	github.com/google/uuid v1.3.0
 	github.com/lestrrat-go/backoff/v2 v2.0.8
 	github.com/ljg-cqu/core v0.0.0-20221104112658-39582ee86747

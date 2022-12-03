@@ -524,7 +524,8 @@ loop
 				;Sleep SleepTimeAfterMouseMove
 				Click
 			; mark converted
-			    FileDelete ".\converted\gainConverted.txt"
+                if FileExist(".\converted\gainConverted.txt")
+			        FileDelete ".\converted\gainConverted.txt"
     		    FileAppend gainConvertFrom, ".\converted\gainConverted.txt"
 				Sleep SleepTimeAfterClickActionButton
 
@@ -909,7 +910,8 @@ loop
 				;Sleep SleepTimeAfterMouseMove
 				Click
             ; mark converted
-                FileDelete ".\converted\lossConverted.txt"
+                if FileExist(".\converted\lossConverted.txt")
+                    FileDelete ".\converted\lossConverted.txt"
 		    	FileAppend lossConvertTo, ".\converted\lossConverted.txt"
 				Sleep SleepTimeAfterClickActionButton
 

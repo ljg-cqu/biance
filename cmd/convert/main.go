@@ -14,6 +14,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"path/filepath"
 	"strings"
 	"syscall"
 	"time"
@@ -89,7 +90,35 @@ func main() {
 				myLogger.DebugOnTrue(!ok, "fs watcher event not ok")
 				myLogger.Debug("got fs watcher event", []logger.Field{{"fsEvent", event}}...)
 				if event.Has(fsnotify.Write) {
-					myLogger.Debug("modified file", []logger.Field{{"file", event.Name}}...)
+					convertedToken, err := os.ReadFile(event.Name)
+					if err != nil {
+						myLogger.ErrorOnError(err, "failed to read file")
+						continue
+					}
+					switch filepath.Base(event.Name) {
+					case "gainConverted.txt":
+						pendingToken, err := os.ReadFile(FileGainConvertFrom)
+						if err != nil {
+							myLogger.ErrorOnError(err, "failed to read file")
+							continue
+						}
+						if string(convertedToken) == string(pendingToken) {
+							writeFile(FileGainConvertFrom, "")
+							writeFile(FileGainConvertTo, "")
+							writeFile(FileGainConvertValue, "")
+						}
+					case "lossConverted.txt":
+						pendingToken, err := os.ReadFile(FileLossConvertTo)
+						if err != nil {
+							myLogger.ErrorOnError(err, "failed to read file")
+							continue
+						}
+						if string(convertedToken) == string(pendingToken) {
+							writeFile(FileLossConvertTo, "")
+							writeFile(FileLossConvertFrom, "")
+							writeFile(FileLossConvertValue, "")
+						}
+					}
 				}
 			case err, ok := <-watcher.Errors:
 				myLogger.DebugOnTrue(!ok, "fs watcher event not ok")

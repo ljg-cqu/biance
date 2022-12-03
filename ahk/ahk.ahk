@@ -10,13 +10,13 @@
      SleepTimeAfterMouseMove := 25
 
      SleepTimeForAlternativeClick := 5
-     SleepTimeAfterClickActionButton := 600
+     SleepTimeAfterClickActionButton := 800
      SleepTimeAfterClickInputField := 5
-     SleepTimeAfterClickCurrencyEntry := 600
+     SleepTimeAfterClickCurrencyEntry := 800
      SleepTimeAfterClickCurrencyOption := 600
 
      SleepTimeAfterSendTxt := 5
-     SleepTimeAfterSendCurrencyTxt := 800
+     SleepTimeAfterSendCurrencyTxt := 600
 
      SleepAfterClickSlider := 200
 ; random

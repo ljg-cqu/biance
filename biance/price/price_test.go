@@ -150,7 +150,7 @@ func TestTrackPrices(t *testing.T) {
 			}
 
 			market += suffix
-			fmt.Sprintf("%v: %v\n", symbol, market)
+			fmt.Printf("%v: %v\n", symbol, market)
 		}
 	}
 }

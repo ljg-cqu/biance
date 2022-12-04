@@ -1,9 +1,11 @@
 package trends
 
 import (
+	"context"
 	"fmt"
 	"github.com/ljg-cqu/biance/biance"
 	"github.com/ljg-cqu/biance/biance/price"
+	"github.com/ljg-cqu/biance/logger"
 	"github.com/ljg-cqu/biance/utils/slice"
 	"github.com/stretchr/testify/require"
 	"math/big"
@@ -11,6 +13,52 @@ import (
 	"testing"
 	"time"
 )
+
+func TestTrends_TrackPairBUSDOrUSDT(t *testing.T) {
+	logger.DevMode = true
+	logger.UseConsoleEncoder = true
+	myLogger := logger.Default()
+
+	ctx, _ := context.WithTimeout(context.Background(), time.Minute)
+
+	trends := Trends{
+		Logger:                      myLogger,
+		ShutDownCtx:                 ctx,
+		IntervalToQueryPrice:        1,
+		PricesCountToMarkMicroTrend: 3,
+		CheckPriceBUSDOverUSDT:      true,
+		Client:                      &http.Client{},
+	}
+
+	trends.TrackPairBUSDOrUSDT()
+}
+
+func TestTrends_TrackPairBUSDOrUSDT_WithGivenToken(t *testing.T) {
+	logger.DevMode = true
+	logger.UseConsoleEncoder = true
+	myLogger := logger.Default()
+
+	ctx, _ := context.WithTimeout(context.Background(), time.Minute)
+
+	trends := Trends{
+		Logger:                      myLogger,
+		ShutDownCtx:                 ctx,
+		IntervalToQueryPrice:        1,
+		PricesCountToMarkMicroTrend: 3,
+		TokensToTrackPrice:          map[price.Token]bool{"BTC": true},
+		CheckPriceBUSDOverUSDT:      true,
+		Client:                      &http.Client{},
+	}
+
+	slices := make(map[price.Token]*slice.Slice)
+	for token, _ := range trends.TokensToTrackPrice {
+		slices[token] = slice.New(trends.PricesCountToMarkMicroTrend)
+	}
+
+	trends.Slices = slices
+
+	trends.TrackPairBUSDOrUSDT()
+}
 
 func TestTrackPrice(t *testing.T) {
 	var symbol = price.Symbol("BTCBUSD")

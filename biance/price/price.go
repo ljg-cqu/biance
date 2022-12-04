@@ -24,6 +24,52 @@ type price struct {
 	Price  string `json:"price"`
 }
 
+func GetPricePairUSDTOverBUSD(client biance.Client, url string, tokens ...Token) (map[Symbol]Price, error) {
+	prices, err := GetPrice(client, url)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	var pricesPairBUSDUSDT = make(map[Symbol]Price)
+	for symbol, price := range prices {
+		if strings.HasSuffix(string(symbol), "USDT") {
+			pricesPairBUSDUSDT[symbol] = price
+		}
+	}
+	for symbol, price := range prices {
+		if strings.HasSuffix(string(symbol), "BUSD") {
+			_, ok := pricesPairBUSDUSDT[Symbol(strings.TrimSuffix(string(symbol), "BUSD")+"USDT")]
+			if ok {
+				continue
+			}
+			pricesPairBUSDUSDT[symbol] = price
+		}
+	}
+
+	if tokens == nil {
+		return pricesPairBUSDUSDT, nil
+	}
+
+	var pricesPairUSDTBUSDQuery = make(map[Symbol]Price)
+	for _, token := range tokens {
+		symbol := Symbol(token + "USDT")
+		price, okBUSD := pricesPairBUSDUSDT[symbol]
+		if okBUSD {
+			pricesPairUSDTBUSDQuery[symbol] = price
+			continue
+		}
+		symbol = Symbol(token + "BUSD")
+		price, okUSDT := pricesPairBUSDUSDT[symbol]
+		if okUSDT {
+			pricesPairUSDTBUSDQuery[symbol] = price
+			continue
+		}
+		return nil, errors.Errorf("no price found for token %v", token)
+	}
+
+	return pricesPairUSDTBUSDQuery, nil
+}
+
 func GetPricePairBUSDOverUSDT(client biance.Client, url string, tokens ...Token) (map[Symbol]Price, error) {
 	prices, err := GetPrice(client, url)
 	if err != nil {

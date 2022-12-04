@@ -19,13 +19,14 @@ func TestTrends_TrackPairBUSDOrUSDT(t *testing.T) {
 	logger.UseConsoleEncoder = true
 	myLogger := logger.Default()
 
-	ctx, _ := context.WithTimeout(context.Background(), time.Minute*10)
+	//ctx, _ := context.WithTimeout(context.Background(), time.Minute*5)
+	ctx := context.Background()
 
 	trends := Trends{
 		Logger:                      myLogger,
 		ShutDownCtx:                 ctx,
 		IntervalToQueryPrice:        1,
-		PricesCountToMarkMicroTrend: 3,
+		PricesCountToMarkMicroTrend: 5,
 		CheckPriceBUSDOverUSDT:      true,
 		Client:                      &http.Client{},
 	}
@@ -38,7 +39,8 @@ func TestTrends_TrackPairBUSDOrUSDT_WithGivenToken(t *testing.T) {
 	logger.UseConsoleEncoder = true
 	myLogger := logger.Default()
 
-	ctx, _ := context.WithTimeout(context.Background(), time.Minute*5)
+	//ctx, _ := context.WithTimeout(context.Background(), time.Minute*5)
+	ctx := context.Background()
 
 	trends := Trends{
 		Logger:                      myLogger,

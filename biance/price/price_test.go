@@ -74,7 +74,7 @@ func TestTrackPrices(t *testing.T) {
 	client := &http.Client{}
 
 	tk := time.NewTicker(time.Second * 1)
-	intervalsToTrack := 10
+	intervalsToTrack := 5
 	s := slice.New(intervalsToTrack)
 	defer tk.Stop()
 	for {
@@ -142,11 +142,11 @@ func TestTrackPrices(t *testing.T) {
 
 			switch priceDiffs[len(priceDiffs)-1].Sign() {
 			case -1:
-				suffix = "     -"
+				suffix = "             -"
 			case 0:
 				suffix = "     0"
 			case 1:
-				suffix = "     +"
+				suffix = "                     +"
 			}
 
 			market += suffix

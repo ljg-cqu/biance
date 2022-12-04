@@ -21,9 +21,29 @@ func TestGetPricePairUSDTOverBUSD(t *testing.T) {
 	}
 }
 
+func TestGetPricePairUSDTOverBUSDWithGivenTokens(t *testing.T) {
+	client := &http.Client{}
+	symbolPrices, err := GetPricePairUSDTOverBUSD(client, biance.URLs[biance.URLSymbolPrice], "SSV")
+	require.Nil(t, err)
+	fmt.Println(len(symbolPrices))
+	for _, symbolPrice := range symbolPrices {
+		fmt.Printf("%+v\n", symbolPrice)
+	}
+}
+
 func TestGetPricePairBUSDOverUSDT(t *testing.T) {
 	client := &http.Client{}
 	symbolPrices, err := GetPricePairBUSDOverUSDT(client, biance.URLs[biance.URLSymbolPrice])
+	require.Nil(t, err)
+	fmt.Println(len(symbolPrices))
+	for _, symbolPrice := range symbolPrices {
+		fmt.Printf("%+v\n", symbolPrice)
+	}
+}
+
+func TestGetPricePairBUSDOverUSDTWithGivenTokens(t *testing.T) {
+	client := &http.Client{}
+	symbolPrices, err := GetPricePairBUSDOverUSDT(client, biance.URLs[biance.URLSymbolPrice], "MFT")
 	require.Nil(t, err)
 	fmt.Println(len(symbolPrices))
 	for _, symbolPrice := range symbolPrices {

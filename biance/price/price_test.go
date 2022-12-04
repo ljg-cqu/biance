@@ -137,7 +137,7 @@ func TestTrackPrices(t *testing.T) {
 			} else if positives == intervalsToTrack-1 {
 				market = "++++++++++"
 			} else {
-				market = "+-+-+-+-+-+-"
+				market = "+-+-+-+-+-"
 			}
 
 			switch priceDiffs[len(priceDiffs)-1].Sign() {

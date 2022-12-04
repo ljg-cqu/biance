@@ -24,6 +24,24 @@ type price struct {
 	Price  string `json:"price"`
 }
 
+func GetPricePairUSDT(client biance.Client, url string, tokens ...Token) (map[Symbol]Price, error) {
+	var symbols []Symbol
+	for _, token := range tokens {
+		symbols = append(symbols, Symbol(token+"USDT"))
+	}
+	prices, err := GetPrice(client, url, symbols...)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	var pricesPairBUSD = make(map[Symbol]Price)
+	for symbol, price := range prices {
+		if strings.HasSuffix(string(symbol), "USDT") {
+			pricesPairBUSD[symbol] = price
+		}
+	}
+	return pricesPairBUSD, nil
+}
+
 func GetPricePairBUSD(client biance.Client, url string, tokens ...Token) (map[Symbol]Price, error) {
 	var symbols []Symbol
 	for _, token := range tokens {

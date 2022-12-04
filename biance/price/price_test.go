@@ -73,8 +73,8 @@ func TestTrackPrices(t *testing.T) {
 	var symbol = Symbol("BTCBUSD")
 	client := &http.Client{}
 
-	tk := time.NewTicker(time.Second * 5)
-	intervalsToTrack := 2
+	tk := time.NewTicker(time.Second * 1)
+	intervalsToTrack := 3
 	s := slice.New(intervalsToTrack)
 	defer tk.Stop()
 	for {

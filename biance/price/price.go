@@ -12,6 +12,7 @@ import (
 )
 
 type Symbol string
+type Token string
 
 type Price struct {
 	Symbol Symbol
@@ -21,6 +22,24 @@ type Price struct {
 type price struct {
 	Symbol Symbol `json:"symbol"`
 	Price  string `json:"price"`
+}
+
+func GetPricePairBUSD(client biance.Client, url string, tokens ...Token) (map[Symbol]Price, error) {
+	var symbols []Symbol
+	for _, token := range tokens {
+		symbols = append(symbols, Symbol(token+"BUSD"))
+	}
+	prices, err := GetPrice(client, url, symbols...)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	var pricesPairBUSD = make(map[Symbol]Price)
+	for symbol, price := range prices {
+		if strings.HasSuffix(string(symbol), "BUSD") {
+			pricesPairBUSD[symbol] = price
+		}
+	}
+	return pricesPairBUSD, nil
 }
 
 func GetPrice(client biance.Client, url string, symbols ...Symbol) (map[Symbol]Price, error) {

@@ -11,6 +11,26 @@ import (
 	"time"
 )
 
+func TestGetSymbolPricePairBUSD(t *testing.T) {
+	client := &http.Client{}
+	symbolPrices, err := GetPricePairBUSD(client, biance.URLs[biance.URLSymbolPrice])
+	require.Nil(t, err)
+	fmt.Println(len(symbolPrices))
+	for _, symbolPrice := range symbolPrices {
+		fmt.Printf("%+v\n", symbolPrice)
+	}
+}
+
+func TestGetSymbolPricePairBUSDWithGivenTokens(t *testing.T) {
+	client := &http.Client{}
+	symbolPrices, err := GetPricePairBUSD(client, biance.URLs[biance.URLSymbolPrice], "BTC", "ETH")
+	require.Nil(t, err)
+	fmt.Println(len(symbolPrices))
+	for _, symbolPrice := range symbolPrices {
+		fmt.Printf("%+v\n", symbolPrice)
+	}
+}
+
 func TestGetSymbolPrice(t *testing.T) {
 	client := &http.Client{}
 	symbolPrices, err := GetPrice(client, biance.URLs[biance.URLSymbolPrice])

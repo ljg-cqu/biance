@@ -74,7 +74,7 @@ func TestTrackPrices(t *testing.T) {
 	client := &http.Client{}
 
 	tk := time.NewTicker(time.Second * 1)
-	intervalsToTrack := 5
+	intervalsToTrack := 10
 	s := slice.New(intervalsToTrack)
 	defer tk.Stop()
 	for {
@@ -84,7 +84,7 @@ func TestTrackPrices(t *testing.T) {
 			require.Nil(t, err)
 			price := symbolPrices[symbol]
 			s.AddElem(price)
-			if s.Len() < 5 {
+			if s.Len() < intervalsToTrack {
 				continue
 			}
 

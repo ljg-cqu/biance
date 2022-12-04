@@ -19,7 +19,7 @@ func TestTrends_TrackPairBUSDOrUSDT(t *testing.T) {
 	logger.UseConsoleEncoder = true
 	myLogger := logger.Default()
 
-	ctx, _ := context.WithTimeout(context.Background(), time.Minute)
+	ctx, _ := context.WithTimeout(context.Background(), time.Minute*10)
 
 	trends := Trends{
 		Logger:                      myLogger,
@@ -38,14 +38,14 @@ func TestTrends_TrackPairBUSDOrUSDT_WithGivenToken(t *testing.T) {
 	logger.UseConsoleEncoder = true
 	myLogger := logger.Default()
 
-	ctx, _ := context.WithTimeout(context.Background(), time.Minute)
+	ctx, _ := context.WithTimeout(context.Background(), time.Minute*5)
 
 	trends := Trends{
 		Logger:                      myLogger,
 		ShutDownCtx:                 ctx,
 		IntervalToQueryPrice:        1,
 		PricesCountToMarkMicroTrend: 3,
-		TokensToTrackPrice:          map[price.Token]bool{"BTC": true},
+		TokensToTrackPrice:          map[price.Token]bool{"BTC": true, "ETH": true, "FIL": true},
 		CheckPriceBUSDOverUSDT:      true,
 		Client:                      &http.Client{},
 	}

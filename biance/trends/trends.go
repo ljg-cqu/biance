@@ -14,6 +14,15 @@ import (
 	"time"
 )
 
+const (
+	TrendUp Trend = iota
+	TrendDown
+	TrendShake
+	TrendZero
+)
+
+type Trend int
+
 type Trends struct {
 	Logger                      logger.Logger
 	ShutDownCtx                 context.Context
@@ -64,79 +73,39 @@ func (t *Trends) TrackPairBUSDOrUSDT() {
 					continue
 				}
 
-				symbol := price_.Symbol
 				s := t.Slices[token]
 				s.AddElem(price_)
-
-				if s.Len() < t.PricesCountToMarkMicroTrend {
-					continue
-				}
-
-				var priceI, priceJ *big.Float
-				var prices = make([]*big.Float, t.PricesCountToMarkMicroTrend)
-				var priceDiffs = make([]*big.Float, t.PricesCountToMarkMicroTrend-1)
-
-				for i := 0; i < t.PricesCountToMarkMicroTrend; i++ {
-					priceI = s.Elem(i).(price.Price).Price
-					prices[i] = priceI
-					if i < t.PricesCountToMarkMicroTrend-1 {
-						priceJ = s.Elem(i + 1).(price.Price).Price
-						priceDiff := new(big.Float).Sub(priceJ, priceI)
-						priceDiffs[i] = priceDiff
-					}
-				}
-
-				var negatives, zeros, positives int
-				for _, priceDiff := range priceDiffs {
-					switch priceDiff.Sign() {
-					case -1:
-						negatives++
-					case 0:
-						zeros++
-					case 1:
-						positives++
-					}
-
-				}
-
-				var priceStr string
-				for _, price := range prices {
-					priceStr += fmt.Sprintf("%v,", price.Text('f', 10))
-				}
-
-				var priceDiffStr string
-				for _, priceDiff := range priceDiffs {
-					priceDiffStr += fmt.Sprintf("%v,", priceDiff.Text('f', 10))
-				}
-
-				//fmt.Printf("%v:\n %v\n %v\n", symbol, priceStr, priceDiffStr)
-
-				var market string
-				var suffix string
-
-				if positives == t.PricesCountToMarkMicroTrend-1 {
-					market = "++++++++++"
-				} else if negatives == t.PricesCountToMarkMicroTrend-1 {
-					market = "              ----------"
-				} else if zeros == t.PricesCountToMarkMicroTrend-1 {
-					market = "                                         0000000000"
-				} else {
-					market = "                            +-+-+-+-+-"
-				}
-
-				switch priceDiffs[len(priceDiffs)-1].Sign() {
-				case -1:
-					suffix = " -"
-				case 0:
-					suffix = " 0"
-				case 1:
-					suffix = " +"
-				}
-
-				market += suffix
-				fmt.Printf("%v: %v\n", symbol, market)
 			}
 
+			trends := t.trends(t.Slices)
+			var trendTokensMap = make(map[Trend][]string)
+			for token, trend := range trends {
+				trendTokensMap[trend] = append(trendTokensMap[trend], string(token))
+			}
+
+			var trendTokensStrMap = make(map[Trend]string)
+			for trend, tokens := range trendTokensMap {
+				trendTokensStrMap[trend] = fmt.Sprintf("[%v] %v", len(tokens), strings.Join(tokens, ","))
+			}
+
+			var trendUpMakert, trendDownMarket, trendShakeMarket, trendZeroMarket string
+
+			for trend, tokensStr := range trendTokensStrMap {
+				switch trend {
+				case TrendUp:
+					trendUpMakert = "++++++++++" + "  " + tokensStr
+				case TrendDown:
+					trendDownMarket = "              ----------" + "  " + tokensStr
+
+				case TrendShake:
+					trendShakeMarket = "                            +-+-+-+-+-" + "  " + tokensStr
+
+				default:
+					trendZeroMarket = "                                         0000000000" + "  " + tokensStr
+				}
+			}
+
+			fmt.Printf("%v\n %v\n %v\n %v\n", trendUpMakert, trendDownMarket, trendShakeMarket, trendZeroMarket)
 		}
 	}
 }
@@ -163,4 +132,61 @@ func (t *Trends) getAllPricesPairWithBUSDorUSDT() (map[price.Token]price.Price, 
 		tokenPriceFoundMap[price.Token(symbolTim)] = price_
 	}
 	return tokenPriceFoundMap, nil
+}
+
+func (t *Trends) trends(slices map[price.Token]*slice.Slice) map[price.Token]Trend {
+	if len(slices) == 0 {
+		return nil
+	}
+
+	var trends_ = make(map[price.Token]Trend)
+
+	for token, slice := range slices {
+		if slice.Len() < t.PricesCountToMarkMicroTrend {
+			continue
+		}
+
+		trend := t.trend(slice)
+		trends_[token] = trend
+	}
+
+	return trends_
+}
+
+func (t *Trends) trend(s *slice.Slice) Trend {
+	var priceI, priceJ *big.Float
+	var prices = make([]*big.Float, t.PricesCountToMarkMicroTrend)
+	var priceDiffs = make([]*big.Float, t.PricesCountToMarkMicroTrend-1)
+
+	for i := 0; i < t.PricesCountToMarkMicroTrend; i++ {
+		priceI = s.Elem(i).(price.Price).Price
+		prices[i] = priceI
+		if i < t.PricesCountToMarkMicroTrend-1 {
+			priceJ = s.Elem(i + 1).(price.Price).Price
+			priceDiff := new(big.Float).Sub(priceJ, priceI)
+			priceDiffs[i] = priceDiff
+		}
+	}
+
+	var negatives, zeros, positives int
+	for _, priceDiff := range priceDiffs {
+		switch priceDiff.Sign() {
+		case -1:
+			negatives++
+		case 0:
+			zeros++
+		case 1:
+			positives++
+		}
+	}
+
+	if positives == t.PricesCountToMarkMicroTrend-1 {
+		return TrendUp
+	} else if negatives == t.PricesCountToMarkMicroTrend-1 {
+		return TrendDown
+	} else if zeros == t.PricesCountToMarkMicroTrend-1 {
+		return TrendZero
+	} else {
+		return TrendShake
+	}
 }

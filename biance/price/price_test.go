@@ -3,6 +3,7 @@ package price
 import (
 	"fmt"
 	"github.com/ljg-cqu/biance/biance"
+	"github.com/ljg-cqu/biance/utils/slice"
 	"github.com/stretchr/testify/require"
 	"math/big"
 	"net/http"
@@ -31,9 +32,9 @@ func TestGetSymbolPriceWithGivenSymbols(t *testing.T) {
 }
 
 func TestTrackPrice(t *testing.T) {
-	var symbol = Symbol("ETHBUSD")
+	var symbol = Symbol("BTCBUSD")
 	client := &http.Client{}
-	tk := time.NewTicker(time.Second)
+	tk := time.NewTicker(time.Second * 5)
 	var nextIndex int
 	var prices = [2]*Price{}
 	defer tk.Stop()
@@ -63,6 +64,77 @@ func TestTrackPrice(t *testing.T) {
 				quo := new(big.Float).Quo(newPrice.Price, oldPrice.Price)
 				diff := new(big.Float).Sub(quo, one)
 				fmt.Printf("%v, %v, %v, %v\n", symbol, oldPrice.Price, newPrice.Price, diff)
+			}
+		}
+	}
+}
+
+func TestTrackPrices(t *testing.T) {
+	var symbol = Symbol("BTCBUSD")
+	client := &http.Client{}
+
+	tk := time.NewTicker(time.Second * 1)
+	intervalsToTrack := 5
+	s := slice.New(intervalsToTrack)
+	defer tk.Stop()
+	for {
+		select {
+		case <-tk.C:
+			symbolPrices, err := GetPrice(client, biance.URLs[biance.URLSymbolPrice], symbol)
+			require.Nil(t, err)
+			price := symbolPrices[symbol]
+			s.AddElem(price)
+			if s.Len() < 5 {
+				continue
+			}
+
+			var priceI, priceJ *big.Float
+			var prices = make([]*big.Float, intervalsToTrack)
+			var priceDiffs = make([]*big.Float, intervalsToTrack-1)
+
+			for i := 0; i < 5; i++ {
+				priceI = s.Elem(i).(Price).Price
+				prices[i] = priceI
+				if i < intervalsToTrack-1 {
+					priceJ = s.Elem(i + 1).(Price).Price
+					priceDiff := new(big.Float).Sub(priceJ, priceI)
+					priceDiffs[i] = priceDiff
+				}
+			}
+
+			var negatives, zeros, positives int
+			for _, priceDiff := range priceDiffs {
+				switch priceDiff.Sign() {
+				case -1:
+					negatives++
+				case 0:
+					zeros++
+				case 1:
+					positives++
+				}
+
+			}
+
+			var priceStr string
+			for _, price := range prices {
+				priceStr += fmt.Sprintf("%v,", price.Text('f', 10))
+			}
+
+			var priceDiffStr string
+			for _, priceDiff := range priceDiffs {
+				priceDiffStr += fmt.Sprintf("%v,", priceDiff.Text('f', 10))
+			}
+
+			fmt.Printf("%v:\n %v\n %v\n", symbol, priceStr, priceDiffStr)
+
+			if negatives == intervalsToTrack-1 {
+				fmt.Println("----------")
+			} else if zeros == intervalsToTrack-1 {
+				fmt.Println("0000000000")
+			} else if positives == intervalsToTrack-1 {
+				fmt.Println("++++++++++")
+			} else {
+				fmt.Println("+-+-+-+-+-+-")
 			}
 		}
 	}

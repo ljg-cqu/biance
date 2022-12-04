@@ -125,17 +125,32 @@ func TestTrackPrices(t *testing.T) {
 				priceDiffStr += fmt.Sprintf("%v,", priceDiff.Text('f', 10))
 			}
 
-			fmt.Printf("%v:\n %v\n %v\n", symbol, priceStr, priceDiffStr)
+			//fmt.Printf("%v:\n %v\n %v\n", symbol, priceStr, priceDiffStr)
+
+			var market string
+			var suffix string
 
 			if negatives == intervalsToTrack-1 {
-				fmt.Println("----------")
+				market = "----------"
 			} else if zeros == intervalsToTrack-1 {
-				fmt.Println("0000000000")
+				market = "0000000000"
 			} else if positives == intervalsToTrack-1 {
-				fmt.Println("++++++++++")
+				market = "++++++++++"
 			} else {
-				fmt.Println("+-+-+-+-+-+-")
+				market = "+-+-+-+-+-+-"
 			}
+
+			switch priceDiffs[len(priceDiffs)-1].Sign() {
+			case -1:
+				suffix = "     -"
+			case 0:
+				suffix = "     0"
+			case 1:
+				suffix = "     +"
+			}
+
+			market += suffix
+			fmt.Println(market)
 		}
 	}
 }

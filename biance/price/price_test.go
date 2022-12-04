@@ -92,7 +92,7 @@ func TestTrackPrices(t *testing.T) {
 			var prices = make([]*big.Float, intervalsToTrack)
 			var priceDiffs = make([]*big.Float, intervalsToTrack-1)
 
-			for i := 0; i < 5; i++ {
+			for i := 0; i < intervalsToTrack; i++ {
 				priceI = s.Elem(i).(Price).Price
 				prices[i] = priceI
 				if i < intervalsToTrack-1 {

@@ -15,7 +15,10 @@ import (
 )
 
 const (
-	TrendUp Trend = iota
+	TrendUpStrengthen = iota
+	TrendUpSteady
+	TrendUpShake
+	TrendUpWeaken
 	TrendDown
 	TrendShake
 	TrendZero
@@ -92,16 +95,20 @@ func (t *Trends) TrackPairBUSDOrUSDT() {
 
 			for trend, tokensStr := range trendTokensStrMap {
 				switch trend {
-				case TrendUp:
-					trendUpMakert = "++++++++++" + "  " + tokensStr
+				case TrendUpStrengthen:
+					trendUpMakert = "++++++++++/" + "  " + tokensStr
+				case TrendUpSteady:
+					trendUpMakert = "++++++++++=" + "  " + tokensStr
+				case TrendUpShake:
+					trendUpMakert = "++++++++++~" + "  " + tokensStr
+				case TrendUpWeaken:
+					trendUpMakert = "++++++++++\\" + "  " + tokensStr
 				case TrendDown:
-					trendDownMarket = "              ----------" + "  " + tokensStr
-
+					trendDownMarket = "                ----------" + "  " + tokensStr
 				case TrendShake:
-					trendShakeMarket = "                            +-+-+-+-+-" + "  " + tokensStr
-
+					trendShakeMarket = "                              +-+-+-+-+-" + "  " + tokensStr
 				default:
-					trendZeroMarket = "                                         0000000000" + "  " + tokensStr
+					trendZeroMarket = "                                           0000000000" + "  " + tokensStr
 				}
 			}
 
@@ -181,7 +188,28 @@ func (t *Trends) trend(s *slice.Slice) Trend {
 	}
 
 	if positives == t.PricesCountToMarkMicroTrend-1 {
-		return TrendUp
+		var strenghthenNum, steadyNum, weakenNum int
+		for i := 0; i < t.PricesCountToMarkMicroTrend-2; i++ {
+			priceDifff := new(big.Float).Sub(priceDiffs[i+1], priceDiffs[i])
+			switch priceDifff.Sign() {
+			case -1:
+				weakenNum++
+			case 0:
+				steadyNum++
+			case 1:
+				strenghthenNum++
+			}
+		}
+
+		if strenghthenNum == t.PricesCountToMarkMicroTrend-2 {
+			return TrendUpStrengthen
+		} else if steadyNum == t.PricesCountToMarkMicroTrend-2 {
+			return TrendUpSteady
+		} else if weakenNum == t.PricesCountToMarkMicroTrend-2 {
+			return TrendUpWeaken
+		} else {
+			return TrendUpShake
+		}
 	} else if negatives == t.PricesCountToMarkMicroTrend-1 {
 		return TrendDown
 	} else if zeros == t.PricesCountToMarkMicroTrend-1 {

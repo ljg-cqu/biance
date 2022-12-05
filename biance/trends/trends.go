@@ -171,14 +171,14 @@ func (t *Trends) trends(slices map[price.Token]*slice.Slice) map[price.Token]Tre
 			continue
 		}
 
-		trend := t.trend(slice)
+		trend := t.microTrend(slice)
 		trends_[token] = trend
 	}
 
 	return trends_
 }
 
-func (t *Trends) trend(s *slice.Slice) Trend {
+func (t *Trends) microTrend(s *slice.Slice) Trend {
 	var priceI, priceJ *big.Float
 	var prices = make([]*big.Float, t.PricesCountToMarkMicroTrend)
 	var priceDiffs = make([]*big.Float, t.PricesCountToMarkMicroTrend-1)

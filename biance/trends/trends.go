@@ -88,7 +88,7 @@ func (t *Trends) TrackPairBUSDOrUSDT() {
 				s.AddElem(price_)
 			}
 
-			trends := t.trends(t.Slices)
+			trends := t.microTrends(t.Slices)
 			var trendTokensMap = make(map[Trend][]string)
 			for token, trend := range trends {
 				trendTokensMap[trend] = append(trendTokensMap[trend], string(token))
@@ -159,7 +159,7 @@ func (t *Trends) getAllPricesPairWithBUSDorUSDT() (map[price.Token]price.Price, 
 	return tokenPriceFoundMap, nil
 }
 
-func (t *Trends) trends(slices map[price.Token]*slice.Slice) map[price.Token]Trend {
+func (t *Trends) microTrends(slices map[price.Token]*slice.Slice) map[price.Token]Trend {
 	if len(slices) == 0 {
 		return nil
 	}

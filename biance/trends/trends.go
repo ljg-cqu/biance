@@ -25,7 +25,9 @@ const (
 	TrendDownShake
 	TrendDownWeaken
 
-	TrendShake
+	TrendShakeUp
+	TrendShakeZero
+	TrendShakeDown
 
 	TrendZero
 )
@@ -117,8 +119,12 @@ func (t *Trends) TrackPairBUSDOrUSDT() {
 					trendDownMarket = "                ----------~" + "  " + tokensStr
 				case TrendDownWeaken:
 					trendDownMarket = "                ----------/" + "  " + tokensStr
-				case TrendShake:
-					trendShakeMarket = "                                +-+-+-+-+-" + "  " + tokensStr
+				case TrendShakeUp:
+					trendShakeMarket = "                                +-+-+-+-+-/" + "  " + tokensStr
+				case TrendShakeDown:
+					trendShakeMarket = "                                +-+-+-+-+-\\" + "  " + tokensStr
+				case TrendShakeZero:
+					trendShakeMarket = "                                +-+-+-+-+-0" + "  " + tokensStr
 				default:
 					trendZeroMarket = "                                             0000000000" + "  " + tokensStr
 				}
@@ -248,6 +254,15 @@ func (t *Trends) trend(s *slice.Slice) Trend {
 	} else if zeros == t.PricesCountToMarkMicroTrend-1 {
 		return TrendZero
 	} else {
-		return TrendShake
+		priceDiff := priceDiffs[len(priceDiffs)-1]
+		switch priceDiff.Sign() {
+		case -1:
+			return TrendShakeDown
+		case 0:
+			return TrendShakeZero
+		case 1:
+			//return TrendShakeUp
+		}
+		return TrendShakeUp
 	}
 }

@@ -23,12 +23,13 @@ func TestTrends_TrackPairBUSDOrUSDT(t *testing.T) {
 	ctx := context.Background()
 
 	trends := Trends{
-		Logger:                      myLogger,
-		ShutDownCtx:                 ctx,
-		IntervalToQueryPrice:        1,
-		PricesCountToMarkMicroTrend: 5,
-		CheckPriceBUSDOverUSDT:      true,
-		Client:                      &http.Client{},
+		Logger:                           myLogger,
+		ShutDownCtx:                      ctx,
+		IntervalToQueryPrice:             1,
+		PricesCountToMarkMicroTrend:      5,
+		MicroTrendsCountToMarkMacroTrend: 300,
+		CheckPriceBUSDOverUSDT:           true,
+		Client:                           &http.Client{},
 	}
 
 	trends.TrackPairBUSDOrUSDT()

@@ -15,34 +15,57 @@ import (
 )
 
 const (
-	TrendUpStrengthen = iota
-	TrendUpSteady
-	TrendUpShake
-	TrendUpWeaken
+	MicroTrendUpStrengthen MicroTrend = iota
+	MicroTrendUpSteady
+	MircoTrendUpShake
+	MicroTrendUpWeaken
 
-	TrendDownStrengthen
-	TrendDownSteady
-	TrendDownShake
-	TrendDownWeaken
+	MicroTrendDownStrengthen
+	MicroTrendDownSteady
+	MicroTrendDownShake
+	MicroTrendDownWeaken
 
-	TrendShakeUp
-	TrendShakeZero
-	TrendShakeDown
+	MicroTrendShakeUp
+	MicroTrendShakeZero
+	MicroTrendShakeDown
 
-	TrendZero
+	MicroTrendZero
 )
 
-type Trend int
+const (
+	MacroTrendUp MacroTrend = iota
+	MacroTrendDown
+	MacroTrendShake
+	MacroTrendZero
+)
+
+type MicroTrend int
+
+type MacroTrend int
+
+func isMicroTrendUp(t MicroTrend) bool {
+	return t == MicroTrendUpStrengthen || t == MicroTrendUpSteady || t == MircoTrendUpShake || t == MicroTrendUpWeaken
+}
+
+func isMicroTrendDown(t MicroTrend) bool {
+	return t == MicroTrendDownStrengthen || t == MicroTrendDownSteady || t == MicroTrendDownShake || t == MicroTrendDownWeaken
+}
+
+func isMicroTrendShake(t MicroTrend) bool {
+	return t == MicroTrendShakeUp || t == MicroTrendShakeZero || t == MicroTrendShakeDown
+}
 
 type Trends struct {
-	Logger                      logger.Logger
-	ShutDownCtx                 context.Context
-	IntervalToQueryPrice        time.Duration // unit: second
-	PricesCountToMarkMicroTrend int
-	TokensToTrackPrice          map[price.Token]bool
-	Slices                      map[price.Token]*slice.Slice
-	CheckPriceBUSDOverUSDT      bool
-	Client                      *http.Client
+	Logger                           logger.Logger
+	ShutDownCtx                      context.Context
+	IntervalToQueryPrice             time.Duration // unit: second
+	MicroTrendsCountToMarkMacroTrend int
+	PricesCountToMarkMicroTrend      int
+	TokensToTrackPrice               map[price.Token]bool
+	Slices                           map[price.Token]*slice.Slice
+	CheckPriceBUSDOverUSDT           bool
+	Client                           *http.Client
+	microTrendsMap                   map[price.Token]*slice.Slice
 }
 
 func (t *Trends) TrackPairBUSDOrUSDT() {
@@ -88,49 +111,130 @@ func (t *Trends) TrackPairBUSDOrUSDT() {
 				s.AddElem(price_)
 			}
 
-			trends := t.microTrends(t.Slices)
-			var trendTokensMap = make(map[Trend][]string)
-			for token, trend := range trends {
-				trendTokensMap[trend] = append(trendTokensMap[trend], string(token))
+			microTrends := t.microTrends(t.Slices)
+			if t.microTrendsMap == nil {
+				t.microTrendsMap = make(map[price.Token]*slice.Slice)
+			}
+			for token, trend := range microTrends {
+				_, ok := t.microTrendsMap[token]
+				if !ok {
+					t.microTrendsMap[token] = slice.New(t.MicroTrendsCountToMarkMacroTrend)
+				}
+
+				t.microTrendsMap[token].AddElem(trend)
 			}
 
-			var trendTokensStrMap = make(map[Trend]string)
-			for trend, tokens := range trendTokensMap {
-				trendTokensStrMap[trend] = fmt.Sprintf("[%v] %v", len(tokens), strings.Join(tokens, ","))
+			var microTrendsMapMap = make(map[price.Token]map[MicroTrend]int)
+			for token, microTrends := range t.microTrendsMap {
+				if microTrends.Len() < t.MicroTrendsCountToMarkMacroTrend {
+					continue
+				}
+				var m = make(map[MicroTrend]int)
+				for i := 0; i < microTrends.Len(); i++ {
+					microTrend := microTrends.Elem(i).(MicroTrend)
+					m[microTrend]++
+				}
+				microTrendsMapMap[token] = m
 			}
 
-			var trendUpMakert, trendDownMarket, trendShakeMarket, trendZeroMarket string
+			var MacroTrendsMap = make(map[price.Token]MacroTrend)
 
-			for trend, tokensStr := range trendTokensStrMap {
-				switch trend {
-				case TrendUpStrengthen:
-					trendUpMakert = "++++++++++/" + "  " + tokensStr
-				case TrendUpSteady:
-					trendUpMakert = "++++++++++=" + "  " + tokensStr
-				case TrendUpShake:
-					trendUpMakert = "++++++++++~" + "  " + tokensStr
-				case TrendUpWeaken:
-					trendUpMakert = "++++++++++\\" + "  " + tokensStr
-				case TrendDownStrengthen:
-					trendDownMarket = "                ----------\\" + "  " + tokensStr
-				case TrendDownSteady:
-					trendDownMarket = "                ----------=" + "  " + tokensStr
-				case TrendDownShake:
-					trendDownMarket = "                ----------~" + "  " + tokensStr
-				case TrendDownWeaken:
-					trendDownMarket = "                ----------/" + "  " + tokensStr
-				case TrendShakeUp:
-					trendShakeMarket = "                                +-+-+-+-+-/" + "  " + tokensStr
-				case TrendShakeDown:
-					trendShakeMarket = "                                +-+-+-+-+-\\" + "  " + tokensStr
-				case TrendShakeZero:
-					trendShakeMarket = "                                +-+-+-+-+-0" + "  " + tokensStr
-				default:
-					trendZeroMarket = "                                             0000000000" + "  " + tokensStr
+			for token, microTrendsMap := range microTrendsMapMap {
+				var microTrendUpCount, microTrendDownCount, microTrendShakeCount, microTrendZeroCount, totalCount int
+				for microTrend, count := range microTrendsMap {
+					totalCount += count
+					if isMicroTrendUp(microTrend) {
+						microTrendUpCount++
+					} else if isMicroTrendDown(microTrend) {
+						microTrendDownCount++
+					} else if isMicroTrendShake(microTrend) {
+						microTrendShakeCount++
+					} else {
+						microTrendZeroCount++
+					}
+				}
+
+				if microTrendUpCount > totalCount/2 {
+					MacroTrendsMap[token] = MacroTrendUp
+				} else if microTrendDownCount > totalCount/2 {
+					MacroTrendsMap[token] = MacroTrendDown
+				} else if microTrendZeroCount > totalCount/2 {
+					MacroTrendsMap[token] = MacroTrendZero
+				} else {
+					MacroTrendsMap[token] = MacroTrendShake
 				}
 			}
 
-			fmt.Printf("%v\n %v\n %v\n %v\n", trendUpMakert, trendDownMarket, trendShakeMarket, trendZeroMarket)
+			var MacroTrendTokensMap = make(map[MacroTrend][]string)
+			for token, macroTrend := range MacroTrendsMap {
+				MacroTrendTokensMap[macroTrend] = append(MacroTrendTokensMap[macroTrend], string(token))
+			}
+
+			var macroTrendTokensStrMap = make(map[MacroTrend]string)
+			for trend, tokens := range MacroTrendTokensMap {
+				macroTrendTokensStrMap[trend] = fmt.Sprintf("[%v] %v", len(tokens), strings.Join(tokens, ","))
+			}
+
+			var macroTrendUpMakert, macroTrendDownMarket, macroTrendShakeMarket, macroTrendZeroMarket string
+
+			for trend, tokensStr := range macroTrendTokensStrMap {
+				switch trend {
+				case MacroTrendUp:
+					macroTrendUpMakert = "++++++++++" + "  " + tokensStr
+				case MacroTrendDown:
+					macroTrendDownMarket = "                ----------" + "  " + tokensStr
+				case MacroTrendShake:
+					macroTrendShakeMarket = "                                +-+-+-+-+-" + "  " + tokensStr
+				default:
+					macroTrendZeroMarket = "                                             0000000000" + "  " + tokensStr
+				}
+			}
+
+			fmt.Printf("{\nmacro trends:\n%v\n %v\n %v\n %v\n", macroTrendUpMakert, macroTrendDownMarket, macroTrendShakeMarket, macroTrendZeroMarket)
+			// ---
+
+			var microTrendTokensMap = make(map[MicroTrend][]string)
+			for token, microTrend := range microTrends {
+				microTrendTokensMap[microTrend] = append(microTrendTokensMap[microTrend], string(token))
+			}
+
+			var microTrendTokensStrMap = make(map[MicroTrend]string)
+			for trend, tokens := range microTrendTokensMap {
+				microTrendTokensStrMap[trend] = fmt.Sprintf("[%v] %v", len(tokens), strings.Join(tokens, ","))
+			}
+
+			var microTrendUpMakert, microTrendDownMarket, microTrendShakeMarket, microTrendZeroMarket string
+
+			for trend, tokensStr := range microTrendTokensStrMap {
+				switch trend {
+				case MicroTrendUpStrengthen:
+					microTrendUpMakert = "++++++++++/" + "  " + tokensStr
+				case MicroTrendUpSteady:
+					microTrendUpMakert = "++++++++++=" + "  " + tokensStr
+				case MircoTrendUpShake:
+					microTrendUpMakert = "++++++++++~" + "  " + tokensStr
+				case MicroTrendUpWeaken:
+					microTrendUpMakert = "++++++++++\\" + "  " + tokensStr
+				case MicroTrendDownStrengthen:
+					microTrendDownMarket = "                ----------\\" + "  " + tokensStr
+				case MicroTrendDownSteady:
+					microTrendDownMarket = "                ----------=" + "  " + tokensStr
+				case MicroTrendDownShake:
+					microTrendDownMarket = "                ----------~" + "  " + tokensStr
+				case MicroTrendDownWeaken:
+					microTrendDownMarket = "                ----------/" + "  " + tokensStr
+				case MicroTrendShakeUp:
+					microTrendShakeMarket = "                                +-+-+-+-+-/" + "  " + tokensStr
+				case MicroTrendShakeDown:
+					microTrendShakeMarket = "                                +-+-+-+-+-\\" + "  " + tokensStr
+				case MicroTrendShakeZero:
+					microTrendShakeMarket = "                                +-+-+-+-+-0" + "  " + tokensStr
+				default:
+					microTrendZeroMarket = "                                             0000000000" + "  " + tokensStr
+				}
+			}
+
+			fmt.Printf("micro trends:\n%v\n %v\n %v\n %v\n}\n", microTrendUpMakert, microTrendDownMarket, microTrendShakeMarket, microTrendZeroMarket)
 		}
 	}
 }
@@ -159,12 +263,12 @@ func (t *Trends) getAllPricesPairWithBUSDorUSDT() (map[price.Token]price.Price, 
 	return tokenPriceFoundMap, nil
 }
 
-func (t *Trends) microTrends(slices map[price.Token]*slice.Slice) map[price.Token]Trend {
+func (t *Trends) microTrends(slices map[price.Token]*slice.Slice) map[price.Token]MicroTrend {
 	if len(slices) == 0 {
 		return nil
 	}
 
-	var trends_ = make(map[price.Token]Trend)
+	var trends_ = make(map[price.Token]MicroTrend)
 
 	for token, slice := range slices {
 		if slice.Len() < t.PricesCountToMarkMicroTrend {
@@ -178,7 +282,7 @@ func (t *Trends) microTrends(slices map[price.Token]*slice.Slice) map[price.Toke
 	return trends_
 }
 
-func (t *Trends) microTrend(s *slice.Slice) Trend {
+func (t *Trends) microTrend(s *slice.Slice) MicroTrend {
 	var priceI, priceJ *big.Float
 	var prices = make([]*big.Float, t.PricesCountToMarkMicroTrend)
 	var priceDiffs = make([]*big.Float, t.PricesCountToMarkMicroTrend-1)
@@ -220,13 +324,13 @@ func (t *Trends) microTrend(s *slice.Slice) Trend {
 		}
 
 		if strenghthenNum == t.PricesCountToMarkMicroTrend-2 {
-			return TrendUpStrengthen
+			return MicroTrendUpStrengthen
 		} else if steadyNum == t.PricesCountToMarkMicroTrend-2 {
-			return TrendUpSteady
+			return MicroTrendUpSteady
 		} else if weakenNum == t.PricesCountToMarkMicroTrend-2 {
-			return TrendUpWeaken
+			return MicroTrendUpWeaken
 		} else {
-			return TrendUpShake
+			return MircoTrendUpShake
 		}
 	} else if negatives == t.PricesCountToMarkMicroTrend-1 {
 		var strenghthenNum, steadyNum, weakenNum int
@@ -243,26 +347,26 @@ func (t *Trends) microTrend(s *slice.Slice) Trend {
 		}
 
 		if strenghthenNum == t.PricesCountToMarkMicroTrend-2 {
-			return TrendDownStrengthen
+			return MicroTrendDownStrengthen
 		} else if steadyNum == t.PricesCountToMarkMicroTrend-2 {
-			return TrendDownSteady
+			return MicroTrendDownSteady
 		} else if weakenNum == t.PricesCountToMarkMicroTrend-2 {
-			return TrendDownWeaken
+			return MicroTrendDownWeaken
 		} else {
-			return TrendDownShake
+			return MicroTrendDownShake
 		}
 	} else if zeros == t.PricesCountToMarkMicroTrend-1 {
-		return TrendZero
+		return MicroTrendZero
 	} else {
 		priceDiff := priceDiffs[len(priceDiffs)-1]
 		switch priceDiff.Sign() {
 		case -1:
-			return TrendShakeDown
+			return MicroTrendShakeDown
 		case 0:
-			return TrendShakeZero
+			return MicroTrendShakeZero
 		case 1:
-			//return TrendShakeUp
+			//return MicroTrendShakeUp
 		}
-		return TrendShakeUp
+		return MicroTrendShakeUp
 	}
 }

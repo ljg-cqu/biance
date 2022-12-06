@@ -190,7 +190,7 @@ func (t *Trends) TrackPairBUSDOrUSDT() {
 				}
 			}
 
-			fmt.Printf("<<<\nmacro trends:\n%v\n %v\n %v\n %v\n", macroTrendUpMakert, macroTrendDownMarket, macroTrendShakeMarket, macroTrendZeroMarket)
+			fmt.Printf("%v\nmacro trends:\n%v\n %v\n %v\n %v\n", time.Now(), macroTrendUpMakert, macroTrendDownMarket, macroTrendShakeMarket, macroTrendZeroMarket)
 			// ---
 
 			var microTrendTokensMap = make(map[MicroTrend][]string)
@@ -234,7 +234,7 @@ func (t *Trends) TrackPairBUSDOrUSDT() {
 				}
 			}
 
-			fmt.Printf("micro trends:\n%v\n %v\n %v\n %v\n>>>\n\n", microTrendUpMakert, microTrendDownMarket, microTrendShakeMarket, microTrendZeroMarket)
+			fmt.Printf("micro trends:\n%v\n %v\n %v\n %v\n", microTrendUpMakert, microTrendDownMarket, microTrendShakeMarket, microTrendZeroMarket)
 		}
 	}
 }

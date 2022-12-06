@@ -27,7 +27,7 @@ func TestTrends_TrackPairBUSDOrUSDT(t *testing.T) {
 		ShutDownCtx:                      ctx,
 		IntervalToQueryPrice:             5,
 		PricesCountToMarkMicroTrend:      5,
-		MicroTrendsCountToMarkMacroTrend: 300,
+		MicroTrendsCountToMarkMacroTrend: 60,
 		CheckPriceBUSDOverUSDT:           true,
 		Client:                           &http.Client{},
 	}

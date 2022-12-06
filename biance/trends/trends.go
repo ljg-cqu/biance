@@ -234,7 +234,7 @@ func (t *Trends) TrackPairBUSDOrUSDT() {
 				}
 			}
 
-			fmt.Printf("micro trends:\n%v\n %v\n %v\n %v\n", microTrendUpMakert, microTrendDownMarket, microTrendShakeMarket, microTrendZeroMarket)
+			fmt.Printf("micro trends:\n%v\n %v\n %v\n %v\n\n", microTrendUpMakert, microTrendDownMarket, microTrendShakeMarket, microTrendZeroMarket)
 		}
 	}
 }

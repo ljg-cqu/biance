@@ -29,3 +29,24 @@ func (s *Slice) Elem(index int) any {
 func (s *Slice) Len() int {
 	return len(s.store)
 }
+
+func (s *Slice) First() any {
+	if len(s.store) == 0 {
+		return nil
+	}
+	return s.store[0]
+}
+
+func (s *Slice) Middle() any {
+	if len(s.store) == 0 {
+		return nil
+	}
+	return s.store[len(s.store)/2]
+}
+
+func (s *Slice) Last() any {
+	if len(s.store) == 0 {
+		return nil
+	}
+	return s.store[len(s.store)-1]
+}

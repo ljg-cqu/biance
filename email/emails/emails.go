@@ -1,4 +1,4 @@
-package fromqq126163
+package emails
 
 import (
 	"context"

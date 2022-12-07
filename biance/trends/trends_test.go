@@ -30,6 +30,7 @@ func TestTrends_TrackPairBUSDOrUSDT(t *testing.T) {
 		MicroTrendsCountToMarkMacroTrend: 300,
 		CheckPriceBUSDOverUSDT:           true,
 		Client:                           &http.Client{},
+		emailAddressToReportUpTrend:      "ljg_cqu@163.com",
 	}
 
 	trends.TrackPairBUSDOrUSDT()

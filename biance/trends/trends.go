@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/ljg-cqu/biance/biance"
 	"github.com/ljg-cqu/biance/biance/price"
+	"github.com/ljg-cqu/biance/email/emails"
 	"github.com/ljg-cqu/biance/logger"
 	"github.com/ljg-cqu/biance/utils/slice"
 	"github.com/pkg/errors"
@@ -66,6 +67,7 @@ type Trends struct {
 	CheckPriceBUSDOverUSDT           bool
 	Client                           *http.Client
 	microTrendsMap                   map[price.Token]*slice.Slice
+	emailAddressToReportUpTrend      string
 }
 
 func (t *Trends) TrackPairBUSDOrUSDT() {
@@ -235,6 +237,41 @@ func (t *Trends) TrackPairBUSDOrUSDT() {
 			}
 
 			fmt.Printf("micro trends:\n%v\n %v\n %v\n %v\n\n", microTrendUpMakert, microTrendDownMarket, microTrendShakeMarket, microTrendZeroMarket)
+
+			var upStrengthenTokens, upSteadyTokens []string
+			for token, macroTrend := range MacroTrendsMap {
+				if macroTrend == MacroTrendUp {
+					microTrends, ok := t.microTrendsMap[token]
+					if ok {
+						microTrend := microTrends.Last().(MicroTrend)
+						if microTrend == MicroTrendUpStrengthen {
+							upStrengthenTokens = append(upStrengthenTokens, string(token))
+						} else if microTrend == MicroTrendUpSteady {
+							upSteadyTokens = append(upSteadyTokens, string(token))
+						}
+					}
+				}
+			}
+
+			var upReportStrengthen, upReportSteady string
+			if upStrengthenTokens != nil {
+				upReportStrengthen = "Tokens on Strengthen Up Trend:"
+				upReportStrengthen += strings.Join(upStrengthenTokens, ",")
+				upReportStrengthen += "\n"
+
+			}
+			if upSteadyTokens != nil {
+				upReportSteady = "Tokens on Steady Up Trend "
+				upReportSteady += strings.Join(upSteadyTokens, ",")
+			}
+
+			var upTrendTokensReport = upReportStrengthen + upReportSteady
+
+			if t.emailAddressToReportUpTrend != "" && upTrendTokensReport != "" {
+				go func() {
+					emails.Send(t.Logger, t.ShutDownCtx, "Up Trend Tokens", upTrendTokensReport, t.emailAddressToReportUpTrend)
+				}()
+			}
 		}
 	}
 }

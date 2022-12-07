@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-func SendPNLReportWith126Mail(log logger.Logger, ctx context.Context, subject, content, to string) error {
+func Send126Mail(log logger.Logger, ctx context.Context, subject, content, to string) error {
 	email := mail.NewMSG()
 	email.SetFrom("Zealy <ljg_cqu@126.com>").
 		AddTo(to).
@@ -31,7 +31,7 @@ func SendPNLReportWith126Mail(log logger.Logger, ctx context.Context, subject, c
 	return errors.WithStack(err)
 }
 
-func SendPNLReportWith163Mail(log logger.Logger, ctx context.Context, subject, content, to string) error {
+func Send163Mail(log logger.Logger, ctx context.Context, subject, content, to string) error {
 	email := mail.NewMSG()
 	email.SetFrom("Zealy <ljg_cqu@163.com>").
 		AddTo(to).
@@ -52,7 +52,7 @@ func SendPNLReportWith163Mail(log logger.Logger, ctx context.Context, subject, c
 	return errors.WithStack(err)
 }
 
-func SendPNLReportWithQQMail(log logger.Logger, ctx context.Context, subject, content, to string) error {
+func SendQQMail(log logger.Logger, ctx context.Context, subject, content, to string) error {
 	email := mail.NewMSG()
 	email.SetFrom("Zealy <1025003548@qq.com>").
 		AddTo(to).

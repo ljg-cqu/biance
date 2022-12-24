@@ -140,8 +140,8 @@ func main() {
 						"NBS":  "",
 						"USDT": "",
 						"BUSD": "",
-						"VIDT": "",
-						"AST":  "",
+						//"VIDT": "",
+						"AST": "",
 					}
 
 					for _, freePNL := range freePNLs {

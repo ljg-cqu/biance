@@ -2,6 +2,7 @@ package pnl
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/ljg-cqu/biance/biance"
 	"github.com/ljg-cqu/biance/biance/asset"
 	"github.com/ljg-cqu/biance/biance/price"
@@ -90,6 +91,10 @@ func CheckFreePNLWithUSDTOrBUSD(client biance.Client, assetURL, priceURL, asset,
 	configPrincipalValue(freePNLs)
 
 	for i, freePNL := range freePNLs {
+		if freePNL.FreeValue == nil || freePNL.PrincipalValueInDollar == nil {
+			fmt.Printf("got nil FreeValue or nil PrincipalValueInDollar, token: %v\n", freePNL.Token)
+			continue //TODO
+		}
 		pnlVal := new(big.Float).Sub(freePNL.FreeValue, freePNL.PrincipalValueInDollar)
 		freePNLs[i].PNLValue = pnlVal
 

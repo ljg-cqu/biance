@@ -140,6 +140,7 @@ func main() {
 						"NBS":  "",
 						"USDT": "",
 						"BUSD": "",
+						"HIFI": "",
 						//"VIDT": "",
 						"AST": "",
 					}

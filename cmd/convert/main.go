@@ -141,6 +141,7 @@ func main() {
 						"USDT": "",
 						"BUSD": "",
 						"HIFI": "",
+						"GFT":  "",
 						//"VIDT": "",
 						"AST": "",
 					}

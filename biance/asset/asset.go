@@ -77,6 +77,7 @@ func GetAssetWithUSDTOrBUSDFreeValue(client biance.Client, assetURL, priceURL, a
 		return nil, errors.New("no price found")
 	}
 
+	var assetsToUSDTorBUSD Assets
 	for i, asset := range assets {
 		symbol := price.Symbol(asset.Token + "USDT")
 		price_, ok := pricesMap[symbol]
@@ -85,6 +86,7 @@ func GetAssetWithUSDTOrBUSDFreeValue(client biance.Client, assetURL, priceURL, a
 			price_, ok = pricesMap[symbol]
 		}
 		if !ok && asset.Token != "USDT" && asset.Token != "BUSD" {
+			fmt.Printf("Token %v has no paired price to USDT or BUSD\n", asset.Token)
 			continue
 		}
 
@@ -102,10 +104,21 @@ func GetAssetWithUSDTOrBUSDFreeValue(client biance.Client, assetURL, priceURL, a
 		}
 
 		assets[i].Price = price_
-		assets[i].FreeValue = new(big.Float).Mul(price_.Price, asset.Free)
+		assetsToUSDTorBUSD = append(assetsToUSDTorBUSD, assets[i])
 	}
-	assets.Sort()
-	return assets, nil
+
+	for i, asset := range assetsToUSDTorBUSD {
+		freeValue := new(big.Float).Mul(asset.Price.Price, asset.Free)
+		//zero, _ := new(big.Float).SetString("0")
+		//cmp := freeValue.Cmp(zero)
+		//if cmp == 0 || cmp == -1 {
+		//	fmt.Printf("Token %v has no free value to USDT or BUSD\n", asset.Token)
+		//	continue
+		//}
+		assetsToUSDTorBUSD[i].FreeValue = freeValue
+	}
+	assetsToUSDTorBUSD.Sort()
+	return assetsToUSDTorBUSD, nil
 }
 
 func GetAsset(client biance.Client, assetURL, asset, apiKey, secretKey string) (Assets, error) {

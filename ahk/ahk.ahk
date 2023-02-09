@@ -97,21 +97,21 @@ loop
             {
                 MouseMove FoundX+20, FoundY+10, MouseMoveSpeed
                 Click
-                Sleep 4000
+                Sleep 8000
                 if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\login\continuewithgoogle.png")
                     {
                        MouseMove FoundX+20, FoundY+10, MouseMoveSpeed
                        Click
-                       Sleep 2000
+                       Sleep 8000
                          if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\login\googlemail.png")
                             {
                                  MouseMove FoundX+20, FoundY+10, MouseMoveSpeed
                                  Click
-                                 Sleep 2000
+                                 Sleep 8000
                                  Send "^{Tab}"
                                  Send "{F5}"
                                  Send "^{Tab}"
-                                 Sleep 4000
+                                 Sleep 8000
                             }
                     }
              }

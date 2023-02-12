@@ -95,12 +95,12 @@ loop
     ; login
         if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\login\login.png")
             {
-                MouseMove FoundX+20, FoundY+10, MouseMoveSpeed
+                MouseMove 1181, 176, MouseMoveSpeed
                 Click
                 Sleep 4000
-                if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\login\continuewithgoogle.png")
-                    {
-                       MouseMove FoundX+20, FoundY+10, MouseMoveSpeed
+                ;if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\login\continuewithgoogle.png")
+                 ;   {
+                       MouseMove 493, 802, MouseMoveSpeed
                        Click
                        Sleep 4000
                          ;if ImageSearch(&FoundX, &FoundY,0, 0, A_ScreenWidth, A_ScreenHeight, "W:\github.com\ljg-cqu\binance\biance\static\login\googlemail.png")
@@ -117,7 +117,7 @@ loop
                                  Send "^{Tab}"
                                  Sleep 10000
                             ;}
-                    }
+                  ;  }
              }
     ; activate mouse
         if (RandomNumber = 0)

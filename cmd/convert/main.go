@@ -4,11 +4,6 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"github.com/fsnotify/fsnotify"
-	"github.com/ljg-cqu/biance/biance"
-	"github.com/ljg-cqu/biance/biance/asset"
-	"github.com/ljg-cqu/biance/biance/pnl"
-	"github.com/ljg-cqu/biance/logger"
 	"log"
 	"math/big"
 	"net/http"
@@ -18,6 +13,12 @@ import (
 	"strings"
 	"syscall"
 	"time"
+
+	"github.com/fsnotify/fsnotify"
+	"github.com/ljg-cqu/biance/biance"
+	"github.com/ljg-cqu/biance/biance/asset"
+	"github.com/ljg-cqu/biance/biance/pnl"
+	"github.com/ljg-cqu/biance/logger"
 )
 
 const (
@@ -144,6 +145,7 @@ func main() {
 						"GFT":  "",
 						//"VIDT": "",
 						"AST": "",
+						"BNX": "",
 					}
 
 					for _, freePNL := range freePNLs {
